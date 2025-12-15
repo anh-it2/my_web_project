@@ -3,9 +3,14 @@ import RHFSelect from "@/components/form/RHFSelect";
 import RHFSelectTags from "@/components/form/RHFSelectTags";
 import RHFSwitch from "@/components/form/RHFSwitch";
 import { difficultyOptions } from "@/data/mock";
-import { Col, Row } from "antd";
+import { Col, Flex, Row, Typography } from "antd";
+import { useTranslations } from "next-intl";
+
+const { Title, Text } = Typography;
 
 export default function BasicInfoStep() {
+  const t = useTranslations("problem");
+
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} md={12}>
@@ -14,23 +19,24 @@ export default function BasicInfoStep() {
           label="Problem title"
           placeholder="Enter your problem title"
         />
-        <RHFInput
-          type="number"
-          name="timeLimit"
-          addonAfter="ms"
-          label="Time Limit"
-        />
+        <div className="flex flex-row">
+          <RHFInput
+            type="number"
+            name="timeLimit"
+            addonAfter="ms"
+            label="Time Limit"
+          />
 
-        <RHFInput
-          type="number"
-          name="memoryLimit"
-          addonAfter="MB"
-          label="Memory Limit"
-        />
+          <RHFInput
+            type="number"
+            name="memoryLimit"
+            addonAfter="MB"
+            label="Memory Limit"
+          />
+        </div>
       </Col>
 
       <Col xs={24} md={12}>
-        <RHFSwitch name="visibility" label="Visible" />
         <RHFSelect
           name="difficulty"
           label="Difficulty"
@@ -42,6 +48,15 @@ export default function BasicInfoStep() {
           label="Tags"
           placeholder="Enter a tag then press Enter or comma to add"
         />
+      </Col>
+      <Col xs={24} md={12}>
+        <Flex align="center" gap={3}>
+          <RHFSwitch name="visibility" />
+          <div>
+            <Title level={5}>{t("publish_title")}</Title>
+            <Text>{t("publish_description")}</Text>
+          </div>
+        </Flex>
       </Col>
     </Row>
   );

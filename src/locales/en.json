@@ -138,5 +138,9 @@
     "message": "Your information will not be saved, do you agree to exit?",
     "stayButton": "Stay",
     "exitButton": "Exit"
+  },
+  "problem": {
+    "publish_title": "Publish this problem",
+    "publish_description": "When enabled, this product will appear in the class."
   }
 }

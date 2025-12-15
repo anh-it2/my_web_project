@@ -17,14 +17,14 @@ export default function TestcaseManager() {
         <h3 className="font-semibold">Problem Test Cases</h3>
         <CancelButton
           title="Add Test cases"
-          onClick={() => append({ input: "", output: "" })}
+          onClick={() => append({ input: "", output: "", score: 0 })}
         />
       </div>
 
       {fields.map((f, i) => (
         <Card key={f.id} size="small" className="space-y-2">
           <Row gutter={[16, 16]}>
-            <Col xs={24} md={12}>
+            <Col xs={24} md={8}>
               <RHFInput
                 name={`testCases.${i}.input`}
                 placeholder="Enter your test case input"
@@ -32,11 +32,20 @@ export default function TestcaseManager() {
               />
             </Col>
 
-            <Col xs={24} md={12}>
+            <Col xs={24} md={8}>
               <RHFInput
                 name={`testCases.${i}.output`}
                 placeholder="Enter your test case output"
                 label="Test Case  Output"
+              />
+            </Col>
+
+            <Col xs={24} md={8}>
+              <RHFInput
+                name={`testCases.${i}.score`}
+                placeholder="Enter score for this test case"
+                label="Score"
+                type="number"
               />
             </Col>
           </Row>

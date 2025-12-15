@@ -68,6 +68,7 @@ export default function RHFInput({
           help={fieldState.error?.message}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
+          style={{ width: "100%" }}
         >
           {type === "number" ? (
             <InputNumber

@@ -138,5 +138,9 @@
     "message": "Thông tin sẽ không được lưu, bạn có đồng ý thoát?",
     "stayButton": "Ở lại",
     "exitButton": "Thoát"
+  },
+  "problem": {
+    "publish_title": "Đăng tải bài toán này",
+    "publish_description": "Khi bật, bài toán này sẽ xuất hiện trên lớp học."
   }
 }

@@ -13,6 +13,7 @@ export default function StatementStep() {
         name="statement"
         rows={8}
         placeholder="Markdown + LaTeX supported"
+        label="Description:"
       />
 
       <div className="flex justify-between items-center">

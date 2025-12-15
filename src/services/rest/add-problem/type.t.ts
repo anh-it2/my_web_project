@@ -5,9 +5,9 @@ export type ProblemFormValues = {
   visibility: boolean;
   timeLimit: number;
   memoryLimit: number;
-  statement: string;
+  description: string;
   samples: { input: string; output: string }[];
-  testCases: { input: string; output: string }[];
+  testCases: { input: string; output: string; score: number }[];
 };
 
 export type Testcase = {

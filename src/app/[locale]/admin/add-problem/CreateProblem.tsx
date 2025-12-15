@@ -1,7 +1,11 @@
+import ConfirmModal from "@/components/form/ConfirmModal";
+import FormHeader from "@/components/form/FormHeader";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { ProblemFormValues } from "@/services/rest/add-problem/type.t";
 import { Card, Steps } from "antd";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import BasicInfoStep from "./components/BasicInfoStep";
@@ -20,7 +24,7 @@ export default function CreateProblem() {
       visibility: true,
       timeLimit: 1000,
       memoryLimit: 256,
-      statement: "",
+      description: "",
       samples: [],
       testCases: [],
     },
@@ -45,6 +49,22 @@ export default function CreateProblem() {
     },
   ];
 
+  const t = useTranslations("sidebar");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
+  const router = useRouter();
+
+  const breadCrumbs = [
+    {
+      label: t("home"),
+      link: "/admin/home",
+    },
+    {
+      label: "Create new problem",
+      link: "#",
+    },
+  ];
+
   const { handleSubmit } = methods;
   const onSubmit = () => {
     //do any thing
@@ -53,6 +73,13 @@ export default function CreateProblem() {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <FormHeader
+          setOpenDialog={setOpenDialog}
+          title="Assignment"
+          breadcrumbs={breadCrumbs}
+          setConfirmModalLink={setConfirmModalLink}
+          publicButtonTitle="Save Draft"
+        />
         <div className="p-6 max-w-6xl mx-auto">
           <Steps
             current={step}
@@ -74,11 +101,17 @@ export default function CreateProblem() {
                 onClick={() => setStep((prev) => prev + 1)}
               />
             ) : (
-              <PublishButton title="Save Draft" isSubmit={false} />
+              <PublishButton title="Save Draft" isSubmit={true} />
             )}
           </div>
         </div>
       </form>
+
+      <ConfirmModal
+        open={openDialog}
+        onOk={() => router.replace(confirmModalLink)}
+        onCancel={() => setOpenDialog(false)}
+      />
     </FormProvider>
   );
 }
