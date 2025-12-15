@@ -1,7 +1,8 @@
 import { Submission, submissions } from "@/data/mock";
-import { CheckOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Table, Tag } from "antd";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function SubmissionTable() {
@@ -22,10 +23,13 @@ export default function SubmissionTable() {
       title: "ID",
       dataIndex: "id",
       key: "id",
-      render: (id) => (
-        <a style={{ color: "#722ed1", fontWeight: 500 }}>
-          {id.toString().padStart(6, "0")}
-        </a>
+      render: (text: string) => (
+        <Link
+          href="/user/contests/test-case/1"
+          className="text-blue-600 hover:underline"
+        >
+          {text}
+        </Link>
       ),
     },
     {
@@ -69,19 +73,19 @@ export default function SubmissionTable() {
       title: "Bài nộp cuối",
       key: "last",
       align: "center",
-      render: (_, record) =>
-        record.passed ? (
-          <CheckOutlined style={{ color: "green", fontSize: 18 }} />
-        ) : (
-          <span
-            style={{
-              border: "1px solid #d9d9d9",
-              width: 16,
-              height: 16,
-              display: "inline-block",
-            }}
-          />
-        ),
+      render: (_, record) => (
+        <Checkbox
+          checked={record.isFinal}
+          onChange={() => {
+            setData((prev) =>
+              prev.map((item) => ({
+                ...item,
+                isFinal: item.id === record.id, // ⭐ chỉ 1 cái true
+              }))
+            );
+          }}
+        />
+      ),
     },
   ];
 

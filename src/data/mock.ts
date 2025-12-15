@@ -90,6 +90,7 @@ export type Submission = {
   passed: boolean;
   language: string;
   createdAt: string;
+  isFinal: boolean;
 };
 
 export const submissions: Submission[] = [
@@ -100,6 +101,7 @@ export const submissions: Submission[] = [
     passed: true,
     language: "JavaScript",
     createdAt: "2025-12-14 09:30",
+    isFinal: true,
   },
   {
     id: 2,
@@ -108,6 +110,7 @@ export const submissions: Submission[] = [
     passed: false,
     language: "Python",
     createdAt: "2025-12-14 10:15",
+    isFinal: false,
   },
   {
     id: 3,
@@ -116,6 +119,7 @@ export const submissions: Submission[] = [
     passed: true,
     language: "C++",
     createdAt: "2025-12-15 08:00",
+    isFinal: false,
   },
 ];
 
