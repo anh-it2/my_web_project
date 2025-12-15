@@ -21,7 +21,7 @@ import { routing } from "./libs/routing";
 const intlMiddleware = createMiddleware(routing);
 
 // Các route cần đăng nhập
-const protectedRoutes = ["/admin"];
+const protectedRoutes = ["/adminsss"];
 
 export default function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

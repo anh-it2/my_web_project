@@ -171,3 +171,9 @@ export const submissionInfo = {
   problem: "Replace ? To Find Real Expression",
   contest: "BTVN-IT3100-Ky20251-T9-2025",
 };
+
+export const difficultyOptions = [
+  { label: "Easy", value: "EASY" },
+  { label: "Medium", value: "MEDIUM" },
+  { label: "Hard", value: "HARD" },
+];
