@@ -1,3 +1,5 @@
+import z from "zod";
+
 export const contestTableData = [
   {
     key: "1",
@@ -258,3 +260,13 @@ export const problem = {
     { input: "input test case 2", output: "out put test case 2", score: 111 },
   ],
 };
+
+export const problemSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  difficulty: z.enum(["EASY", "MEDIUM", "HARD"]),
+  tags: z.array(z.string()).min(1, "At least one tag is required"),
+  visibility: z.boolean(),
+  timeLimit: z.number().min(1),
+  memoryLimit: z.number().min(1),
+  description: z.string().optional(),
+});

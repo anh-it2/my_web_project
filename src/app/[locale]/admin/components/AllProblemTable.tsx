@@ -5,6 +5,7 @@ import { MoreOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps, Switch, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
@@ -15,6 +16,8 @@ export default function AllProblemTable({ data }: Props) {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   console.log(pageSize);
+
+  const router = useRouter();
 
   const columns: ColumnsType<Problem> = [
     {
@@ -79,12 +82,16 @@ export default function AllProblemTable({ data }: Props) {
           {
             key: "view",
             label: "Xem chi tiết",
-            onClick: () => console.log("View", record.key),
+            onClick: () => {
+              router.push("/admin/view-problem-detail/1");
+            },
           },
           {
             key: "edit",
             label: "Chỉnh sửa",
-            onClick: () => console.log("Edit", record.key),
+            onClick: () => {
+              router.push("/admin/edit-problem/1");
+            },
           },
           {
             key: "delete",

@@ -1,4 +1,7 @@
-import { Button, Typography } from "antd";
+import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
+import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
+import { Editor } from "@monaco-editor/react";
+import { Typography } from "antd";
 import React, { SetStateAction } from "react";
 
 const { Title, Text } = Typography;
@@ -42,7 +45,7 @@ export function CodeEditor({
       </select>
 
       {/* Editor */}
-      <textarea
+      {/* <textarea
         value={code}
         onChange={(e) => setCode(e.target.value)}
         spellCheck={false}
@@ -63,20 +66,19 @@ export function CodeEditor({
             });
           }
         }}
+      /> */}
+
+      <Editor
+        height="400px"
+        language="cpp"
+        theme="vs-dark"
+        value={code}
+        onChange={(value) => setCode(value ?? "")}
       />
 
-      <div className="flex justify-between items-center gap-2">
-        <div>
-          <Text type="secondary" className="text-xs">
-            Editor cơ bản: đổi ngôn ngữ, Tab để indent, chưa compile.
-          </Text>
-        </div>
-
-        <div>
-          <Button type="primary" htmlType="submit" className="!shadow-none">
-            Nộp bài
-          </Button>
-        </div>
+      <div className="flex flex-row gap-2 items-end">
+        <CancelButton title="Chạy thử" />
+        <PublishButton title="Nộp bài" isSubmit={true} />
       </div>
     </>
   );

@@ -279,6 +279,7 @@ import { Badge, Dropdown, Space } from "antd";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
+import { useRouter } from "next/navigation";
 import LanguageSwitcher from "../shared/LanguageSwitcher/LanguageSwitcher";
 import "./Header.scss";
 
@@ -305,6 +306,8 @@ export default function Header() {
     return name.length > 20 ? name.substring(0, 20) + "..." : name;
   }, [currentUser.companyName]);
 
+  const router = useRouter();
+
   const getInitials = () => {
     if (companyName) return companyName.charAt(0).toUpperCase();
     if (currentUser.email) return currentUser.email.charAt(0).toUpperCase();
@@ -320,7 +323,7 @@ export default function Header() {
   const handleUserMenuClick = ({ key }: { key: string }) => {
     switch (key) {
       case "business-info":
-        console.log("Go to /admin/company");
+        router.push("/user/user-info");
         break;
       case "shop-setup":
         console.log("Go to /admin/shop-setup");

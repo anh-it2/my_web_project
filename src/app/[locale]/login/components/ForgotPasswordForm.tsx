@@ -83,7 +83,7 @@ export default function ForgotPasswordForm({
             htmlType="submit"
             size="large"
             loading={loading}
-            className="submit-button"
+            className="submit-button shadow-none border-none"
             block
           >
             {t("sendOtpButton")}

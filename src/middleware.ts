@@ -54,7 +54,7 @@ export default function middleware(request: NextRequest) {
   const isLoginPage = pathname.includes("/login");
   if (isLoginPage && token) {
     const baseUrl = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
-    const dashboardUrl = new URL(`/${currentLocale}/admin/dashboard`, baseUrl);
+    const dashboardUrl = new URL(`/${currentLocale}/user/home`, baseUrl);
     return NextResponse.redirect(dashboardUrl);
   }
 

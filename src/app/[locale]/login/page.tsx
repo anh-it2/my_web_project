@@ -7,6 +7,7 @@ import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import LoginForm from "./components/LoginForm";
 import NewPasswordForm from "./components/NewPasswordForm";
 import OTPVerificationForm from "./components/OTPVerificationForm";
+import RegisterForm from "./components/RegisterForm";
 import SuccessMessage from "./components/SuccessMessage";
 import "./login.scss";
 
@@ -15,7 +16,8 @@ type AuthStep =
   | "forgot-password"
   | "otp-verification"
   | "new-password"
-  | "success";
+  | "success"
+  | "register";
 
 export default function LoginPage() {
   const [currentStep, setCurrentStep] = useState<AuthStep>("login");
@@ -48,6 +50,7 @@ export default function LoginPage() {
         return (
           <LoginForm
             onForgotPassword={() => handleStepChange("forgot-password")}
+            onRegister={() => handleStepChange("register")}
           />
         );
       case "forgot-password":
@@ -76,10 +79,13 @@ export default function LoginPage() {
         return (
           <SuccessMessage onBackToLogin={() => handleStepChange("login")} />
         );
+      case "register":
+        return <RegisterForm onBackToLogin={() => handleStepChange("login")} />;
       default:
         return (
           <LoginForm
             onForgotPassword={() => handleStepChange("forgot-password")}
+            onRegister={() => handleStepChange("register")}
           />
         );
     }

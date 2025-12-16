@@ -36,10 +36,18 @@
     "loginSuccess": "Login successful! Welcome {company}",
     "loginError": "Email or password is incorrect!",
     "generalError": "An error occurred. Please try again!",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Re-enter password",
+    "agreeTerms": "I agree to the terms and conditions",
+    "registerButton": "Register",
+    "registerLink": "Register now",
     "validation": {
       "emailRequired": "Please enter your email!",
       "emailInvalid": "Invalid email!",
-      "passwordRequired": "Please enter your password!"
+      "passwordRequired": "Please enter your password!",
+      "confirmPasswordRequired": "Please confirm your password",
+      "confirmPasswordMismatch": "Passwords do not match",
+      "agreeRequired": "You must agree to the terms to continue"
     },
     "forgotPassword": {
       "title": "Password Recovery",

@@ -1,0 +1,341 @@
+// Responsive styles for Admin pages
+// Mobile breakpoint: 768px and below
+// Tablet breakpoint: 769px - 1024px
+
+// Container and layout responsive
+@media (max-width: 768px) {
+  .admin-page-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .admin-page-header {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+
+    h1 {
+      font-size: 1.25rem !important;
+      line-height: 1.5rem !important;
+    }
+
+    .text-sm {
+      font-size: 0.75rem !important;
+    }
+  }
+
+  .admin-content-wrapper {
+    padding: 1rem !important;
+  }
+
+  .admin-card {
+    padding: 1rem !important;
+  }
+}
+
+// Table responsive styles
+@media (max-width: 768px) {
+  // Make tables scrollable horizontally on mobile
+  .ant-table-wrapper,
+  .admin-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .ant-table {
+      min-width: 600px; // Minimum width to maintain readability
+
+      // Reduce font sizes on mobile
+      .ant-table-thead > tr > th {
+        padding: 8px 8px !important;
+        font-size: 0.75rem !important;
+        white-space: nowrap;
+      }
+
+      .ant-table-tbody > tr > td {
+        padding: 8px 8px !important;
+        font-size: 0.875rem !important;
+      }
+
+      // Hide less important columns on mobile
+      .ant-table-cell-hidden {
+        display: none !important;
+      }
+
+      // Stack action buttons vertically on mobile
+      .ant-table-cell-action {
+        .ant-space {
+          flex-direction: column;
+          gap: 4px !important;
+        }
+      }
+    }
+
+    // Hide scrollbar but keep functionality
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  }
+}
+
+// Categories table specific
+@media (max-width: 768px) {
+  .categories-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .categories-table {
+      min-width: 600px;
+
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 8px 8px !important;
+        font-size: 0.875rem !important;
+      }
+    }
+  }
+}
+
+// Demands table specific
+@media (max-width: 768px) {
+  .demands-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .ant-table {
+      min-width: 800px;
+
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 8px 8px !important;
+        font-size: 0.875rem !important;
+      }
+    }
+  }
+}
+
+// Template product table
+@media (max-width: 768px) {
+  .template-product-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .template-product-table {
+      min-width: 600px;
+
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 8px 8px !important;
+        font-size: 0.875rem !important;
+      }
+    }
+  }
+}
+
+// Filter and search form responsive
+@media (max-width: 768px) {
+  .admin-filter-bar,
+  .admin-search-form {
+    .ant-form-item {
+      margin-bottom: 0.75rem !important;
+    }
+
+    .ant-form-item-label {
+      padding-bottom: 0.25rem !important;
+    }
+
+    .ant-input,
+    .ant-select-selector,
+    .ant-picker {
+      font-size: 0.875rem !important;
+    }
+  }
+}
+
+// Toolbar responsive
+@media (max-width: 768px) {
+  .admin-toolbar {
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .admin-toolbar-left,
+    .admin-toolbar-right {
+      width: 100%;
+    }
+
+    .ant-btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// Pagination responsive
+@media (max-width: 768px) {
+  .ant-pagination {
+    .ant-pagination-options {
+      display: none !important; // Hide page size selector on mobile
+    }
+
+    .ant-pagination-item,
+    .ant-pagination-prev,
+    .ant-pagination-next {
+      min-width: 32px;
+      height: 32px;
+      line-height: 32px;
+      font-size: 0.875rem;
+    }
+
+    .ant-pagination-jump-prev,
+    .ant-pagination-jump-next {
+      display: none !important; // Hide jump buttons on mobile
+    }
+  }
+}
+
+// Grid view responsive (for product/service cards)
+@media (max-width: 768px) {
+  .admin-grid-view {
+    .ant-col {
+      margin-bottom: 1rem !important;
+    }
+  }
+}
+
+// Card responsive
+@media (max-width: 768px) {
+  .admin-card,
+  .ant-card {
+    .ant-card-head {
+      padding: 0.75rem 1rem !important;
+
+      .ant-card-head-title {
+        font-size: 1rem !important;
+        padding: 0 !important;
+      }
+    }
+
+    .ant-card-body {
+      padding: 1rem !important;
+    }
+  }
+}
+
+// Selection bar responsive
+@media (max-width: 768px) {
+  .admin-selection-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem !important;
+
+    .admin-selection-info {
+      font-size: 0.875rem !important;
+    }
+
+    .ant-btn {
+      font-size: 0.875rem !important;
+      padding: 4px 12px !important;
+    }
+  }
+}
+
+// Modal responsive
+@media (max-width: 768px) {
+  .ant-modal {
+    margin: 0;
+    max-width: 100% !important;
+    top: 0 !important;
+    padding-bottom: 0;
+
+    .ant-modal-content {
+      border-radius: 0;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+
+    .ant-modal-header {
+      padding: 1rem !important;
+    }
+
+    .ant-modal-body {
+      padding: 1rem !important;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    .ant-modal-footer {
+      padding: 0.75rem 1rem !important;
+    }
+  }
+}
+
+// Form responsive
+@media (max-width: 768px) {
+  .ant-form {
+    .ant-form-item-label {
+      padding-bottom: 0.25rem !important;
+
+      label {
+        font-size: 0.875rem !important;
+      }
+    }
+
+    .ant-input,
+    .ant-input-number,
+    .ant-select,
+    .ant-picker,
+    textarea.ant-input {
+      font-size: 0.875rem !important;
+    }
+
+    .ant-form-item {
+      margin-bottom: 1rem !important;
+    }
+  }
+}
+
+// Button group responsive
+@media (max-width: 768px) {
+  .ant-btn-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .ant-btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      border-radius: 4px !important;
+
+      &:not(:last-child) {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+// Space component responsive
+@media (max-width: 768px) {
+  .ant-space {
+    &.ant-space-horizontal {
+      flex-wrap: wrap;
+      gap: 0.5rem !important;
+    }
+
+    &.ant-space-vertical {
+      width: 100%;
+    }
+  }
+}
