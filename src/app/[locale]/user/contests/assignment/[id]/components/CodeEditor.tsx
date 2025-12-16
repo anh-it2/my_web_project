@@ -4,7 +4,7 @@ import { Editor } from "@monaco-editor/react";
 import { Typography } from "antd";
 import React, { SetStateAction } from "react";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 type Props = {
   code: string;
