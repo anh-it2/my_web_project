@@ -1,16 +1,18 @@
-interface ProblemDetail {
-  problemId: number;
-  problemCode: string;
+export type ProblemStatus = "draft" | "published";
+export type ProblemDifficulty = "easy" | "medium" | "hard";
+
+export type ProblemDetail = {
+  id: string;
   title: string;
-  description: string;
-  inputFormat: string;
-  outputFormat: string;
-  constraints: string;
-  difficultyLevel: string;
-  timeLimit: number;
-  memoryLimit: number;
-  createdBy: string;
-  createdDate: string;
-  updatedDate: string;
-  active: boolean;
-}
+  slug: string;
+  statement: string; // markdown or html
+  difficulty: ProblemDifficulty;
+  tags: string[];
+  time_limit: number; // ms
+  memory_limit: number; // MB
+  visibility: boolean;
+  creator_id: string;
+  status: ProblemStatus;
+  created_at: string; // ISO string
+  updated_at: string; // ISO string
+};

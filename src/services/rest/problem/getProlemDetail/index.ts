@@ -1,8 +1,9 @@
 import axios from "axios";
+import { ProblemDetail } from "./type";
 
 export async function getProblemDetail(id: string): Promise<ProblemDetail> {
   const res = await axios.get(
-    "https://686e2031c9090c49538860be.mockapi.io/activeProblem"
+    "https://694391e669b12460f3151313.mockapi.io/problemDetail"
   );
   return res.data[id] || null;
 }

@@ -2,11 +2,13 @@
 import ConfirmModal from "@/components/form/ConfirmModal";
 import CustomUploadFile from "@/components/form/CustomUploadFile";
 import FormHeader from "@/components/form/FormHeader";
+import ProblemStatement from "@/components/ProblemStatement";
 import { useProblemDetail } from "@/hook/problem/useProblemDetail";
+import { useListTestCase } from "@/hook/test-case/useListTestCase";
 import { Card, Divider, Tag, Typography, UploadFile } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CodeEditor } from "./components/CodeEditor";
 import SubmissionTable from "./components/SubmissionTable";
 
@@ -56,8 +58,14 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const { problemDetail } = useProblemDetail(id);
+  const { listTestCase } = useListTestCase(id);
 
-  console.log(problemDetail);
+  const sampleTestCase = useMemo(
+    () => listTestCase?.find((item) => item.is_sample === true),
+    [listTestCase]
+  );
+
+  console.log(listTestCase);
 
   const t = useTranslations("sidebar");
   const router = useRouter();
@@ -113,27 +121,25 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <Tag color="green" className="px-3 py-1 rounded-full">
-              Dễ
+              {problemDetail?.difficulty.toUpperCase()}
             </Tag>
           </div>
 
           {/* Description */}
           <Title level={4}>{problemDetail?.title}</Title>
-          <Paragraph className="text-gray-700">
-            {problemDetail?.description}
-          </Paragraph>
+          <ProblemStatement statement={problemDetail?.statement || ""} />
 
           <Divider />
 
           {/* Input */}
           <Title level={5}>Input</Title>
-          <span>{problemDetail?.inputFormat}</span>
+          <pre>{sampleTestCase?.input}</pre>
 
           {/* Output */}
           <Title level={5} className="mt-4">
             Output
           </Title>
-          <span>{problemDetail?.outputFormat}</span>
+          <span>{sampleTestCase?.output}</span>
 
           <Divider />
 
@@ -142,13 +148,11 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Input</div>
-              <pre className="whitespace-pre-wrap">
-                {problemDetail?.inputFormat}
-              </pre>
+              <pre className="whitespace-pre-wrap">{sampleTestCase?.input}</pre>
             </div>
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Output</div>
-              <pre>{problemDetail?.outputFormat}</pre>
+              <pre>{sampleTestCase?.output}</pre>
             </div>
           </div>
 

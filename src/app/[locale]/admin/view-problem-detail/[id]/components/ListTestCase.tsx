@@ -44,13 +44,7 @@ export default function ListTestCase() {
       align: "center",
       sorter: (a, b) => a.testcaseId - b.testcaseId,
     },
-    {
-      title: "Thứ tự",
-      dataIndex: "orderIndex",
-      key: "orderIndex",
-      align: "center",
-      sorter: (a, b) => a.orderIndex - b.orderIndex,
-    },
+
     {
       title: "Input",
       dataIndex: "input",
@@ -87,14 +81,11 @@ export default function ListTestCase() {
   return (
     <Card
       title={
-        <Title level={4} className="!mb-0">
-          Testcases
-        </Title>
-      }
-      extra={
-        <Text type="secondary">
-          Total: <Text strong>{filteredTestcases.length}</Text>
-        </Text>
+        <div className="flex flex-row justify-between items-center">
+          <Title level={4} className="!mb-0">
+            Testcases
+          </Title>
+        </div>
       }
       className="testcase-card"
     >

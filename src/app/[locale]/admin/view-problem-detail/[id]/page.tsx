@@ -13,8 +13,6 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
   const { id } = params;
   const [activeTab, setActiveTab] = useState<string>("1");
 
-  console.log(id);
-
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
   const router = useRouter();
@@ -47,7 +45,7 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
           className="custom__search__tabs"
         >
           <Tabs.TabPane key="1" tab="Product Detail">
-            <ProblemDetailPage />
+            <ProblemDetailPage id={id} />
           </Tabs.TabPane>
           <Tabs.TabPane key="2" tab="List Test Case">
             <ListTestCase />

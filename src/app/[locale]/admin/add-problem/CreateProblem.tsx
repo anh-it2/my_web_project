@@ -2,21 +2,24 @@ import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
-import { ProblemFormValues } from "@/services/rest/problem/add-problem/type";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, Steps } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import z from "zod";
 import BasicInfoStep from "./components/BasicInfoStep";
 import ReviewStep from "./components/Review";
 import StatementStep from "./components/StatementStep";
 import TestcaseManager from "./components/Testcases";
+import { problemFormSchema } from "./constant";
 
 export default function CreateProblem() {
   const [step, setStep] = useState<number>(0);
   //   const [testcases, setTestcases] = useState<Testcase[]>([]);
-  const methods = useForm<ProblemFormValues>({
+  const methods = useForm<z.infer<typeof problemFormSchema>>({
+    resolver: zodResolver(problemFormSchema),
     defaultValues: {
       title: "",
       problemCode: "",
@@ -68,7 +71,7 @@ export default function CreateProblem() {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (values: ProblemFormValues) => {
+  const onSubmit = (values: z.infer<typeof problemFormSchema>) => {
     const payload = {
       ...values,
       testCases: [

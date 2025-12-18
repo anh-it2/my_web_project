@@ -1,8 +1,11 @@
 "use client";
+import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { problem } from "@/data/mock";
+import { EditOutlined } from "@ant-design/icons";
 import { Card, Table, Tag } from "antd";
+import { useRouter } from "next/navigation";
 
-export default function ProblemDetailPage() {
+export default function ProblemDetailPage({ id }: { id: string }) {
   const sampleColumns = [
     { title: "Input", dataIndex: "input", key: "input" },
     { title: "Output", dataIndex: "output", key: "output" },
@@ -14,14 +17,28 @@ export default function ProblemDetailPage() {
     { title: "Score", dataIndex: "score", key: "score" },
   ];
 
+  const router = useRouter();
+
   return (
     <>
       <div className="p-6 space-y-6">
-        <Card className="p-6 rounded-2xl shadow-sm border">
-          <h1 className="text-xl font-semibold mb-2">
-            <span className="text-2xl font-semibold mb-2">Problem Title:</span>{" "}
-            {problem.title}
-          </h1>
+        <Card
+          extra={
+            <PublishButton
+              title="Edit button"
+              Icon={EditOutlined}
+              onClick={() => router.push(`/admin/edit-problem/${id}`)}
+            />
+          }
+          className="p-6 rounded-2xl shadow-sm border"
+        >
+          <div className="flex flex-row justify-between">
+            <h1 className="text-xl font-semibold mb-2 flex">
+              <span className="text-2xl font-semibold mb-2">
+                Problem Title: {problem.title}
+              </span>
+            </h1>
+          </div>
           <div className="flex items-center gap-4 text-gray-600 mb-4">
             <span className="font-medium">Difficulty:</span>
             <span
