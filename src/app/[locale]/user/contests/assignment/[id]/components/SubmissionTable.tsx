@@ -12,6 +12,8 @@ export default function SubmissionTable() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
 
+  console.log(pageSize);
+
   const fetchData = () => {
     setLoading(true);
     // fake fetch
