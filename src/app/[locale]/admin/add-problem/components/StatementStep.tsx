@@ -14,13 +14,22 @@ export default function StatementStep() {
         rows={8}
         placeholder="Markdown + LaTeX supported"
         label="Description:"
+        required={true}
       />
 
       <div className="flex justify-between items-center">
         <h3 className="font-semibold">Sample IO</h3>
         <CancelButton
           title="Add Sample"
-          onClick={() => append({ input: "", output: "" })}
+          onClick={() =>
+            append({
+              input: "",
+              expectedOutput: "",
+              score: 0,
+              orderIndex: fields.length + 1,
+              isSample: true,
+            })
+          }
         />
       </div>
 
@@ -34,7 +43,7 @@ export default function StatementStep() {
           />
 
           <RHFTextArea
-            name={`samples.${i}.output`}
+            name={`samples.${i}.expectedOutput`}
             rows={3}
             placeholder="Enter your sample output"
             label="Sample Output"

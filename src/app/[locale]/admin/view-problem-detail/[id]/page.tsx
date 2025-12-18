@@ -1,23 +1,19 @@
 "use client";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
-import { problem } from "@/data/mock";
-import { Card, Table, Tag } from "antd";
+import { Tabs } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import "../style.scss";
+import ListTestCase from "./components/ListTestCase";
+import ProblemDetailPage from "./components/ProblemDetail";
 
-export default function ProblemDetailPage() {
-  const sampleColumns = [
-    { title: "Input", dataIndex: "input", key: "input" },
-    { title: "Output", dataIndex: "output", key: "output" },
-  ];
+export default function ContestDetail({ params }: { params: { id: string } }) {
+  const { id } = params;
+  const [activeTab, setActiveTab] = useState<string>("1");
 
-  const testCaseColumns = [
-    { title: "Input", dataIndex: "input", key: "input" },
-    { title: "Output", dataIndex: "output", key: "output" },
-    { title: "Score", dataIndex: "score", key: "score" },
-  ];
+  console.log(id);
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
@@ -44,76 +40,19 @@ export default function ProblemDetailPage() {
         setConfirmModalLink={setConfirmModalLink}
         has_button={false}
       />
-      <div className="p-6 space-y-6">
-        <Card className="p-6 rounded-2xl shadow-sm border">
-          <h1 className="text-xl font-semibold mb-2">
-            <span className="text-2xl font-semibold mb-2">Problem Title:</span>{" "}
-            {problem.title}
-          </h1>
-          <div className="flex items-center gap-4 text-gray-600 mb-4">
-            <span className="font-medium">Difficulty:</span>
-            <span
-              className={
-                problem.difficulty === "EASY"
-                  ? "text-green-600"
-                  : problem.difficulty === "HARD"
-                  ? "text-red-600"
-                  : "text-orange-500"
-              }
-            >
-              {problem.difficulty}
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            <span className="font-medium text-gray-600 mr-2">Tags:</span>
-            {problem.tags.map((tag, index) => (
-              <Tag key={index} color="blue">
-                {tag}
-              </Tag>
-            ))}
-          </div>
-          <div className="flex gap-6 mb-4 text-gray-700">
-            <div>
-              <span className="font-medium">Visibility:</span>{" "}
-              {problem.visibility ? "Public" : "Private"}
-            </div>
-            <div>
-              <span className="font-medium">Time Limit: </span>
-              {problem.timeLimit} ms
-            </div>
-            <div>
-              <span className="font-medium">Memory Limit: </span>
-              {problem.memoryLimit} MB
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <h2 className="text-lg font-semibold mb-2">Description</h2>
-            <p className="text-gray-700 whitespace-pre-wrap">
-              {problem.description || "(No description)"}
-            </p>
-          </div>
-        </Card>
-
-        {/* Samples */}
-        <Card className="p-6 rounded-2xl shadow-sm border">
-          <h2 className="text-xl font-semibold mb-4">Sample Tests</h2>
-          <Table
-            dataSource={problem.samples}
-            columns={sampleColumns}
-            pagination={false}
-          />
-        </Card>
-
-        {/* Test Cases */}
-        <Card className="p-6 rounded-2xl shadow-sm border">
-          <h2 className="text-xl font-semibold mb-4">Test Cases</h2>
-          <Table
-            dataSource={problem.testCases}
-            columns={testCaseColumns}
-            pagination={false}
-          />
-        </Card>
+      <div className="p-4 px-6">
+        <Tabs
+          activeKey={activeTab}
+          onChange={(key) => setActiveTab(key)}
+          className="custom__search__tabs"
+        >
+          <Tabs.TabPane key="1" tab="Product Detail">
+            <ProblemDetailPage />
+          </Tabs.TabPane>
+          <Tabs.TabPane key="2" tab="List Test Case">
+            <ListTestCase />
+          </Tabs.TabPane>
+        </Tabs>
       </div>
       <ConfirmModal
         open={openDialog}
@@ -123,6 +62,3 @@ export default function ProblemDetailPage() {
     </>
   );
 }
-
-// Example usage:
-// <ProblemDetailPage problem={DATA_FROM_API} />

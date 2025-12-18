@@ -3,6 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Card, Input, Table } from "antd";
 import Link from "next/link";
 import { useState } from "react";
+import "../style.scss";
 
 export default function PublicContestTab() {
   const [page, setPage] = useState<number>(1);
@@ -53,6 +54,7 @@ export default function PublicContestTab() {
         <Table
           dataSource={contestTableData}
           columns={contestTableColumns}
+          className="custom__table"
           pagination={{
             current: page,
             pageSizeOptions: ["5", "10", "20", "50"],

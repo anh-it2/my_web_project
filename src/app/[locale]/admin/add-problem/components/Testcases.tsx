@@ -14,12 +14,21 @@ export default function TestcaseManager() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="font-semibold">Problem Test Cases</h3>
+        <h3 className="font-semibold">Problem Test Cases & constraints</h3>
         <CancelButton
           title="Add Test cases"
-          onClick={() => append({ input: "", output: "", score: 0 })}
+          onClick={() =>
+            append({
+              input: "",
+              expectedOutput: "",
+              score: 0,
+              orderIndex: fields.length + 1,
+              isSample: false,
+            })
+          }
         />
       </div>
+      <RHFInput name="constraints" label="Contraints" required />
 
       {fields.map((f, i) => (
         <Card key={f.id} size="small" className="space-y-2">
@@ -34,7 +43,7 @@ export default function TestcaseManager() {
 
             <Col xs={24} md={8}>
               <RHFInput
-                name={`testCases.${i}.output`}
+                name={`testCases.${i}.expectedOutput`}
                 placeholder="Enter your test case output"
                 label="Test Case  Output"
               />

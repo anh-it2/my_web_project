@@ -1,28 +1,34 @@
-import { Exercise, exerciseTableData } from "@/data/mock";
-import { formatNumberSpace } from "@/utils/format";
+import RouteLoading from "@/components/shared/RouteLoading";
+import { useListActiveProblem } from "@/hook/problem/useListActiveProblem";
+import { ActiveProblem } from "@/services/rest/problem/get-all-active-problem/type";
 import { SearchOutlined } from "@ant-design/icons";
-import { Card, Input, Table, Typography } from "antd";
+import { Card, Input, Table, Tag } from "antd";
+import { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import { useState } from "react";
-
-const { Text } = Typography;
+import "../../../style.scss";
 
 export default function AssignmentTab() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
+  // const [currentScore, setCurrentScore] = useState<number>(0);
+  // const [maxScore, setMaxScore] = useState<number>(0);
 
   console.log(pageSize);
 
-  const exerciseTableColumns = [
+  const { activeProblem } = useListActiveProblem();
+
+  const exerciseTableColumns: ColumnsType<ActiveProblem> = [
     {
       title: "Bài tập",
-      dataIndex: "title",
-      key: "title",
-      sorter: (a: Exercise, b: Exercise) => a.title.localeCompare(b.title),
-      render: (text: string) => (
+      dataIndex: "problemId",
+      key: "problemId",
+      align: "center",
+      sorter: (a: ActiveProblem, b: ActiveProblem) => a.problemId - b.problemId,
+      render: (text: string, record: ActiveProblem) => (
         <Link
-          href="/user/contests/assignment/1"
+          href={`/user/contests/assignment/${record.problemId}`}
           className="text-blue-600 hover:underline"
         >
           {text}
@@ -31,45 +37,76 @@ export default function AssignmentTab() {
     },
     {
       title: "Mã bài tập",
-      dataIndex: "code",
-      key: "code",
-      sorter: (a: Exercise, b: Exercise) => a.code.localeCompare(b.code),
+      dataIndex: "problemCode",
+      key: "problemCode",
+      align: "center",
+      sorter: (a: ActiveProblem, b: ActiveProblem) =>
+        a.problemCode.localeCompare(b.problemCode),
+      render: (text: string, record: ActiveProblem) => {
+        return (
+          <Link
+            href={`/user/contests/assignment/${record.problemId}`}
+            className="text-blue-600 hover:underline"
+          >
+            {text}
+          </Link>
+        );
+      },
     },
     {
       title: "Mức độ",
-      dataIndex: "level",
-      key: "level",
-      sorter: (a: Exercise, b: Exercise) => a.level.localeCompare(b.level),
-    },
-    {
-      title: "Điểm đạt được",
-      dataIndex: "score",
-      key: "score",
-      sorter: (a: Exercise, b: Exercise) => a.score - b.score,
+      dataIndex: "difficultyLevel",
+      key: "difficultyLevel",
+      align: "center",
+      sorter: (a: ActiveProblem, b: ActiveProblem) =>
+        a.difficultyLevel.localeCompare(b.difficultyLevel),
+      render: (level: string) => {
+        let color: string;
+
+        switch (level) {
+          case "EASY":
+            color = "green";
+            break;
+          case "MEDIUM":
+            color = "orange";
+            break;
+          case "HARD":
+            color = "red";
+            break;
+          default:
+            color = "default";
+        }
+
+        return (
+          <Tag color={color}>
+            <span className="text-xs font-medium rounded">{level}</span>
+          </Tag>
+        );
+      },
     },
     {
       title: "Điểm tối đa",
       dataIndex: "maxScore",
+      align: "center",
       key: "maxScore",
-      sorter: (a: Exercise, b: Exercise) => a.maxScore - b.maxScore,
+      sorter: (a: ActiveProblem, b: ActiveProblem) => a.maxScore - b.maxScore,
     },
     {
-      title: "Hoàn thành",
-      dataIndex: "completed",
-      key: "completed",
-      sorter: (a: Exercise, b: Exercise) =>
-        a.completed.localeCompare(b.completed),
+      title: "Người tạo",
+      dataIndex: "createdBy",
+      align: "center",
+      key: "createdBy",
+      sorter: (a: ActiveProblem, b: ActiveProblem) =>
+        a.createdBy.localeCompare(b.createdBy),
     },
   ];
+
+  if (!activeProblem) return <RouteLoading />;
 
   return (
     <Card>
       <div className="flex flex-col gap-3">
-        <div>
-          <Text className="!text-red-500 text-base">
-            Điểm đạt được: 0 / Điểm tối đa: {formatNumberSpace(3500)}
-          </Text>
-        </div>
+        <div></div>
         <div className="flex justify-end">
           <Input
             value={searchValue}
@@ -81,12 +118,13 @@ export default function AssignmentTab() {
         </div>
 
         <Table
-          dataSource={exerciseTableData}
+          dataSource={activeProblem}
           columns={exerciseTableColumns}
+          className="custom__table"
           pagination={{
             current: page,
             pageSizeOptions: ["5", "10", "20", "50"],
-            total: exerciseTableData.length,
+            total: activeProblem.length,
             showSizeChanger: true,
             onChange: (page, pageSize) => {
               setPage(page);

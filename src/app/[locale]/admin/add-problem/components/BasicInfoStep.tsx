@@ -18,6 +18,7 @@ export default function BasicInfoStep() {
           name="title"
           label="Problem title"
           placeholder="Enter your problem title"
+          required={true}
         />
         <div className="flex flex-row">
           <RHFInput
@@ -25,6 +26,7 @@ export default function BasicInfoStep() {
             name="timeLimit"
             addonAfter="ms"
             label="Time Limit"
+            required={true}
           />
 
           <RHFInput
@@ -32,24 +34,31 @@ export default function BasicInfoStep() {
             name="memoryLimit"
             addonAfter="MB"
             label="Memory Limit"
+            required={true}
           />
         </div>
-      </Col>
-
-      <Col xs={24} md={12}>
-        <RHFSelect
-          name="difficulty"
-          label="Difficulty"
-          options={difficultyOptions}
-        />
-
         <RHFSelectTags
           name="tags"
           label="Tags"
           placeholder="Enter a tag then press Enter or comma to add"
+          required={true}
         />
       </Col>
+
       <Col xs={24} md={12}>
+        <RHFInput
+          name="problemCode"
+          label="Problem code"
+          placeholder="Enter your problem code"
+          required={true}
+        />
+        <RHFSelect
+          name="difficulty"
+          label="Difficulty"
+          options={difficultyOptions}
+          required={true}
+        />
+
         <Flex align="center" gap={3}>
           <RHFSwitch name="visibility" />
           <div>

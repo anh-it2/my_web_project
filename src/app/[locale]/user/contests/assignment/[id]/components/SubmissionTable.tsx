@@ -4,10 +4,13 @@ import { Button, Checkbox, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import { useState } from "react";
+import "../../.././style.scss";
 
 export default function SubmissionTable() {
   const [data, setData] = useState<Submission[]>(submissions);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   const fetchData = () => {
     setLoading(true);
@@ -111,11 +114,19 @@ export default function SubmissionTable() {
       </div>
 
       <Table
-        rowKey="id"
-        columns={columns}
         dataSource={data}
-        loading={loading}
-        pagination={false}
+        columns={columns}
+        className="custom__table"
+        pagination={{
+          current: page,
+          pageSizeOptions: ["5", "10", "20", "50"],
+          total: data.length,
+          showSizeChanger: true,
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize);
+          },
+        }}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
-import { ProblemFormValues } from "@/services/rest/add-problem/type.t";
+import { ProblemFormValues } from "@/services/rest/problem/add-problem/type";
 import { Card, Steps } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,7 @@ export default function CreateProblem() {
   const methods = useForm<ProblemFormValues>({
     defaultValues: {
       title: "",
+      problemCode: "",
       difficulty: "EASY",
       tags: [],
       visibility: true,
@@ -66,8 +67,45 @@ export default function CreateProblem() {
   ];
 
   const { handleSubmit } = methods;
-  const onSubmit = () => {
-    //do any thing
+
+  const onSubmit = (values: ProblemFormValues) => {
+    const payload = {
+      ...values,
+      testCases: [
+        ...values.testCases,
+        ...values.samples.map((sample) => ({
+          ...sample,
+          orderIndex: sample.orderIndex + values.testCases.length,
+        })),
+      ],
+    };
+    console.log(values.samples);
+    const {
+      problemCode,
+      title,
+      description,
+      constraints,
+      difficulty,
+      timeLimit,
+      memoryLimit,
+    } = payload;
+
+    const problemData = {
+      problemCode,
+      title,
+      description,
+      constraints,
+      difficulty,
+      timeLimit,
+      memoryLimit,
+    };
+
+    const { testCases } = payload;
+
+    const testCaseData = { testCases };
+
+    console.log("problemData: ", problemData);
+    console.log("testCaseData: ", testCaseData);
   };
 
   return (

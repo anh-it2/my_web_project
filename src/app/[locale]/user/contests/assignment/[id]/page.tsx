@@ -2,6 +2,7 @@
 import ConfirmModal from "@/components/form/ConfirmModal";
 import CustomUploadFile from "@/components/form/CustomUploadFile";
 import FormHeader from "@/components/form/FormHeader";
+import { useProblemDetail } from "@/hook/problem/useProblemDetail";
 import { Card, Divider, Tag, Typography, UploadFile } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -53,7 +54,10 @@ a = data[idx:idx+n]
 
 export default function AssignmentPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  console.log(id);
+
+  const { problemDetail } = useProblemDetail(id);
+
+  console.log(problemDetail);
 
   const t = useTranslations("sidebar");
   const router = useRouter();
@@ -114,31 +118,22 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
           </div>
 
           {/* Description */}
-          <Title level={4}>Count Equal Pairs</Title>
+          <Title level={4}>{problemDetail?.title}</Title>
           <Paragraph className="text-gray-700">
-            Given a sequence of <Text strong>n</Text> integers a[1], a[2], ...,
-            a[n]. Count the number <Text strong>Q</Text> of pairs of indices
-            <Text code>1 ≤ i &lt; j ≤ n</Text> such that{" "}
-            <Text code>a[i] = a[j]</Text>.
+            {problemDetail?.description}
           </Paragraph>
 
           <Divider />
 
           {/* Input */}
           <Title level={5}>Input</Title>
-          <ul className="list-disc pl-6 text-gray-700 space-y-1">
-            <li>Line 1: positive integer n (1 ≤ n ≤ 100000)</li>
-            <li>Line 2: n integers a[i] (1 ≤ a[i] ≤ 100000)</li>
-          </ul>
+          <span>{problemDetail?.inputFormat}</span>
 
           {/* Output */}
           <Title level={5} className="mt-4">
             Output
           </Title>
-          <Paragraph className="text-gray-700">
-            Write the value <Text strong>Q</Text> modulo{" "}
-            <Text code>10^9 + 7</Text>.
-          </Paragraph>
+          <span>{problemDetail?.outputFormat}</span>
 
           <Divider />
 
@@ -147,11 +142,13 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Input</div>
-              <pre className="whitespace-pre-wrap">6 1 2 2 1 3 1</pre>
+              <pre className="whitespace-pre-wrap">
+                {problemDetail?.inputFormat}
+              </pre>
             </div>
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Output</div>
-              <pre>4</pre>
+              <pre>{problemDetail?.outputFormat}</pre>
             </div>
           </div>
 
