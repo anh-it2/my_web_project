@@ -1,27 +1,29 @@
-import { Submission, submissions } from "@/data/mock";
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useListSubmission } from "@/hook/submission/useListSubmission";
+import { Submission } from "@/services/rest/submission/type";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import "../../.././style.scss";
 
 export default function SubmissionTable() {
-  const [data, setData] = useState<Submission[]>(submissions);
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<Submission[]>([]);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
+  const router = useRouter();
 
   console.log(pageSize);
 
-  const fetchData = () => {
-    setLoading(true);
-    // fake fetch
-    setTimeout(() => {
-      setData(submissions);
-      setLoading(false);
-    }, 500);
-  };
+  const { listSubmission, refetch } = useListSubmission();
+
+  useEffect(() => {
+    if (!listSubmission) return;
+
+    setData(listSubmission);
+  }, [listSubmission]);
 
   const columns: ColumnsType<Submission> = [
     {
@@ -42,8 +44,10 @@ export default function SubmissionTable() {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        if (status === "Hoàn thành") {
+        if (status === "Accepted") {
           return <Tag color="green">Accepted</Tag>;
+        } else if (status === "Wrong Answer") {
+          return <Tag color="red">Wrong Answer</Tag>;
         }
         return <Tag color="orange">Partial</Tag>;
       },
@@ -58,8 +62,15 @@ export default function SubmissionTable() {
       title: "Đạt",
       key: "passed",
       render: (_, record) =>
-        record.score !== null ? (
-          <span>{record.passed ? "6 / 6" : "5 / 6"}</span>
+        record.per_test_results !== null ? (
+          <span>
+            {
+              record.per_test_results.filter(
+                (item) => item.status === "Accepted"
+              ).length
+            }{" "}
+            / {record.per_test_results.length}
+          </span>
         ) : (
           "--"
         ),
@@ -71,8 +82,8 @@ export default function SubmissionTable() {
     },
     {
       title: "Thời gian tạo",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "created_at",
+      key: "created_at",
     },
     {
       title: "Bài nộp cuối",
@@ -107,8 +118,7 @@ export default function SubmissionTable() {
         <Button
           type="primary"
           icon={<ReloadOutlined />}
-          onClick={fetchData}
-          loading={loading}
+          onClick={() => refetch()}
           className="!shadow-none"
         >
           Làm mới
@@ -119,6 +129,11 @@ export default function SubmissionTable() {
         dataSource={data}
         columns={columns}
         className="custom__table"
+        onRow={(record) => ({
+          onClick: () => {
+            router.push(`/user/contests/test-case/${record.id}`);
+          },
+        })}
         pagination={{
           current: page,
           pageSizeOptions: ["5", "10", "20", "50"],

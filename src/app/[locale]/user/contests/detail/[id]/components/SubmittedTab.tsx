@@ -158,40 +158,42 @@ export default function AssignmentTab() {
   if (!list_problem) return <RouteLoading />;
 
   return (
-    <Card>
-      <div className="flex flex-col gap-3">
-        <div>
-          <Text className="!text-red-500 text-base">
-            Điểm đạt được: {formatNumberSpace(currentScore)} / Điểm tối đa:{" "}
-            {formatNumberSpace(maxScore)}
-          </Text>
-        </div>
-        <div className="flex justify-end">
-          <Input
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            prefix={<SearchOutlined className="text-gray-400" />}
-            className="text-base w-[220px]"
-            placeholder="Tìm kiếm"
+    <>
+      <Card>
+        <div className="flex flex-col gap-3">
+          <div>
+            <Text className="!text-red-500 text-base">
+              Điểm đạt được: {formatNumberSpace(currentScore)} / Điểm tối đa:{" "}
+              {formatNumberSpace(maxScore)}
+            </Text>
+          </div>
+          <div className="flex justify-end">
+            <Input
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              prefix={<SearchOutlined className="text-gray-400" />}
+              className="text-base w-[220px]"
+              placeholder="Tìm kiếm"
+            />
+          </div>
+
+          <Table
+            dataSource={list_problem}
+            columns={exerciseTableColumns}
+            className="custom__table"
+            pagination={{
+              current: page,
+              pageSizeOptions: ["5", "10", "20", "50"],
+              total: list_problem.length,
+              showSizeChanger: true,
+              onChange: (page, pageSize) => {
+                setPage(page);
+                setPageSize(pageSize);
+              },
+            }}
           />
         </div>
-
-        <Table
-          dataSource={list_problem}
-          columns={exerciseTableColumns}
-          className="custom__table"
-          pagination={{
-            current: page,
-            pageSizeOptions: ["5", "10", "20", "50"],
-            total: list_problem.length,
-            showSizeChanger: true,
-            onChange: (page, pageSize) => {
-              setPage(page);
-              setPageSize(pageSize);
-            },
-          }}
-        />
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 }

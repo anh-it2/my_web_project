@@ -7,8 +7,8 @@ export default function InfoRow({
 }) {
   return (
     <div>
-      <div className="font-medium text-gray-600">{label}</div>
-      <div>{children}</div>
+      <div className="font-medium text-black text-base">{label}</div>
+      <div className="text-base">{children}</div>
     </div>
   );
 }
