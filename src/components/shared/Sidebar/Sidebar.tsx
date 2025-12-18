@@ -4,7 +4,6 @@ import { usePathname } from "@/libs/routing";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Drawer, Layout, Menu } from "antd";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import "./Sidebar.scss";
 
@@ -26,7 +25,6 @@ export default function Sidebar({
   items,
 }: SidebarProps) {
   const pathname = usePathname();
-  const t = useTranslations("sidebar");
   const [isMobile, setIsMobile] = useState(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
