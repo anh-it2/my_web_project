@@ -1,13 +1,7 @@
 "use client";
 
-import { Link, usePathname } from "@/libs/routing";
-import {
-  AppstoreOutlined,
-  HomeOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  ScheduleOutlined,
-} from "@ant-design/icons";
+import { usePathname } from "@/libs/routing";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Drawer, Layout, Menu } from "antd";
 import { useTranslations } from "next-intl";
@@ -21,6 +15,7 @@ interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
   onToggleSider?: () => void;
+  items: MenuProps["items"];
 }
 
 export default function Sidebar({
@@ -28,6 +23,7 @@ export default function Sidebar({
   mobileOpen,
   onMobileClose,
   onToggleSider,
+  items,
 }: SidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("sidebar");
@@ -72,48 +68,6 @@ export default function Sidebar({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpenKeys(keys);
   }, [pathname]);
-
-  const items: MenuProps["items"] = [
-    {
-      key: "home",
-      icon: <HomeOutlined />,
-      label: <Link href="/user/home">{t("home")}</Link>,
-    },
-    {
-      key: "programmingContests",
-      icon: <AppstoreOutlined />,
-      label: <Link href={"/user/contests"}>{t("programmingContests")}</Link>,
-    },
-    {
-      key: "learning",
-      icon: <ScheduleOutlined />,
-      label: t("learning"),
-      children: [
-        {
-          key: "classRegistration",
-          label: (
-            <Link href={"/user/learning/registration"}>
-              {t("classRegistration")}
-            </Link>
-          ),
-        },
-        {
-          key: "classes",
-          label: <Link href={"/user/learning/classes"}>{t("classes")}</Link>,
-        },
-        {
-          key: "joinQuizTest",
-          label: (
-            <Link href={"/user/learning/join-quiz"}>{t("joinQuizTest")}</Link>
-          ),
-        },
-        {
-          key: "quizTests",
-          label: <Link href={"/user/learning/quiz"}>{t("quizTests")}</Link>,
-        },
-      ],
-    },
-  ];
 
   // Derive selected key by resolving current admin section
   const matchKey = () => {

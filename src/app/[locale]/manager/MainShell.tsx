@@ -2,7 +2,11 @@
 
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/shared/Sidebar/Sidebar";
+import { Link } from "@/libs/routing";
+import { HomeOutlined } from "@ant-design/icons";
+import type { MenuProps } from "antd";
 import { Layout } from "antd";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 
 export default function MainShell({ children }: { children: React.ReactNode }) {
@@ -37,6 +41,16 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
     setMobileOpen(false);
   };
 
+  const t = useTranslations("sidebar");
+
+  const managerItems: MenuProps["items"] = [
+    {
+      key: "home",
+      icon: <HomeOutlined />,
+      label: <Link href="/admin/home">{t("home")}</Link>,
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f8fc]">
       <Header />
@@ -46,6 +60,7 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
           mobileOpen={mobileOpen}
           onMobileClose={handleMobileClose}
           onToggleSider={handleToggleSider}
+          items={managerItems}
         />
         <Layout className="w-full bg-[#f5f8fc]">
           <main className=" w-full">{children}</main>

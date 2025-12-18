@@ -69,6 +69,7 @@ export default function AdminManagementMock() {
         open={grantModalOpen}
         onCancel={() => setGrantModalOpen(false)}
         onOk={() => setGrantModalOpen(false)}
+        centered
       >
         <div className="flex flex-col gap-4">
           <div>

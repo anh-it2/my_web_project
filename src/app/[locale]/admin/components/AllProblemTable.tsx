@@ -1,8 +1,9 @@
 "use client";
+import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 // ExerciseTable.tsx
 import { Problem } from "@/data/mock";
-import { MoreOutlined } from "@ant-design/icons";
-import { Dropdown, MenuProps, Switch, Table } from "antd";
+import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
+import { Dropdown, Input, MenuProps, Switch, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,6 +16,7 @@ type Props = {
 export default function AllProblemTable({ data }: Props) {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
+  const [searchValue, setSearchValue] = useState<string>("");
   console.log(pageSize);
 
   const router = useRouter();
@@ -111,7 +113,21 @@ export default function AllProblemTable({ data }: Props) {
   ];
 
   return (
-    <div className="bg-white p-4 rounded-lg">
+    <div className="bg-white p-4 rounded-lg flex flex-col gap-3">
+      <div className="flex justify-end gap-2">
+        <Input
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          prefix={<SearchOutlined className="text-gray-400" />}
+          className="text-base w-[220px]"
+          placeholder="Tìm kiếm"
+        />
+        <PublishButton
+          title="Thêm mới"
+          onClick={() => router.push("/admin/add-problem")}
+        />
+      </div>
+
       <Table
         columns={columns}
         dataSource={data}
