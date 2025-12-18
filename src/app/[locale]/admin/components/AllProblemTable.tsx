@@ -2,7 +2,6 @@
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 // ExerciseTable.tsx
 import { Problem } from "@/data/mock";
-import { useListSubmittedProblem } from "@/hook/problem/useListSubmittedProblem";
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
 import { Dropdown, Input, MenuProps, Switch, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
@@ -19,8 +18,6 @@ export default function AllProblemTable({ data }: Props) {
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
   console.log(pageSize);
-
-  const { list_problem } = useListSubmittedProblem();
 
   const router = useRouter();
 
