@@ -65,8 +65,6 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
     [listTestCase]
   );
 
-  console.log(listTestCase);
-
   const t = useTranslations("sidebar");
   const router = useRouter();
 

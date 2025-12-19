@@ -1,0 +1,19 @@
+.custom__table {
+  .ant-table-thead > tr > th {
+    background-color: #fafafa;
+    font-weight: 600;
+    font-size: 1rem !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    font-size: 1rem !important;
+  }
+
+  .ant-table-tbody > tr:nth-child(odd) > td {
+    background-color: #fcfcfc;
+  }
+
+  .ant-table-tbody > tr:hover > td {
+    background-color: #e6f7ff !important;
+  }
+}

@@ -27,6 +27,7 @@
     font-size: 1.25rem !important;
   }
 }
+
 @layer utilities {
   .bg-white-gradient {
     background: linear-gradient(180deg, #ffffff 23.56%, #94cbf6 100%);

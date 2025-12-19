@@ -6,7 +6,8 @@ import {
   LockOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Form, Input, message, Typography } from "antd";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -60,7 +61,13 @@ export default function LoginForm({
   const handleSubmit = async (values: LoginFormData) => {
     setLoading(true);
     console.log(values);
-    router.replace("/user/home");
+    const res = await axios.post("http://localhost:8080/auth/login", values);
+    if (res.status === 200) {
+      router.replace("/user/home");
+    } else {
+      message.error("Login failed");
+    }
+    // router.replace("/user/home");
   };
 
   const handleAccountSelect = (email: string, password: string) => {

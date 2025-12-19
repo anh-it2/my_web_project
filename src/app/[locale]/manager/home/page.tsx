@@ -1,5 +1,6 @@
 "use client";
-import AdminManagementMock from "../AdminManagement";
+
+import AdminManagementMock from "../components/AdminManagement";
 
 export default function ManagerPage() {
   return <AdminManagementMock />;

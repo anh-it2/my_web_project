@@ -2,6 +2,7 @@ import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { Input, Modal, Select, Table } from "antd";
 import { useState } from "react";
+import "./style.scss";
 
 type User = {
   id: number;
@@ -61,7 +62,13 @@ export default function AdminManagementMock() {
     <div className="p-6 w-full mx-auto">
       <h1 className="text-2xl font-semibold mb-4">Admin Management</h1>
 
-      <Table<User> rowKey="id" columns={columns} dataSource={data} bordered />
+      <Table<User>
+        className="custom__table"
+        rowKey="id"
+        columns={columns}
+        dataSource={data}
+        bordered
+      />
 
       {/* Grant Admin Modal */}
       <Modal

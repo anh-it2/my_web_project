@@ -6,11 +6,11 @@ import {
   LockOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Form, Input, message, Typography } from "antd";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Title } = Typography;
@@ -37,8 +37,7 @@ const itemVariants = {
 };
 
 interface RegisterFormData {
-  fullName: string;
-  email: string;
+  username: string;
   password: string;
   confirmPassword: string;
   agree: boolean;
@@ -53,12 +52,37 @@ export default function RegisterForm({ onBackToLogin }: Props) {
   const agree = Form.useWatch("agree", form);
   const [loading, setLoading] = useState(false);
   const t = useTranslations("login");
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleSubmit = async (values: RegisterFormData) => {
     setLoading(true);
-    console.log(values);
-    router.replace("/login");
+    const { agree, ...payload } = values;
+
+    // const res = await registerAccount(payload);
+
+    const res = await axios.post(
+      "http://localhost:8080/auth/register",
+      payload
+    );
+    console.log(res);
+
+    if (!res) {
+      message.error("Have an error while registering account");
+      setLoading(false);
+      return;
+    }
+
+    // if (res.status && res.status !== 200) {
+    //   message.error(res.backend?.message ?? `Register failed (${res.status})`);
+    //   setLoading(false);
+    //   return;
+    // }
+
+    // success
+    message.success("Register success");
+    setLoading(false);
+    // router.replace("/login");
+    // router.replace("/login");
   };
 
   return (
@@ -105,7 +129,7 @@ export default function RegisterForm({ onBackToLogin }: Props) {
           <motion.div variants={itemVariants}>
             <Form.Item
               label={t("email")}
-              name="email"
+              name="username"
               rules={[
                 { required: true, message: t("validation.emailRequired") },
                 { type: "email", message: t("validation.emailInvalid") },
