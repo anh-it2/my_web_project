@@ -10,3 +10,8 @@ interface RegisterResponseTypes {
   role: string;
   message: string;
 }
+
+interface LoginTypes {
+  username: string;
+  password: string;
+}

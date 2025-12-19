@@ -1,5 +1,6 @@
 "use client";
 
+import { registerAccount } from "@/services/rest/auth";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -7,7 +8,6 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message, Typography } from "antd";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -58,13 +58,9 @@ export default function RegisterForm({ onBackToLogin }: Props) {
     setLoading(true);
     const { agree, ...payload } = values;
 
-    // const res = await registerAccount(payload);
+    console.log(agree);
 
-    const res = await axios.post(
-      "http://localhost:8080/auth/register",
-      payload
-    );
-    console.log(res);
+    const res = await registerAccount(payload);
 
     if (!res) {
       message.error("Have an error while registering account");
@@ -72,11 +68,11 @@ export default function RegisterForm({ onBackToLogin }: Props) {
       return;
     }
 
-    // if (res.status && res.status !== 200) {
-    //   message.error(res.backend?.message ?? `Register failed (${res.status})`);
-    //   setLoading(false);
-    //   return;
-    // }
+    if (res.status && res.status !== 200) {
+      message.error(res.backend?.message ?? `Register failed (${res.status})`);
+      setLoading(false);
+      return;
+    }
 
     // success
     message.success("Register success");

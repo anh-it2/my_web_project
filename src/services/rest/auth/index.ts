@@ -17,3 +17,13 @@ export async function registerAccount(payload: RegisterTypes) {
     return null;
   }
 }
+
+export async function loginAccount(payload: LoginTypes) {
+  try {
+    const res = await axios.post("/api/login", payload);
+    return res.data;
+  } catch (error) {
+    console.error("Login API error:", error);
+    return null;
+  }
+}

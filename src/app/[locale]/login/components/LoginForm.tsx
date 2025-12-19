@@ -1,5 +1,6 @@
 "use client";
 
+import { loginAccount } from "@/services/rest/auth";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -7,7 +8,6 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message, Typography } from "antd";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -44,7 +44,7 @@ interface LoginFormProps {
 }
 
 interface LoginFormData {
-  email: string;
+  username: string;
   password: string;
   remember: boolean;
 }
@@ -60,12 +60,17 @@ export default function LoginForm({
 
   const handleSubmit = async (values: LoginFormData) => {
     setLoading(true);
-    console.log(values);
-    const res = await axios.post("http://localhost:8080/auth/login", values);
+    const { remember, ...payload } = values;
+    console.log(remember);
+    const res = await loginAccount(payload);
+    console.log(res);
+
     if (res.status === 200) {
       router.replace("/user/home");
     } else {
       message.error("Login failed");
+      setLoading(false);
+      return;
     }
     // router.replace("/user/home");
   };
@@ -118,7 +123,7 @@ export default function LoginForm({
           <motion.div variants={itemVariants}>
             <Form.Item
               label={t("email")}
-              name="email"
+              name="username"
               rules={[
                 { required: true, message: t("validation.emailRequired") },
                 { type: "email", message: t("validation.emailInvalid") },

@@ -1,73 +1,80 @@
-// import createMiddleware from 'next-intl/middleware';
-
-// import { routing } from './libs/routing';
-
-// // Create the intl middleware - chỉ xử lý routing đa ngôn ngữ
-// const intlMiddleware = createMiddleware(routing);
-
-// export default intlMiddleware;
-
-// export const config = {
-//     // Match only internationalized pathnames and exclude static files and API routes
-//     matcher: ['/((?!api|_next|.*\\..*).*)'],
-// };
-
 import createMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { routing } from "./libs/routing";
 
-// Tạo middleware xử lý đa ngôn ngữ
 const intlMiddleware = createMiddleware(routing);
 
-// Các route cần đăng nhập
-const protectedRoutes = ["/adminsss"];
+type Role = "USER" | "ADMIN" | "MANAGER";
 
-export default function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+const ROLE_ROUTES: Record<Role, string[]> = {
+  USER: ["/user"],
+  ADMIN: ["/admin"],
+  MANAGER: ["/manager", "/admin"],
+};
 
-  // Lấy token từ cookie
-  const token = request.cookies.get("token")?.value;
+const PUBLIC_ROUTES = ["/login"];
 
-  // Lấy locale từ pathname hoặc sử dụng mặc định
-  const localeMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
-  const currentLocale = localeMatch ? localeMatch[1] : "vi"; // default to 'vi'
+function stripLocale(pathname: string) {
+  return pathname.replace(/^\/[a-zA-Z-]+(?=\/|$)/, "");
+}
 
-  // --- 1. Xác định xem path hiện tại có phải route cần bảo vệ không ---
-  const needsAuth = protectedRoutes.some((route) => {
-    // Check if pathname contains the protected route (with or without locale)
-    const localePattern = /^\/[a-z]{2}(\/|$)/; // matches /en/ or /vi/
-    const pathWithoutLocale = pathname.replace(localePattern, "/");
-    return pathWithoutLocale.startsWith(route) || pathname.includes(route);
-  });
+function isPublic(pathname: string) {
+  const path = stripLocale(pathname);
+  return PUBLIC_ROUTES.some((r) => path.startsWith(r));
+}
 
-  // --- 2. Nếu thuộc route cần bảo vệ mà không có token → redirect login ---
-  if (needsAuth && !token) {
-    // Tạo URL redirect với base URL đúng
-    const baseUrl = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
-    const loginUrl = new URL(`/${currentLocale}/login`, baseUrl);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+function getRole(req: NextRequest): Role | null {
+  const role = req.cookies.get("role")?.value?.toUpperCase();
+  return role === "USER" || role === "ADMIN" || role === "MANAGER"
+    ? role
+    : null;
+}
+
+function dashboard(locale: string, role: Role) {
+  switch (role) {
+    case "ADMIN":
+      return `/${locale}/admin/home`;
+    case "MANAGER":
+      return `/${locale}/manager/home`;
+    default:
+      return `/${locale}/user/home`;
+  }
+}
+
+export default function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const jwt = req.cookies.get("jwtToken")?.value;
+  const role = getRole(req);
+
+  const locale =
+    pathname.match(/^\/([a-zA-Z-]+)(\/|$)/)?.[1] ?? routing.defaultLocale;
+
+  // 🔓 Public routes
+  if (isPublic(pathname)) {
+    if (jwt && role) {
+      return NextResponse.redirect(new URL(dashboard(locale, role), req.url));
+    }
+    return intlMiddleware(req);
   }
 
-  // --- 2.1. Nếu đã đăng nhập mà cố truy cập trang login → redirect dashboard ---
-  const isLoginPage = pathname.includes("/login");
-  if (isLoginPage && token) {
-    const baseUrl = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
-    const dashboardUrl = new URL(`/${currentLocale}/user/home`, baseUrl);
-    return NextResponse.redirect(dashboardUrl);
+  // 🔒 Protected routes
+  if (!jwt || !role) {
+    const login = new URL(`/${locale}/login`, req.url);
+    login.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(login);
   }
 
-  // --- 3. Nếu mọi thứ OK, chạy middleware I18n ---
-  return intlMiddleware(request);
+  const path = stripLocale(pathname);
+  const allowed = ROLE_ROUTES[role].some((r) => path.startsWith(r));
+
+  if (!allowed) {
+    return NextResponse.redirect(new URL(dashboard(locale, role), req.url));
+  }
+
+  return intlMiddleware(req);
 }
 
 export const config = {
-  matcher: [
-    // Match tất cả trừ:
-    // - /api
-    // - /_next (static)
-    // - file tĩnh (jpg|png|svg|css…)
-    "/((?!api|_next|.*\\..*).*)",
-  ],
+  matcher: ["/((?!api|_next|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)"],
 };
