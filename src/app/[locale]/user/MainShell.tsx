@@ -23,17 +23,17 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
   const userItems: MenuProps["items"] = [
     {
       key: "home",
-      icon: <HomeOutlined />,
+      icon: <HomeOutlined className="!text-xl" />,
       label: <Link href="/user/home">{t("home")}</Link>,
     },
     {
       key: "programmingContests",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined className="!text-xl" />,
       label: <Link href={"/user/contests"}>{t("programmingContests")}</Link>,
     },
     {
       key: "learning",
-      icon: <ScheduleOutlined />,
+      icon: <ScheduleOutlined className="!text-xl" />,
       label: t("learning"),
       children: [
         {

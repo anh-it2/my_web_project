@@ -18,7 +18,7 @@ type RHFInputProps = {
 const inputStyle = {
   height: 40, // hoặc 40 tuỳ size bạn muốn, giống với AntD default
   lineHeight: "38.5px",
-  fontSize: "0.875rem", // text-sm
+  fontSize: "1rem", // text-base
 };
 
 export const moneyFormatter = (value?: string | number) => {
@@ -56,7 +56,7 @@ export default function RHFInput({
         <Form.Item
           label={
             label && (
-              <span className="font-medium text-sm flex items-center">
+              <span className="font-medium text-base flex items-center">
                 {label}
                 {required && (
                   <span style={{ color: "red", fontSize: 20 }}>*</span>
@@ -80,7 +80,7 @@ export default function RHFInput({
                 field.onChange(Number(parsed));
               }}
               placeholder={placeholder}
-              className="text-sm font-normal !w-full full-width-number"
+              className="text-base font-normal !w-full full-width-number"
               formatter={moneyFormatter}
               parser={moneyParser}
               readOnly={readOnly}
@@ -92,7 +92,7 @@ export default function RHFInput({
               {...field}
               placeholder={placeholder}
               type={type}
-              className="text-sm font-normal w-full addon__after__input"
+              className="text-base font-normal w-full addon__after__input"
               style={{ ...inputStyle, width: "100%" }}
               readOnly={readOnly}
               prefix={prefix}

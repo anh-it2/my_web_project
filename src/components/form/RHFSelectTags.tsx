@@ -26,7 +26,7 @@ export default function RHFSelectTags({
       render={({ field, fieldState }) => (
         <Form.Item
           label={
-            <span className="font-medium text-sm flex items-center">
+            <span className="font-medium text-base flex items-center">
               {label}
               {required && (
                 <span style={{ color: "red", fontSize: 20 }}>*</span>
@@ -42,10 +42,10 @@ export default function RHFSelectTags({
             {...field}
             mode="tags"
             placeholder={
-              <span className="font-normal text-sm">{placeholder}</span>
+              <span className="font-normal text-base">{placeholder}</span>
             }
             tokenSeparators={[","]}
-            className="text-sm font-normal w-full custom__select"
+            className="text-base font-normal w-full custom__select"
             options={options}
             value={field.value ?? []}
             onChange={(value) => field.onChange(value)}

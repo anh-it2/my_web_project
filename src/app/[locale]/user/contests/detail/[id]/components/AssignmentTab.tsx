@@ -79,7 +79,7 @@ export default function AssignmentTab() {
 
         return (
           <Tag color={color}>
-            <span className="text-xs font-medium rounded">{level}</span>
+            <span className="text-sm font-medium rounded">{level}</span>
           </Tag>
         );
       },

@@ -32,7 +32,7 @@ export default function RHFTextArea({
         <Form.Item
           label={
             label && (
-              <span className="font-medium text-sm flex items-center">
+              <span className="font-medium text-base flex items-center">
                 {label}
                 {required && (
                   <span style={{ color: "red", fontSize: 20 }}>*</span>
@@ -50,7 +50,7 @@ export default function RHFTextArea({
             rows={rows}
             placeholder={placeholder}
             readOnly={readOnly}
-            className={`text-sm font-normal ${className ?? ""}`}
+            className={`text-base font-normal ${className ?? ""}`}
           />
         </Form.Item>
       )}

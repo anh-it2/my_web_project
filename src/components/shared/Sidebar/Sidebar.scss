@@ -10,7 +10,6 @@
   min-width: 200px;
   max-width: 400px;
 
-  // Khi sidebar collapsed, sử dụng width mặc định của Ant Design
   &.ant-layout-sider-collapsed {
     width: 80px !important;
     min-width: 80px;
@@ -18,45 +17,49 @@
   }
 }
 
-// Style cho active menu item như trong ảnh
 .sidebar-menu-wrapper {
   .sidebar-menu,
   .ant-menu {
-    // Active menu item - có background xanh nhạt, chữ xanh, và thanh dọc bên phải
-    .ant-menu-item-selected {
-      background-color: #e6f4ff !important; // Light blue background
-      color: #1890ff !important; // Blue text
-      font-weight: 500;
+    font-size: 1.25rem !important;
 
-      // Thanh dọc màu xanh đậm ở bên phải
+    .ant-menu-item {
+      font-size: 1.25rem !important;
+    }
+
+    .ant-menu-submenu-title {
+      font-size: 1.25rem !important;
+    }
+
+    .ant-menu-item-selected {
+      background-color: #e6f4ff !important;
+      color: #1890ff !important;
+      font-weight: 500;
+      font-size: 1.25rem !important;
+
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         right: 0;
         top: 0;
         bottom: 0;
         width: 3px;
-        background-color: #0050b3; // Dark blue vertical bar
+        background-color: #0050b3;
       }
 
-      // Link bên trong active item cũng phải màu xanh
       a {
         color: #1890ff !important;
         font-weight: 500;
       }
 
-      // Icon cũng phải màu xanh
       .anticon {
         color: #1890ff !important;
       }
     }
 
-    // Hover state cho menu item không được chọn
     .ant-menu-item:hover:not(.ant-menu-item-selected) {
       background-color: #f5f5f5 !important;
     }
 
-    // Submenu item active (items trong submenu)
     .ant-menu-submenu-inline {
       .ant-menu-item-selected {
         background-color: #e6f4ff !important;
@@ -64,7 +67,7 @@
         font-weight: 500;
 
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           right: 0;
           top: 0;
@@ -84,7 +87,6 @@
       }
     }
 
-    // Đảm bảo menu item có position relative để thanh dọc hiển thị đúng
     .ant-menu-item {
       position: relative;
     }

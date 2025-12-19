@@ -1,6 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global table font sizes */
+.ant-table {
+  font-size: 1rem !important;
+
+  .ant-table-thead > tr > th {
+    font-size: 1rem !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    font-size: 1rem !important;
+  }
+}
+
+/* Global sidebar menu font sizes */
+.ant-menu {
+  font-size: 1.25rem !important;
+
+  .ant-menu-item {
+    font-size: 1.25rem !important;
+  }
+
+  .ant-menu-submenu-title {
+    font-size: 1.25rem !important;
+  }
+}
 @layer utilities {
   .bg-white-gradient {
     background: linear-gradient(180deg, #ffffff 23.56%, #94cbf6 100%);

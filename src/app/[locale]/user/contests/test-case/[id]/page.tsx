@@ -145,19 +145,19 @@ export default function TestCasePage({ params }: { params: { id: string } }) {
       render: (status) => {
         if (status === "Accepted") {
           return (
-            <Tag color="green" className="font-medium text-sm">
+            <Tag color="green" className="font-medium text-base">
               Accepted
             </Tag>
           );
         } else if (status === "Wrong Answer") {
           return (
-            <Tag color="red" className="font-medium text-sm">
+            <Tag color="red" className="font-medium text-base">
               Wrong Answer
             </Tag>
           );
         }
         return (
-          <Tag color="orange" className="font-medium text-sm">
+          <Tag color="orange" className="font-medium text-base">
             Time Limit Exceeded
           </Tag>
         );

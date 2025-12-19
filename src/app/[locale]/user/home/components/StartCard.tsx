@@ -46,7 +46,7 @@ export default function StatCard({ number, title }: Props) {
           >
             {formatNumberSpace(number)} +
           </div>
-          <div className="text-xs tracking-widest text-gray-500">
+          <div className="text-sm tracking-widest text-gray-500">
             {title.toUpperCase()}
           </div>
         </div>

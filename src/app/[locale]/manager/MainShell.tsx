@@ -46,7 +46,7 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
   const managerItems: MenuProps["items"] = [
     {
       key: "home",
-      icon: <HomeOutlined />,
+      icon: <HomeOutlined className="!text-xl" />,
       label: <Link href="/admin/home">{t("home")}</Link>,
     },
   ];

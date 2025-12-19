@@ -50,7 +50,7 @@ export default function ListTestCase() {
       dataIndex: "input",
       key: "input",
       render: (text: string) => (
-        <pre className="bg-gray-100 px-2 py-1 rounded text-xs">{text}</pre>
+        <pre className="bg-gray-100 px-2 py-1 rounded text-sm">{text}</pre>
       ),
     },
     {
@@ -58,7 +58,7 @@ export default function ListTestCase() {
       dataIndex: "expectedOutput",
       key: "expectedOutput",
       render: (text: string) => (
-        <pre className="bg-gray-100 px-2 py-1 rounded text-xs">{text}</pre>
+        <pre className="bg-gray-100 px-2 py-1 rounded text-sm">{text}</pre>
       ),
     },
     {

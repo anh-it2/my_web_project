@@ -29,7 +29,7 @@ export default function RHFSelect({
       render={({ field, fieldState }) => (
         <div className="flex flex-col gap-1">
           {label && (
-            <label className="font-medium text-sm text-[#1A1A1A] select-none mt-2 mb-2">
+            <label className="font-medium text-base text-[#1A1A1A] select-none mt-2 mb-2">
               {label}
               {required && <span className="ml-1 text-red-500">*</span>}
             </label>
@@ -43,7 +43,7 @@ export default function RHFSelect({
             <Select
               {...field}
               placeholder={
-                <span className="font-normal text-sm text-[#1A1A1A]">
+                <span className="font-normal text-base text-[#1A1A1A]">
                   {placeholder}
                 </span>
               }
@@ -53,7 +53,7 @@ export default function RHFSelect({
               onChange={(value) => field.onChange(value)}
               showSearch={searchAble}
               optionFilterProp="label"
-              className="w-full text-sm"
+              className="w-full text-base"
               style={{ height: 40 }}
               maxTagCount="responsive"
             />
