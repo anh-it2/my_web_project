@@ -139,7 +139,10 @@ export default function CreateProblem() {
               <PublishButton
                 title="Next"
                 isSubmit={false}
-                onClick={() => setStep((prev) => prev + 1)}
+                onClickWithE={(e) => {
+                  e.preventDefault();
+                  setStep((prev) => prev + 1);
+                }}
               />
             ) : (
               <PublishButton title="Save Draft" isSubmit={true} />

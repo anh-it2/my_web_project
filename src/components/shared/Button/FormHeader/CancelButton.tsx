@@ -6,6 +6,7 @@ type Props = {
   isLoading?: boolean;
   onClick?: () => void;
   disable?: boolean;
+  onClickWithE?: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 export default function CancelButton({
@@ -13,13 +14,14 @@ export default function CancelButton({
   isLoading,
   onClick,
   disable,
+  onClickWithE,
 }: Props) {
   return (
     <div className="form__header">
       <Button
         type="default"
         className="cancel__button"
-        onClick={onClick}
+        onClick={onClick || onClickWithE}
         loading={isLoading}
         disabled={disable}
       >

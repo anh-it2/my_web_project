@@ -8,6 +8,7 @@ type Props = {
   Icon?: React.ComponentType<{ className?: string }>;
   isSubmit?: boolean;
   disable?: boolean;
+  onClickWithE?: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 export default function PublishButton({
@@ -17,6 +18,7 @@ export default function PublishButton({
   Icon,
   isSubmit,
   disable,
+  onClickWithE,
 }: Props) {
   return (
     <div className="form__header">
@@ -25,7 +27,7 @@ export default function PublishButton({
         htmlType={isSubmit ? "submit" : "button"}
         loading={isLoading}
         className="publish__button"
-        onClick={onClick}
+        onClick={onClick || onClickWithE}
         icon={Icon && <Icon className="icon" />}
         disabled={disable}
       >
