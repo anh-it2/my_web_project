@@ -1,0 +1,42 @@
+---
+alwaysApply: true
+---
+
+wrap motion tag outside other component to add animation for this
+
+<motion.div variants={itemVariants}>
+<motion.button
+className="submit-button"
+onClick={onBackToLogin}
+whileHover={{ scale: 1.05 }}
+whileTap={{ scale: 0.95 }} >
+{t("loginNowButton")}
+</motion.button>
+</motion.div>
+
+rule 2: be clear about if operator, don't use ? : before return func
+
+instead doing this:
+<AnimatePresence mode="wait">
+{loading ? (
+<motion.div
+key="loading"
+className="flex items-center justify-center h-screen"
+variants={loadingVariants}
+initial="hidden"
+animate="visible"
+exit="exit" >
+<Spin size="large" />
+</motion.div>
+) : (
+
+doing this:
+
+if (loading) {
+return (
+
+<div className="flex items-center justify-center h-screen">
+<Spin size="large" />
+</div>
+);
+}
