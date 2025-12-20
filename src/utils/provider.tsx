@@ -6,8 +6,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import React, { useState } from "react";
 
-import GlobalBlockingOverlay from "@/components/shared/GlobalBlockingOverlay";
-import GlobalProgress from "@/components/shared/GlobalProgress";
 import NotifyProvider from "./NotifyProvider";
 
 // Tối ưu React Query configuration
@@ -31,11 +29,7 @@ function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={client}>
       <ReactQueryStreamedHydration>
-        <NotifyProvider>
-          {children}
-          <GlobalProgress />
-          <GlobalBlockingOverlay />
-        </NotifyProvider>
+        <NotifyProvider>{children}</NotifyProvider>
       </ReactQueryStreamedHydration>
       {process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} />

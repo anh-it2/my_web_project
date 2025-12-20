@@ -9,9 +9,9 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 
-import { routing } from "@/libs/routing";
 import GlobalLoading from "@/components/shared/GlobalLoading";
-import ReactQueryProvider from "./QueryProvide";
+import { routing } from "@/libs/routing";
+import Providers from "@/utils/provider";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -35,43 +35,43 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "#005993",
-              colorPrimaryBorder: "#005993",
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#005993",
+            colorPrimaryBorder: "#005993",
+          },
+          components: {
+            Button: {
+              paddingInline: 16,
+              fontSize: 14,
+              fontWeight: 700,
+              borderRadius: 8,
             },
-            components: {
-              Button: {
-                paddingInline: 16,
-                fontSize: 14,
-                fontWeight: 700,
-                borderRadius: 8,
-              },
-              Input: {
-                controlHeight: 40,
-                borderRadius: 8,
-                fontSize: 13,
-              },
+            Input: {
+              controlHeight: 40,
+              borderRadius: 8,
+              fontSize: 13,
             },
-          }}
-        >
-          <ReactQueryProvider>
-            {children}
-            <GlobalLoading />
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-            />
-          </ReactQueryProvider>
-        </ConfigProvider>
+          },
+        }}
+      >
+        <Providers>
+          {children}
+          <GlobalLoading />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </Providers>
+      </ConfigProvider>
     </NextIntlClientProvider>
   );
 }
