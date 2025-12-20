@@ -1,6 +1,7 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import { Tabs } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../style.scss";
 import AssignmentTab from "./components/AssignmentTab";
 import SubmittedTab from "./components/SubmittedTab";
@@ -8,6 +9,10 @@ import SubmittedTab from "./components/SubmittedTab";
 export default function ContestDetail({ params }: { params: { id: string } }) {
   const { id } = params;
   const [activeTab, setActiveTab] = useState<string>("1");
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
 
   console.log(id);
 

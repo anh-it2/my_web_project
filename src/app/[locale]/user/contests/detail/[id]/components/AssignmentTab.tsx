@@ -1,10 +1,11 @@
+import useLoadingStore from "@/app/store/loadingStore";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useListActiveProblem } from "@/hook/problem/useListActiveProblem";
 import { ActiveProblem } from "@/services/rest/problem/get-all-active-problem/type";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card, Input, Table, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "../../../style.scss";
 
@@ -12,6 +13,8 @@ export default function AssignmentTab() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
+  const startLoading = useLoadingStore((state) => state.startLoading);
+  const router = useRouter();
   // const [currentScore, setCurrentScore] = useState<number>(0);
   // const [maxScore, setMaxScore] = useState<number>(0);
 
@@ -27,12 +30,15 @@ export default function AssignmentTab() {
       align: "center",
       sorter: (a: ActiveProblem, b: ActiveProblem) => a.problemId - b.problemId,
       render: (text: string, record: ActiveProblem) => (
-        <Link
-          href={`/user/contests/assignment/${record.problemId}`}
-          className="text-blue-600 hover:underline"
+        <span
+          className="text-blue-600 hover:underline cursor-pointer"
+          onClick={() => {
+            startLoading();
+            router.push(`/user/contests/assignment/${record.problemId}`);
+          }}
         >
           {text}
-        </Link>
+        </span>
       ),
     },
     {
@@ -44,12 +50,15 @@ export default function AssignmentTab() {
         a.problemCode.localeCompare(b.problemCode),
       render: (text: string, record: ActiveProblem) => {
         return (
-          <Link
-            href={`/user/contests/assignment/${record.problemId}`}
-            className="text-blue-600 hover:underline"
+          <span
+            className="text-blue-600 hover:underline cursor-pointer"
+            onClick={() => {
+              startLoading();
+              router.push(`/user/contests/assignment/${record.problemId}`);
+            }}
           >
             {text}
-          </Link>
+          </span>
         );
       },
     },

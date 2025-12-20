@@ -1,4 +1,5 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { problem } from "@/data/mock";
 import { EditOutlined } from "@ant-design/icons";
@@ -16,6 +17,7 @@ export default function ProblemDetailPage({ id }: { id: string }) {
     { title: "Output", dataIndex: "output", key: "output" },
     { title: "Score", dataIndex: "score", key: "score" },
   ];
+  const startLoading = useLoadingStore((state) => state.startLoading);
 
   const router = useRouter();
 
@@ -27,7 +29,10 @@ export default function ProblemDetailPage({ id }: { id: string }) {
             <PublishButton
               title="Edit button"
               Icon={EditOutlined}
-              onClick={() => router.push(`/admin/edit-problem/${id}`)}
+              onClick={() => {
+                startLoading();
+                router.push(`/admin/edit-problem/${id}`);
+              }}
             />
           }
           className="p-6 rounded-2xl shadow-sm border"

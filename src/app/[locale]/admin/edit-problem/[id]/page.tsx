@@ -1,5 +1,6 @@
 "use client";
 
+import useLoadingStore from "@/app/store/loadingStore";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import RHFInput from "@/components/form/RHFInput";
@@ -157,6 +158,10 @@ export default function EditProblemPage() {
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
   // simulate fetch API
   useEffect(() => {
     reset({

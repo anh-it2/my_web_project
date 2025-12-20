@@ -1,4 +1,5 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import CustomUploadFile from "@/components/form/CustomUploadFile";
 import FormHeader from "@/components/form/FormHeader";
@@ -8,7 +9,7 @@ import { useListTestCase } from "@/hook/test-case/useListTestCase";
 import { Card, Divider, Tag, Typography, UploadFile } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CodeEditor } from "./components/CodeEditor";
 import SubmissionTable from "./components/SubmissionTable";
 
@@ -73,6 +74,11 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

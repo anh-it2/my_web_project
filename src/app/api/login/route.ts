@@ -9,10 +9,7 @@ export async function POST(req: NextRequest) {
 
     const data = res.data;
 
-    const response = NextResponse.json(
-      { message: "Login success" },
-      { status: 200 }
-    );
+    const response = NextResponse.json(data, { status: 200 });
 
     response.cookies.set({
       name: "jwtToken",
@@ -24,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     response.cookies.set({
       name: "role",
-      value: data.role,
+      value: data.role || "USER",
       sameSite: "lax",
       path: "/",
       httpOnly: true,

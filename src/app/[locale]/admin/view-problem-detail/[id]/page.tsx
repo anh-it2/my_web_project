@@ -1,10 +1,11 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import { Tabs } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../style.scss";
 import ListTestCase from "./components/ListTestCase";
 import ProblemDetailPage from "./components/ProblemDetail";
@@ -17,6 +18,10 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
   const router = useRouter();
   const t = useTranslations("sidebar");
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
 
   const breadCrumbs = [
     {

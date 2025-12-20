@@ -15,8 +15,16 @@ const ROLE_ROUTES: Record<Role, string[]> = {
 
 const PUBLIC_ROUTES = ["/login"];
 
+function getLocaleSegment(pathname: string) {
+  const segment = pathname.match(/^\/([^/]+)(\/|$)/)?.[1];
+  if (segment && routing.locales.includes(segment as any)) return segment;
+  return null;
+}
+
 function stripLocale(pathname: string) {
-  return pathname.replace(/^\/[a-zA-Z-]+(?=\/|$)/, "");
+  const locale = getLocaleSegment(pathname);
+  if (!locale) return pathname;
+  return pathname.replace(new RegExp(`^/${locale}(?=/|$)`), "");
 }
 
 function isPublic(pathname: string) {
@@ -47,8 +55,7 @@ export default function middleware(req: NextRequest) {
   const jwt = req.cookies.get("jwtToken")?.value;
   const role = getRole(req);
 
-  const locale =
-    pathname.match(/^\/([a-zA-Z-]+)(\/|$)/)?.[1] ?? routing.defaultLocale;
+  const locale = getLocaleSegment(pathname) ?? routing.defaultLocale;
 
   // 🔓 Public routes
   if (isPublic(pathname)) {

@@ -1,12 +1,17 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import { Tabs } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PublicContestTab from "./components/PublicContestTab";
 import PublicRegistedTab from "./components/PublicRegistedTab";
 import "./style.scss";
 
 export default function ContestPage() {
   const [activeTab, setActiveTab] = useState<string>("1");
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
 
   return (
     <div className="p-4">

@@ -1,3 +1,4 @@
+import useLoadingStore from "@/app/store/loadingStore";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useListSubmittedProblem } from "@/hook/problem/useListSubmittedProblem";
 import { SubmittedProblem } from "@/services/rest/problem/get-all-submitted-problem/type";
@@ -9,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Card, Input, Table, Tag, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import "../../../style.scss";
 
@@ -19,6 +20,8 @@ export default function AssignmentTab() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
+  const startLoading = useLoadingStore((state) => state.startLoading);
+  const router = useRouter();
 
   console.log(pageSize);
 
@@ -34,12 +37,15 @@ export default function AssignmentTab() {
       sorter: (a: SubmittedProblem, b: SubmittedProblem) =>
         a.problemId - b.problemId,
       render: (text: string, record: SubmittedProblem) => (
-        <Link
-          href={`/user/contests/assignment/${record.problemId}`}
-          className="text-blue-600 hover:underline"
+        <span
+          className="text-blue-600 hover:underline cursor-pointer"
+          onClick={() => {
+            startLoading();
+            router.push(`/user/contests/assignment/${record.problemId}`);
+          }}
         >
           {text}
-        </Link>
+        </span>
       ),
     },
     {
@@ -51,12 +57,15 @@ export default function AssignmentTab() {
         a.problemCode.localeCompare(b.problemCode),
       render: (text: string, record: SubmittedProblem) => {
         return (
-          <Link
-            href={`/user/contests/assignment/${record.problemId}`}
-            className="text-blue-600 hover:underline"
+          <span
+            className="text-blue-600 hover:underline cursor-pointer"
+            onClick={() => {
+              startLoading();
+              router.push(`/user/contests/assignment/${record.problemId}`);
+            }}
           >
             {text}
-          </Link>
+          </span>
         );
       },
     },

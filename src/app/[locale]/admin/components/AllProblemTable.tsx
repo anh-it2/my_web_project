@@ -1,11 +1,11 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 // ExerciseTable.tsx
 import { Problem } from "@/data/mock";
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
 import { Dropdown, Input, MenuProps, Switch, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -20,18 +20,22 @@ export default function AllProblemTable({ data }: Props) {
   console.log(pageSize);
 
   const router = useRouter();
-
+  const startLoading = useLoadingStore((state) => state.startLoading);
   const columns: ColumnsType<Problem> = [
     {
       title: "Bài tập",
       dataIndex: "title",
       key: "title",
       render: (text) => (
-        <Link href={"/admin/view-problem-detail/1"}>
-          <span className="text-blue-600 hover:underline cursor-pointer">
-            {text}
-          </span>
-        </Link>
+        <span
+          className="text-blue-600 hover:underline cursor-pointer"
+          onClick={() => {
+            startLoading();
+            router.push("/admin/view-problem-detail/1");
+          }}
+        >
+          {text}
+        </span>
       ),
     },
     {
@@ -85,6 +89,7 @@ export default function AllProblemTable({ data }: Props) {
             key: "view",
             label: "Xem chi tiết",
             onClick: () => {
+              startLoading();
               router.push("/admin/view-problem-detail/1");
             },
           },
@@ -92,6 +97,7 @@ export default function AllProblemTable({ data }: Props) {
             key: "edit",
             label: "Chỉnh sửa",
             onClick: () => {
+              startLoading();
               router.push("/admin/edit-problem/1");
             },
           },
@@ -124,7 +130,10 @@ export default function AllProblemTable({ data }: Props) {
         />
         <PublishButton
           title="Thêm mới"
-          onClick={() => router.push("/admin/add-problem")}
+          onClick={() => {
+            startLoading();
+            router.push("/admin/add-problem");
+          }}
         />
       </div>
 

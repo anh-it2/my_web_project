@@ -279,6 +279,7 @@ import { Badge, Dropdown, Space } from "antd";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
+import useLoadingStore from "@/app/store/loadingStore";
 import { useRouter } from "next/navigation";
 import LanguageSwitcher from "../shared/LanguageSwitcher/LanguageSwitcher";
 import "./Header.scss";
@@ -306,6 +307,8 @@ export default function Header() {
     return name.length > 20 ? name.substring(0, 20) + "..." : name;
   }, [currentUser.companyName]);
 
+  const startLoading = useLoadingStore((store) => store.startLoading);
+
   const router = useRouter();
 
   const getInitials = () => {
@@ -323,7 +326,10 @@ export default function Header() {
   const handleUserMenuClick = ({ key }: { key: string }) => {
     switch (key) {
       case "business-info":
-        router.push("/user/user-info");
+        {
+          startLoading();
+          router.push("/user/user-info");
+        }
         break;
       case "shop-setup":
         console.log("Go to /admin/shop-setup");

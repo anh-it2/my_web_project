@@ -1,3 +1,4 @@
+import useLoadingStore from "@/app/store/loadingStore";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Form, Spin, Tag } from "antd";
 import { motion } from "framer-motion";
@@ -89,6 +90,11 @@ export default function UserInfoComponent() {
       status: "",
     },
   });
+
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
 
   const { reset, handleSubmit } = methods;
   const [user, setUser] = useState<UserProfileFormValues>();

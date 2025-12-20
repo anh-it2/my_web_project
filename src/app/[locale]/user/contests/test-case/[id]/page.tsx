@@ -1,4 +1,5 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import RouteLoading from "@/components/shared/RouteLoading";
@@ -14,7 +15,7 @@ import { ColumnsType } from "antd/es/table";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoRow from "./components/InfoRow";
 
 const containerVariants = {
@@ -65,7 +66,10 @@ export default function TestCasePage({ params }: { params: { id: string } }) {
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
   const t = useTranslations("sidebar");
   const router = useRouter();
-
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
   const { submissionDetail } = useSubmissionDetail(id);
 
   console.log(submissionDetail);

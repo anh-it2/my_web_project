@@ -1,8 +1,8 @@
 "use client";
 
+import useLoadingStore from "@/app/store/loadingStore";
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/shared/Sidebar/Sidebar";
-import { Link } from "@/libs/routing";
 import {
   AppstoreOutlined,
   HomeOutlined,
@@ -11,12 +11,15 @@ import {
 import type { MenuProps } from "antd";
 import { Layout } from "antd";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function MainShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const startLoading = useLoadingStore((state) => state.startLoading);
+  const router = useRouter();
 
   const t = useTranslations("sidebar");
 
@@ -24,12 +27,20 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
     {
       key: "home",
       icon: <HomeOutlined className="!text-xl" />,
-      label: <Link href="/user/home">{t("home")}</Link>,
+      label: t("home"),
+      onClick: () => {
+        startLoading();
+        router.replace("/user/home");
+      },
     },
     {
       key: "programmingContests",
       icon: <AppstoreOutlined className="!text-xl" />,
-      label: <Link href={"/user/contests"}>{t("programmingContests")}</Link>,
+      label: t("programmingContests"),
+      onClick: () => {
+        startLoading();
+        router.replace("/user/contests");
+      },
     },
     {
       key: "learning",
@@ -38,25 +49,35 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
       children: [
         {
           key: "classRegistration",
-          label: (
-            <Link href={"/user/learning/registration"}>
-              {t("classRegistration")}
-            </Link>
-          ),
+          label: t("classRegistration"),
+          onClick: () => {
+            startLoading();
+            router.replace("/user/learning/registration");
+          },
         },
         {
           key: "classes",
-          label: <Link href={"/user/learning/classes"}>{t("classes")}</Link>,
+          label: t("classes"),
+          onClick: () => {
+            startLoading();
+            router.replace("/user/learning/classes");
+          },
         },
         {
           key: "joinQuizTest",
-          label: (
-            <Link href={"/user/learning/join-quiz"}>{t("joinQuizTest")}</Link>
-          ),
+          label: t("joinQuizTest"),
+          onClick: () => {
+            startLoading();
+            router.replace("/user/learning/join-quiz");
+          },
         },
         {
           key: "quizTests",
-          label: <Link href={"/user/learning/quiz"}>{t("quizTests")}</Link>,
+          label: t("quizTests"),
+          onClick: () => {
+            startLoading();
+            router.replace("/user/learning/quiz");
+          },
         },
       ],
     },

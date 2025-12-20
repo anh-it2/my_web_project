@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/set-state-in-effect */
+import useLoadingStore from "@/app/store/loadingStore";
 import { useListSubmission } from "@/hook/submission/useListSubmission";
 import { Submission } from "@/services/rest/submission/type";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../.././style.scss";
@@ -14,6 +14,7 @@ export default function SubmissionTable() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const router = useRouter();
+  const startLoading = useLoadingStore((state) => state.startLoading);
 
   console.log(pageSize);
 
@@ -31,12 +32,9 @@ export default function SubmissionTable() {
       dataIndex: "id",
       key: "id",
       render: (text: string) => (
-        <Link
-          href="/user/contests/test-case/1"
-          className="text-blue-600 hover:underline"
-        >
+        <span className="text-blue-600 hover:underline cursor-pointer">
           {text}
-        </Link>
+        </span>
       ),
     },
     {
@@ -131,6 +129,7 @@ export default function SubmissionTable() {
         className="custom__table"
         onRow={(record) => ({
           onClick: () => {
+            startLoading();
             router.push(`/user/contests/test-case/${record.id}`);
           },
         })}

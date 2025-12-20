@@ -1,5 +1,6 @@
 "use client";
 
+import useLoadingStore from "@/app/store/loadingStore";
 import { loginAccount } from "@/services/rest/auth";
 import {
   EyeInvisibleOutlined,
@@ -57,6 +58,7 @@ export default function LoginForm({
   const [loading, setLoading] = useState(false);
   const t = useTranslations("login");
   const router = useRouter();
+  const startLoading = useLoadingStore((state) => state.startLoading);
 
   const handleSubmit = async (values: LoginFormData) => {
     setLoading(true);
@@ -65,14 +67,32 @@ export default function LoginForm({
     const res = await loginAccount(payload);
     console.log(res);
 
-    if (res.status === 200) {
-      router.replace("/user/home");
-    } else {
+    if (!res) {
       message.error("Login failed");
       setLoading(false);
       return;
     }
-    // router.replace("/user/home");
+
+    if (res.status && res.status !== 200) {
+      message.error(res.backend?.message ?? `Login failed (${res.status})`);
+      setLoading(false);
+      return;
+    }
+
+    // success
+    message.success("Login success");
+    setLoading(false);
+
+    if (res.role === "USER") {
+      startLoading();
+      router.replace("/user/home");
+    } else if (res.role === "ADMIN") {
+      startLoading();
+      router.replace("/admin/home");
+    } else {
+      startLoading();
+      router.push("/manager/home");
+    }
   };
 
   const handleAccountSelect = (email: string, password: string) => {

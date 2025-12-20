@@ -1,5 +1,6 @@
 "use client";
 
+import useLoadingStore from "@/app/store/loadingStore";
 import { registerAccount } from "@/services/rest/auth";
 import {
   EyeInvisibleOutlined,
@@ -11,6 +12,7 @@ import { Button, Checkbox, Form, Input, message, Typography } from "antd";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Title } = Typography;
@@ -52,7 +54,8 @@ export default function RegisterForm({ onBackToLogin }: Props) {
   const agree = Form.useWatch("agree", form);
   const [loading, setLoading] = useState(false);
   const t = useTranslations("login");
-  // const router = useRouter();
+  const router = useRouter();
+  const startLoading = useLoadingStore((state) => state.startLoading);
 
   const handleSubmit = async (values: RegisterFormData) => {
     setLoading(true);
@@ -76,9 +79,8 @@ export default function RegisterForm({ onBackToLogin }: Props) {
 
     // success
     message.success("Register success");
-    setLoading(false);
-    // router.replace("/login");
-    // router.replace("/login");
+    startLoading();
+    router.replace("/login");
   };
 
   return (

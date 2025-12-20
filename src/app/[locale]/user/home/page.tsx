@@ -1,6 +1,8 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
 import { Typography } from "antd";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import ChallengeProblemCard from "./components/ChallengeProblemCard";
 import PopularKeywordsCard from "./components/PopularKeywordsCard";
 import StatCard from "./components/StartCard";
@@ -42,6 +44,12 @@ const statCardVariants = {
 };
 
 export default function UserHomePage() {
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+
+  useEffect(() => {
+    stopLoading();
+  }, [stopLoading]);
+
   return (
     <motion.div
       className="home__page"

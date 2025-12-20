@@ -10,7 +10,8 @@ import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 
 import { routing } from "@/libs/routing";
-import Providers from "@/utils/provider";
+import GlobalLoading from "@/components/shared/GlobalLoading";
+import ReactQueryProvider from "./QueryProvide";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -34,7 +35,6 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Providers>
         <ConfigProvider
           theme={{
             token: {
@@ -56,20 +56,22 @@ export default async function LocaleLayout({
             },
           }}
         >
-          {children}
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+          <ReactQueryProvider>
+            {children}
+            <GlobalLoading />
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+          </ReactQueryProvider>
         </ConfigProvider>
-      </Providers>
     </NextIntlClientProvider>
   );
 }
