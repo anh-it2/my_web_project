@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     response.cookies.set({
       name: "role",
-      value: data.role || "USER",
+      value: data.role || "MANAGER",
       sameSite: "lax",
       path: "/",
       httpOnly: true,

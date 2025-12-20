@@ -33,7 +33,7 @@ export default function Sidebar({
       setIsMobile(window.innerWidth <= 768);
     };
 
-    checkMobile();
+    checkMobile(); 
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);

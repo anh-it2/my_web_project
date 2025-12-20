@@ -10,14 +10,22 @@ type Role = "USER" | "ADMIN" | "MANAGER";
 const ROLE_ROUTES: Record<Role, string[]> = {
   USER: ["/user"],
   ADMIN: ["/admin"],
-  MANAGER: ["/manager", "/admin"],
+  MANAGER: ["/manager"],
 };
 
 const PUBLIC_ROUTES = ["/login"];
 
-function getLocaleSegment(pathname: string) {
+type Locale = (typeof routing.locales)[number];
+
+const localeSet = new Set<Locale>(routing.locales);
+
+function getLocaleSegment(pathname: string): Locale | null {
   const segment = pathname.match(/^\/([^/]+)(\/|$)/)?.[1];
-  if (segment && routing.locales.includes(segment as any)) return segment;
+
+  if (segment && localeSet.has(segment as Locale)) {
+    return segment as Locale;
+  }
+
   return null;
 }
 
@@ -57,7 +65,6 @@ export default function middleware(req: NextRequest) {
 
   const locale = getLocaleSegment(pathname) ?? routing.defaultLocale;
 
-  // 🔓 Public routes
   if (isPublic(pathname)) {
     if (jwt && role) {
       return NextResponse.redirect(new URL(dashboard(locale, role), req.url));
@@ -65,7 +72,6 @@ export default function middleware(req: NextRequest) {
     return intlMiddleware(req);
   }
 
-  // 🔒 Protected routes
   if (!jwt || !role) {
     const login = new URL(`/${locale}/login`, req.url);
     login.searchParams.set("redirect", pathname);

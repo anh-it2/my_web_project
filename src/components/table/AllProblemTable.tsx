@@ -11,9 +11,15 @@ import { useState } from "react";
 
 type Props = {
   data: Problem[];
+  addNewProblemLink: string;
+  basePath?: string;
 };
 
-export default function AllProblemTable({ data }: Props) {
+export default function AllProblemTable({
+  data,
+  addNewProblemLink,
+  basePath = "/admin",
+}: Props) {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -31,7 +37,7 @@ export default function AllProblemTable({ data }: Props) {
           className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
             startLoading();
-            router.push("/admin/view-problem-detail/1");
+            router.push(`${basePath}/view-problem-detail/1`);
           }}
         >
           {text}
@@ -90,7 +96,7 @@ export default function AllProblemTable({ data }: Props) {
             label: "Xem chi tiết",
             onClick: () => {
               startLoading();
-              router.push("/admin/view-problem-detail/1");
+              router.push(`${basePath}/view-problem-detail/1`);
             },
           },
           {
@@ -98,7 +104,7 @@ export default function AllProblemTable({ data }: Props) {
             label: "Chỉnh sửa",
             onClick: () => {
               startLoading();
-              router.push("/admin/edit-problem/1");
+              router.push(`${basePath}/edit-problem/1`);
             },
           },
           {
@@ -132,7 +138,7 @@ export default function AllProblemTable({ data }: Props) {
           title="Thêm mới"
           onClick={() => {
             startLoading();
-            router.push("/admin/add-problem");
+            router.push(addNewProblemLink);
           }}
         />
       </div>

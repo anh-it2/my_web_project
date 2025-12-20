@@ -1,5 +1,6 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
+import AllProblemTable from "@/components/table/AllProblemTable";
 import {
   mockExercises,
   mockExercisesAllOff,
@@ -7,7 +8,6 @@ import {
 } from "@/data/mock";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
-import AllProblemTable from "../components/AllProblemTable";
 import "./style.scss";
 
 export default function AdminHomePage() {
@@ -24,13 +24,22 @@ export default function AdminHomePage() {
         className="custom__search__tabs"
       >
         <Tabs.TabPane key="1" tab="All Problems">
-          <AllProblemTable data={mockExercises} />
+          <AllProblemTable
+            data={mockExercises}
+            addNewProblemLink="/admin/add-problem"
+          />
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="Public Problems">
-          <AllProblemTable data={mockExercisesAllOn} />
+          <AllProblemTable
+            data={mockExercisesAllOn}
+            addNewProblemLink="/admin/add-problem"
+          />
         </Tabs.TabPane>
         <Tabs.TabPane key="3" tab="Draft Problems">
-          <AllProblemTable data={mockExercisesAllOff} />
+          <AllProblemTable
+            data={mockExercisesAllOff}
+            addNewProblemLink="/admin/add-problem"
+          />
         </Tabs.TabPane>
       </Tabs>
     </div>

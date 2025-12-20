@@ -1,0 +1,31 @@
+.custom__search__tabs {
+  .ant-tabs-nav .ant-tabs-nav-wrap {
+    scrollbar-width: none;
+    .ant-tabs-nav-list {
+      background-color: white;
+      border-radius: 8px;
+      border: 1px solid #dde1e6;
+
+      .ant-tabs-tab {
+        padding: 10px;
+      }
+
+      .ant-tabs-tab-active {
+        transition: all 0.5s ease-in-out;
+        border-radius: 7px;
+
+        .ant-tabs-tab-btn {
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 500;
+          z-index: 10;
+        }
+      }
+
+      .ant-tabs-ink-bar {
+        height: 100%;
+        border-radius: 7px;
+      }
+    }
+  }
+}

@@ -47,7 +47,7 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
     {
       key: "home",
       icon: <HomeOutlined className="!text-xl" />,
-      label: <Link href="/admin/home">{t("home")}</Link>,
+      label: <Link href="/manager/home">{t("home")}</Link>,
     },
   ];
 
