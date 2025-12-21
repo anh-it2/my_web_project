@@ -1,16 +1,22 @@
 "use client";
+import { difficultyConfig } from "@/app/[locale]/constants";
 import useLoadingStore from "@/app/store/loadingStore";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
+import { useUpdateStateProblem } from "@/hook/problem/useUpdateStateProblem";
 // ExerciseTable.tsx
-import { Problem } from "@/data/mock";
-import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
-import { Dropdown, Input, MenuProps, Switch, Table } from "antd";
+import { MyProblem } from "@/services/rest/problem/get-my-problem/type";
+import {
+  MoreOutlined,
+  SearchOutlined,
+  TrophyOutlined,
+} from "@ant-design/icons";
+import { Dropdown, Input, MenuProps, Switch, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
-  data: Problem[];
+  data: MyProblem[];
   addNewProblemLink: string;
   basePath?: string;
 };
@@ -23,11 +29,14 @@ export default function AllProblemTable({
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
+
   console.log(pageSize);
+
+  const { updateStateProblemAsync } = useUpdateStateProblem();
 
   const router = useRouter();
   const startLoading = useLoadingStore((state) => state.startLoading);
-  const columns: ColumnsType<Problem> = [
+  const columns: ColumnsType<MyProblem> = [
     {
       title: "Bài tập",
       dataIndex: "title",
@@ -46,35 +55,37 @@ export default function AllProblemTable({
     },
     {
       title: "Mã bài tập",
-      dataIndex: "code",
-      key: "code",
+      dataIndex: "problemCode",
+      key: "problemCode",
       className: "text-gray-600",
     },
     {
       title: "Mức độ",
-      dataIndex: "level",
-      key: "level",
-      render: (level) => {
-        const color =
-          level === "Dễ"
-            ? "text-green-600"
-            : level === "Khó"
-            ? "text-red-600"
-            : "text-orange-500";
+      dataIndex: "difficultyLevel",
+      key: "difficultyLevel",
+      render: (difficultyLevel: string) => {
+        const config = difficultyConfig[difficultyLevel] ?? {
+          color: "default",
+          label: difficultyLevel,
+        };
 
-        return <span className={color}>{level}</span>;
+        return (
+          <Tag color={config.color} className="font-medium px-4 py-1">
+            <span className="text-base">{config.label}</span>
+          </Tag>
+        );
       },
     },
     {
       title: "Public",
-      dataIndex: "isPublic",
-      key: "isPublic",
+      dataIndex: "active",
+      key: "active",
       align: "center",
-      render: (isPublic, record) => (
+      render: (active, record) => (
         <Switch
-          checked={isPublic}
-          onChange={(checked) => {
-            console.log("Toggle public:", record.key, checked);
+          checked={active}
+          onChange={async () => {
+            await updateStateProblemAsync({ problemId: record.problemId });
           }}
         />
       ),
@@ -84,6 +95,15 @@ export default function AllProblemTable({
       dataIndex: "maxScore",
       key: "maxScore",
       align: "right",
+      render: (score: number) => (
+        <Tag
+          color="yellow"
+          icon={<TrophyOutlined className="text-xl font-semibold" />}
+          className="font-semibold px-3 py-1"
+        >
+          <span className="text-xl font-semibold">{score}</span>
+        </Tag>
+      ),
     },
     {
       title: "",
@@ -111,7 +131,7 @@ export default function AllProblemTable({
             key: "delete",
             label: "Xóa",
             danger: true,
-            onClick: () => console.log("Delete", record.key),
+            onClick: () => console.log("Delete", record.problemId),
           },
         ];
 

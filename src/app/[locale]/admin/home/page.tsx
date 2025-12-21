@@ -1,11 +1,7 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
 import AllProblemTable from "@/components/table/AllProblemTable";
-import {
-  mockExercises,
-  mockExercisesAllOff,
-  mockExercisesAllOn,
-} from "@/data/mock";
+import { useListProblem } from "@/hook/problem/useListProblem";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import "./style.scss";
@@ -16,6 +12,15 @@ export default function AdminHomePage() {
   useEffect(() => {
     stopLoading();
   }, [stopLoading]);
+
+  const { listProblem } = useListProblem();
+
+  const listActiveProblem = listProblem?.filter((item) => item.active === true);
+
+  const listUncctiveProblem = listProblem?.filter(
+    (item) => item.active === false
+  );
+
   return (
     <div className="p-4">
       <Tabs
@@ -25,19 +30,19 @@ export default function AdminHomePage() {
       >
         <Tabs.TabPane key="1" tab="All Problems">
           <AllProblemTable
-            data={mockExercises}
+            data={listProblem || []}
             addNewProblemLink="/admin/add-problem"
           />
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="Public Problems">
           <AllProblemTable
-            data={mockExercisesAllOn}
+            data={listActiveProblem || []}
             addNewProblemLink="/admin/add-problem"
           />
         </Tabs.TabPane>
         <Tabs.TabPane key="3" tab="Draft Problems">
           <AllProblemTable
-            data={mockExercisesAllOff}
+            data={listUncctiveProblem || []}
             addNewProblemLink="/admin/add-problem"
           />
         </Tabs.TabPane>

@@ -185,7 +185,7 @@ export interface Problem {
   key: string;
   title: string;
   code: string;
-  level: "Dễ" | "Trung bình" | "Khó";
+  level: string;
   isPublic: boolean;
   maxScore: number;
 }

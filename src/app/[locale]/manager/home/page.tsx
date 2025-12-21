@@ -1,7 +1,7 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
 import AllProblemTable from "@/components/table/AllProblemTable";
-import { mockExercises } from "@/data/mock";
+import { useListProblem } from "@/hook/problem/useListProblem";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import AdminManagementMock from "../components/AdminManagement";
@@ -10,6 +10,10 @@ import "./style.scss";
 export default function ManagerPage() {
   const [activeTab, setActiveTab] = useState<string>("1");
   const stopLoading = useLoadingStore((state) => state.stopLoading);
+  const { listProblem } = useListProblem();
+
+  console.log(listProblem);
+
   useEffect(() => {
     stopLoading();
   }, [stopLoading]);
@@ -23,9 +27,9 @@ export default function ManagerPage() {
         <Tabs.TabPane key="1" tab="Admin Management">
           <AdminManagementMock />
         </Tabs.TabPane>
-        <Tabs.TabPane key="2" tab="All Problems">
+        <Tabs.TabPane key="2" tab="My Problems">
           <AllProblemTable
-            data={mockExercises}
+            data={listProblem || []}
             addNewProblemLink="/manager/add-problem"
             basePath="/manager"
           />
