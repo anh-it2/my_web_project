@@ -20,7 +20,7 @@ export default function AssignmentTab() {
 
   console.log(pageSize);
 
-  const { listActiveProblem } = useListActiveProblem();
+  const { listActiveProblem } = useListActiveProblem("http://localhost:8080/problems");
 
   const exerciseTableColumns: ColumnsType<ActiveProblem> = [
     {
