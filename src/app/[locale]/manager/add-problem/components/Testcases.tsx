@@ -2,7 +2,7 @@ import RHFInput from "@/components/form/RHFInput";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import { Card, Col, Row } from "antd";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
 
@@ -74,7 +74,6 @@ export default function TestcaseManager() {
         <RHFInput name="constraints" label="Contraints" required />
       </motion.div>
 
-      <AnimatePresence mode="popLayout">
         {fields.map((f, i) => (
           <motion.div
             key={f.id}
@@ -119,7 +118,6 @@ export default function TestcaseManager() {
             </Card>
           </motion.div>
         ))}
-      </AnimatePresence>
     </motion.div>
   );
 }

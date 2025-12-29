@@ -143,7 +143,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
           <Title level={5} className="mt-4">
             Output
           </Title>
-          <span>{sampleTestCase?.output}</span>
+          <span>{sampleTestCase?.expectedOutput}</span>
 
           <Divider />
 
@@ -156,7 +156,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
             </div>
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Output</div>
-              <pre>{sampleTestCase?.output}</pre>
+              <pre>{sampleTestCase?.expectedOutput}</pre>
             </div>
           </div>
 

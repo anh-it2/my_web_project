@@ -12,7 +12,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const data = { ...res.data, maxScore: 100 };
+    const data = { 
+      ...res.data, 
+      maxScore: 100 
+    };
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {

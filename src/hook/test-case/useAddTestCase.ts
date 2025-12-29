@@ -11,7 +11,7 @@ export function useAddTestCase() {
       payload,
     }: {
       problemId: number;
-      payload: CreateTestCase;
+      payload: CreateTestCase[];
     }) => {
       const res = await addTestCase(problemId, payload);
       return res;

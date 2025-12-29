@@ -2,7 +2,7 @@ import RHFTextArea from "@/components/form/RHFTextArea";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import { Card } from "antd";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useFieldArray } from "react-hook-form";
 
 const containerVariants = {
@@ -81,7 +81,6 @@ export default function StatementStep() {
         </motion.div>
       </motion.div>
 
-      <AnimatePresence mode="popLayout">
         {fields.map((f, i) => (
           <motion.div
             key={f.id}
@@ -122,7 +121,6 @@ export default function StatementStep() {
             </Card>
           </motion.div>
         ))}
-      </AnimatePresence>
     </motion.div>
   );
 }

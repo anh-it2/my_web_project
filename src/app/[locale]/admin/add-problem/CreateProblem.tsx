@@ -5,7 +5,6 @@ import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useAddProblem } from "@/hook/problem/useAddProblem";
 import { useAddTestCase } from "@/hook/test-case/useAddTestCase";
-import { CreateTestCase } from "@/services/rest/test-case/add-test-case/type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, Steps } from "antd";
 import { useTranslations } from "next-intl";
@@ -123,7 +122,7 @@ export default function CreateProblem() {
 
     const problemId = res.problemId;
     await addTestCaseAsync({
-      payload: testCases[0] || ({} as CreateTestCase),
+      payload: testCases,
       problemId,
     });
     setMessage("Đã nạp test case thành công, đang điều hướng");

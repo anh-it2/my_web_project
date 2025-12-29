@@ -12,8 +12,11 @@ import {
 } from "@ant-design/icons";
 import { Dropdown, Input, MenuProps, Switch, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { MotionRow } from "./MotionRow";
+import { tableContainerVariants } from "./motion";
 
 type Props = {
   data: MyProblem[];
@@ -41,12 +44,12 @@ export default function AllProblemTable({
       title: "Bài tập",
       dataIndex: "title",
       key: "title",
-      render: (text) => (
+      render: (text, record) => (
         <span
           className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
             startLoading();
-            router.push(`${basePath}/view-problem-detail/1`);
+            router.push(`${basePath}/view-problem-detail/${record.problemId}`);
           }}
         >
           {text}
@@ -165,7 +168,7 @@ export default function AllProblemTable({
         />
       </div>
 
-      <Table
+      {/* <Table
         columns={columns}
         dataSource={data}
         pagination={{
@@ -178,7 +181,38 @@ export default function AllProblemTable({
             setPageSize(pageSize);
           },
         }}
-      />
+      /> */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          variants={tableContainerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          key={`${page}-${pageSize}`}
+          className="w-full"
+        >
+          <Table
+            rowKey="problemId"
+            columns={columns}
+            dataSource={data}
+            components={{
+              body: {
+                row: MotionRow,
+              },
+            }}
+            pagination={{
+              current: page,
+              pageSizeOptions: ["5", "10", "20", "50"],
+              total: data.length,
+              showSizeChanger: true,
+              onChange: (p, ps) => {
+                setPage(p);
+                setPageSize(ps);
+              },
+            }}
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

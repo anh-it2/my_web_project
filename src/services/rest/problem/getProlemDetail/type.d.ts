@@ -1,19 +1,22 @@
 export type ProblemStatus = "draft" | "published";
-export type ProblemDifficulty = "EASY" | "MEDIUM" | "HARD";
 
 export type ProblemDetail = {
+  problemId: number;
+  problemCode: string;
   title: string;
-  slug: string;
-  statement: string; // markdown or html
-  difficultyLevel: ProblemDifficulty;
+  description: string;
+  inputFormat: string | null;
+  outputFormat: string | null;
+  sampleInput: string | null;
+  sampleOutput: string | null;
+  constraints: string;
+  difficultyLevel: string;
   timeLimit: number; // ms
   memoryLimit: number; // MB
-  visibility: boolean;
-  creator_id: string;
-  status: ProblemStatus;
-  created_at: string; // ISO string
-  updated_at: string; // ISO string
-  problemId: string;
+  createdBy: string;
+  createdDate: string; // ISO string
+  updatedDate: string; // ISO string
   active: boolean;
-  description: string;
+  // Optional fields that might be added by frontend
+  maxScore?: number;
 };
