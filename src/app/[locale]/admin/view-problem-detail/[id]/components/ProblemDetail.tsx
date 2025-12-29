@@ -11,12 +11,67 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import { Card, Table } from "antd";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useRouter } from "next/navigation";
+
 
 type Props = {
   testCases: TestCase[];
   data: ProblemDetail;
 };
+
+// Page-level
+export const pageVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      ease: [0.16, 1, 0.3, 1], // easeOut chuẩn
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 },
+  },
+};
+
+// Container cho các Card
+export const sectionContainerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+// Card animation (rất tiết chế)
+export const cardVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 16,
+    scale: 0.98,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.35,
+      ease: "easeOut",
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -12,
+    scale: 0.98,
+    transition: {
+      duration: 0.25,
+    },
+  },
+};
+
 
 export default function ProblemDetailPage({ testCases, data }: Props) {
   const sampleColumns = [
@@ -26,19 +81,34 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
 
   const testCaseColumns = [
     { title: "Input", dataIndex: "input", key: "input" },
-    { title: "Output", dataIndex: "output", key: "output" },
+    { title: "Output", dataIndex: "expectedOutput", key: "output" },
     { title: "Score", dataIndex: "score", key: "score" },
   ];
 
-  const sampleData = testCases.filter((item) => item.is_sample);
+  const sampleData = testCases.filter((item) => item.sample);
 
   const startLoading = useLoadingStore((state) => state.startLoading);
 
   const router = useRouter();
 
+  console.log(data);
+
   return (
-    <>
-      <div className="p-6 space-y-6">
+   <AnimatePresence mode="wait">
+  <motion.div
+    variants={pageVariants}
+    initial="hidden"
+    animate="visible"
+    exit="exit"
+  >
+    <motion.div
+      className="p-6 space-y-6"
+      variants={sectionContainerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Problem Info */}
+      <motion.div variants={cardVariants}>
         <Card
           extra={
             <PublishButton
@@ -46,13 +116,13 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
               Icon={EditOutlined}
               onClick={() => {
                 startLoading();
-                router.push(`/admin/edit-problem/${data.problemId}`);
+                router.push(`/manager/edit-problem/${data.problemId}`);
               }}
             />
           }
           className="p-6 rounded-2xl shadow-sm border"
         >
-          <div className="flex flex-row justify-between">
+           <div className="flex flex-row justify-between">
             <h1 className="text-xl font-semibold mb-2 flex">
               <span className="text-2xl font-semibold mb-2">
                 Problem Title: {data.title}
@@ -123,8 +193,10 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
             />
           </div>
         </Card>
+      </motion.div>
 
-        {/* Samples */}
+      {/* Samples */}
+      <motion.div variants={cardVariants}>
         <Card className="p-6 rounded-2xl shadow-sm border">
           <h2 className="text-xl font-semibold mb-4">Sample Tests</h2>
           <Table
@@ -133,8 +205,10 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
             pagination={false}
           />
         </Card>
+      </motion.div>
 
-        {/* Test Cases */}
+      {/* Test Cases */}
+      <motion.div variants={cardVariants}>
         <Card className="p-6 rounded-2xl shadow-sm border">
           <h2 className="text-xl font-semibold mb-4">Test Cases</h2>
           <Table
@@ -143,8 +217,11 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
             pagination={false}
           />
         </Card>
-      </div>
-    </>
+      </motion.div>
+    </motion.div>
+  </motion.div>
+</AnimatePresence>
+
   );
 }
 
