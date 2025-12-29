@@ -4,6 +4,7 @@ import useLoadingStore from "@/app/store/loadingStore";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { useUpdateStateProblem } from "@/hook/problem/useUpdateStateProblem";
 // ExerciseTable.tsx
+import { useDeleteProblem } from "@/hook/problem/useDeleteProblem";
 import { MyProblem } from "@/services/rest/problem/get-my-problems/type";
 import {
   MoreOutlined,
@@ -15,6 +16,7 @@ import type { ColumnsType } from "antd/es/table";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import RouteLoading from "../shared/RouteLoading";
 import { MotionRow } from "./MotionRow";
 import { tableContainerVariants } from "./motion";
 
@@ -32,10 +34,11 @@ export default function AllProblemTable({
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  console.log(pageSize);
 
   const { updateStateProblemAsync } = useUpdateStateProblem();
+  const { deleteProblemAsync } = useDeleteProblem();
 
   const router = useRouter();
   const startLoading = useLoadingStore((state) => state.startLoading);
@@ -88,7 +91,9 @@ export default function AllProblemTable({
         <Switch
           checked={active}
           onChange={async () => {
+            setLoading(true)
             await updateStateProblemAsync({ problemId: record.problemId });
+            setLoading(false)
           }}
         />
       ),
@@ -136,7 +141,9 @@ export default function AllProblemTable({
             key: "delete",
             label: "Xóa",
             danger: true,
-            onClick: () => console.log("Delete", record.problemId),
+            onClick: () => {
+              deleteProblemAsync({ id: record.problemId, link: 'http://localhost:8080/problems' })
+            },
           },
         ];
 
@@ -148,6 +155,8 @@ export default function AllProblemTable({
       },
     },
   ];
+
+  if(loading) return <RouteLoading message="Đang update nội dung, vui lòng đợi..."/>
 
   return (
     <div className="bg-white p-4 rounded-lg flex flex-col gap-3">

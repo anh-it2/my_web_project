@@ -85,7 +85,7 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
     { title: "Score", dataIndex: "score", key: "score" },
   ];
 
-  const sampleData = testCases.filter((item) => item.is_sample);
+  const sampleData = testCases.filter((item) => item.sample);
 
   const startLoading = useLoadingStore((state) => state.startLoading);
 

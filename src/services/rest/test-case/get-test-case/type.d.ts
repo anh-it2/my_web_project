@@ -1,7 +1,7 @@
 export type TestCase = {
-  id: number;
+  testcaseId: number;
   input: string;
   expectedOutput: string;
   orderIndex: number;
-  is_sample: boolean;
+  sample: boolean;
 };

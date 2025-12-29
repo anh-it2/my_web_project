@@ -1,68 +1,11 @@
+import TestCaseTable from "@/components/table/TestCaseTable";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
-import { SearchOutlined } from "@ant-design/icons";
-import { Card, Input, Table, Tag, Typography } from "antd";
-import { ColumnsType } from "antd/es/table";
-import { useState } from "react";
+import { Card, Typography } from "antd";
 import "../../style.scss";
 
+const { Title } = Typography;
+
 export default function ListTestCase({ testcases }: { testcases: TestCase[] }) {
-  const [page, setPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(5);
-  const [searchValue, setSearchValue] = useState<string>("");
-
-  const { Title, Text } = Typography;
-
-  const filteredTestcases = testcases.filter(
-    (tc) =>
-      tc.input.toLowerCase().includes(searchValue.toLowerCase()) ||
-      tc.expectedOutput
-        .toString()
-        .toLowerCase()
-        .includes(searchValue.toString().toLowerCase())
-  );
-
-  const testcaseColumns: ColumnsType<TestCase> = [
-    // ... keep your existing column configs, maybe just tweak labels if you want ...
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-      sorter: (a: TestCase, b: TestCase) => a.id - b.id,
-    },
-
-    {
-      title: "Input",
-      dataIndex: "input",
-      key: "input",
-      render: (text: string) => (
-        <pre className="bg-gray-100 px-2 py-1 rounded text-sm">{text}</pre>
-      ),
-    },
-    {
-      title: "Output",
-      dataIndex: "expectedOutput",
-      key: "expectedOutput",
-      render: (text: string) => (
-        <pre className="bg-gray-100 px-2 py-1 rounded text-sm">{text}</pre>
-      ),
-    },
-    {
-      title: "Loại",
-      dataIndex: "sample",
-      key: "sample",
-      align: "center",
-      render: (sample: boolean) =>
-        sample ? <Tag color="blue">Sample</Tag> : <Tag>Testcase</Tag>,
-      filters: [
-        { text: "Sample", value: true },
-        { text: "Testcase", value: false },
-      ],
-      onFilter: (value, record) => record.is_sample === value,
-    },
-  ];
-
-  //   if (!activeProblem) return <RouteLoading />;
 
   return (
     <Card
@@ -76,42 +19,7 @@ export default function ListTestCase({ testcases }: { testcases: TestCase[] }) {
       className="testcase-card"
     >
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center gap-3 flex-wrap">
-          <div>
-            <Text type="secondary">
-              Quản lý testcases &amp; samples của đề bài.
-            </Text>
-          </div>
-          <Input
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            prefix={<SearchOutlined className="text-gray-400" />}
-            className="text-base w-[260px]"
-            placeholder="Tìm kiếm theo input / output"
-            allowClear
-          />
-        </div>
-
-        <Table<TestCase>
-          rowKey="testcaseId"
-          dataSource={filteredTestcases}
-          columns={testcaseColumns}
-          bordered
-          size="middle"
-          className="custom__table"
-          pagination={{
-            current: page,
-            pageSize,
-            pageSizeOptions: ["5", "10", "20", "50"],
-            total: filteredTestcases.length,
-            showSizeChanger: true,
-            showTotal: (total) => `Total ${total} items`,
-            onChange: (page, pageSize) => {
-              setPage(page);
-              setPageSize(pageSize);
-            },
-          }}
-        />
+          <TestCaseTable data={testcases} />
       </div>
     </Card>
   );

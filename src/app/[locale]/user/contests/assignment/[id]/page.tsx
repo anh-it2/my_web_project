@@ -62,7 +62,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
   const { listTestCase } = useListTestCase(id);
 
   const sampleTestCase = useMemo(
-    () => listTestCase?.find((item) => item.is_sample === true),
+    () => listTestCase?.find((item) => item.sample === true),
     [listTestCase]
   );
 
