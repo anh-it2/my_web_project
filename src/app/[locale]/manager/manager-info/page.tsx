@@ -2,5 +2,5 @@
 import UserInfoComponent from "@/components/UserInfo/UserInfoComponent";
 
 export default function UserInfo() {
-  return <UserInfoComponent userName="" />;
+  return <UserInfoComponent userName="" role="" />;
 }

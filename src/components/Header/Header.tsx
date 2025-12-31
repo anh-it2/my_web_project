@@ -284,7 +284,11 @@ import { useRouter } from "next/navigation";
 import LanguageSwitcher from "../shared/LanguageSwitcher/LanguageSwitcher";
 import "./Header.scss";
 
-export default function Header() {
+type HeaderProps = {
+  site: string;
+};
+
+export default function Header({ site }: HeaderProps) {
   /* =====================
    * FAKE DATA (tạm thời)
    * ===================== */
@@ -336,7 +340,7 @@ export default function Header() {
       case "business-info":
         {
           startLoading();
-          router.push("/user/user-info");
+          router.push(`/${site}/${site}-info`);
         }
         break;
       case "shop-setup":

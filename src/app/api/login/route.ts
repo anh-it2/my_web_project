@@ -27,12 +27,13 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
     });
 
+
     return response;
   } catch (err) {
     const error = err as AxiosError<Error>;
 
     const status = error.response?.status ?? 500;
-    const data = error.response?.data ?? { message: "Unknown error" };
+    const data = error.response?.data ?? { message: error.message };
 
     console.error("Register backend error:", status, data);
 

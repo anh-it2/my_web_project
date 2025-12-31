@@ -77,7 +77,7 @@ export default function CommonTable<T extends object>({
             pagination={{
               current: page,
               pageSizeOptions: pageSizeOptions,
-              total: dataSource.length,
+              total: dataSource? dataSource.length: 0,
               showSizeChanger: true,
               onChange: (p, ps) => {
                 setPage(p);

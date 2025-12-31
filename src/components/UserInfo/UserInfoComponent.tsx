@@ -3,12 +3,13 @@ import { useUserInfo } from "@/hook/auth/useUserInfo";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Form, Spin, Tag } from "antd";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
+import RHFDatePicker from "../form/RHFDatePicker";
 import RHFInput from "../form/RHFInput";
 import PublishButton from "../shared/Button/FormHeader/PublishButton";
-import { UserProfileFormValues, UserProfileSchema } from "./constants";
+import { UserProfileSchema } from "./constants";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -60,28 +61,12 @@ const loadingVariants = {
   exit: { opacity: 0 },
 };
 
-// mock API
-const fetchUserProfile = async (): Promise<UserProfileFormValues> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        username: "nguyenvana",
-        email: "vana@gmail.com",
-        role: "user",
-        status: "active",
-        fullName: "Nguyễn Văn A",
-        phone: "0123456789",
-        address: "Hà Nội, Việt Nam",
-        bio: "Frontend developer | React | Tailwind",
-      });
-    }, 600);
-  });
-};
 
 export default function UserInfoComponent({
-  userName,
+  userName, role
 }: {
   userName: string;
+  role: string;
 }) {
 
   const { userInfo } = useUserInfo(userName);
@@ -90,14 +75,14 @@ export default function UserInfoComponent({
 
   const methods = useForm({
     defaultValues: {
-      username: "",
-      email: "",
-      fullName: "",
-      phone: "",
-      address: "",
-      bio: "",
-      role: "",
-      status: "",
+      email: userInfo?.email || '',
+      fullName: userInfo?.fullName || '',
+      phone: userInfo?.phone || '',
+      bio: userInfo?.bio || '',
+      avatarUrl: userInfo?.avatarUrl || '',
+      github: userInfo?.github || '',
+      facebook: userInfo?.facebook || '',
+      birthday: userInfo?.birthday || '',
     },
   });
 
@@ -106,33 +91,20 @@ export default function UserInfoComponent({
     stopLoading();
   }, [stopLoading]);
 
-  const { reset, handleSubmit } = methods;
-  const [user, setUser] = useState<UserProfileFormValues>();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchUserProfile().then((data) => {
-      setUser(data);
-      reset({
-        ...data,
-      });
-      setLoading(false);
-    });
-  }, [reset]);
+  const {  handleSubmit } = methods;
 
   const onSubmit = (values: z.infer<typeof UserProfileSchema>) => {
     const payload = {
       profile: {
         fullName: values.fullName,
         phone: values.phone,
-        address: values.address,
         bio: values.bio,
       },
     };
     console.log("Submit payload:", payload);
   };
 
-  if (loading) {
+  if (!userInfo) {
     return (
       <motion.div
         key="loading"
@@ -176,10 +148,10 @@ export default function UserInfoComponent({
                 className="text-2xl font-semibold"
                 variants={itemVariants}
               >
-                {user?.fullName}
+                {userInfo?.fullName}
               </motion.h1>
               <motion.p className="text-gray-500" variants={itemVariants}>
-                @{user?.username}
+                @{userName}
               </motion.p>
               <motion.div
                 className="mt-2 flex gap-2"
@@ -188,10 +160,10 @@ export default function UserInfoComponent({
                 animate="visible"
               >
                 <motion.div variants={tagVariants}>
-                  <Tag color="green">{user?.role.toUpperCase()}</Tag>
+                  <Tag color="green">{role.toUpperCase()}</Tag>
                 </motion.div>
                 <motion.div variants={tagVariants}>
-                  <Tag color="blue">{user?.status}</Tag>
+                  <Tag color="blue"><span className="font-semibold">ACTIVE</span></Tag>
                 </motion.div>
               </motion.div>
             </div>
@@ -206,15 +178,6 @@ export default function UserInfoComponent({
                 initial="hidden"
                 animate="visible"
               >
-                <motion.div variants={itemVariants}>
-                  <RHFInput
-                    name="username"
-                    label="Username"
-                    readOnly={true}
-                    placeholder="Username"
-                  />
-                </motion.div>
-
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="fullName"
@@ -241,6 +204,16 @@ export default function UserInfoComponent({
                     required
                   />
                 </motion.div>
+
+                <motion.div variants={itemVariants}>
+                  <RHFInput name="github" label="Github" placeholder="Nhập github"/>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <RHFInput name="facebook" label="Facebook" placeholder="Nhập facebook" />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <RHFDatePicker name="birthday" label="Ngày sinh" />
+                </motion.div>
               </motion.div>
 
               <motion.div
@@ -248,12 +221,6 @@ export default function UserInfoComponent({
                 initial="hidden"
                 animate="visible"
               >
-                <motion.div variants={itemVariants}>
-                  <RHFInput name="status" label="Trạng thái" readOnly={true} />
-                </motion.div>
-                <motion.div variants={itemVariants}>
-                  <RHFInput name="role" label="Role" readOnly={true} />
-                </motion.div>
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="address"

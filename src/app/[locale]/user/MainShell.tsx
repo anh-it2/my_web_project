@@ -112,7 +112,7 @@ export default function MainShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f8fc]">
-      <Header />
+      <Header site="user" />
       <Layout className="flex-1 flex min-h-0 ">
         <Sidebar
           collapsed={collapsed}

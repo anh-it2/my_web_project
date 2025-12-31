@@ -64,6 +64,7 @@ export default function LoginForm({
     const { remember, ...payload } = values;
     const res = await loginAccount(payload);
     localStorage.setItem("userName", res.username);
+    localStorage.setItem("role", res.role);
 
     if (!res) {
       message.error("Login failed");

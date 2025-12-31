@@ -13,5 +13,5 @@ export default function UserInfo() {
 
   if(userName === '') return <RouteLoading />
 
-  return <UserInfoComponent userName={userName}/>
+  return <UserInfoComponent userName={userName} role="admin"/>
 }

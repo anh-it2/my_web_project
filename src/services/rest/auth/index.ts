@@ -30,9 +30,8 @@ export async function loginAccount(payload: LoginTypes) {
 
 export async function getUserInfor(userName:string) {
   try {
-    const res = await axios.post('/api/post',{
-      link: 'http://localhost:8080/user/username',
-      payload: userName
+    const res = await axios.post('/api/get-list',{
+      link: `http://localhost:8080/user/${userName}`
     });
     return res.data;
   } catch (error) {
