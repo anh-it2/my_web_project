@@ -1,11 +1,13 @@
 "use client";
 
 import UserTable from "@/components/table/UserTable";
-import { useListUser } from "@/hook/auth/useListUser";
+import useGetListUser from "@/hook/user-info/useGetListUser";
 import "./style.scss";
 
 export default function AdminManagementMock() {
-  const { listUser, isLoading, isError, error } = useListUser();
+  const { listUser, isLoading, isError, error, handleFilterChange } = useGetListUser();
+
+  console.log(listUser)
 
   console.log("AdminManagement - listUser:", listUser);
   console.log("AdminManagement - isLoading:", isLoading);
@@ -19,6 +21,7 @@ export default function AdminManagementMock() {
       <UserTable 
         data={listUser?.content || []} 
         totalElements={listUser?.totalElements || 0} 
+        handlePageChange={handleFilterChange}
       />
     </div>
   );

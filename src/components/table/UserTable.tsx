@@ -1,21 +1,19 @@
 "use client";
 import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
+import { FilterOptions } from "@/services/rest/constant";
+import { User } from "@/services/rest/user/type";
 import { Input, Modal, Select } from "antd";
 import { useState } from "react";
 import CommonTable from "./CommonTable";
 
-type User = {
-  username: string;
-  role: "USER" | "ADMIN";
-};
-
 type Props = {
   data: User[];
   totalElements: number;
+  handlePageChange: (filter: FilterOptions) => void
 };
 
-export default function UserTable({ data, totalElements }: Props) {
+export default function UserTable({ data, totalElements, handlePageChange }: Props) {
   const [grantModalOpen, setGrantModalOpen] = useState<boolean>(false);
   const [revokeModalOpen, setRevokeModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -63,7 +61,9 @@ export default function UserTable({ data, totalElements }: Props) {
         columns={columns}
         dataSource={data}
         rowKey="username"
+        defaultPageSize={10}
         totalElements={totalElements}
+        handlePageChange={handlePageChange}
       />
 
       {/* Grant Admin Modal */}

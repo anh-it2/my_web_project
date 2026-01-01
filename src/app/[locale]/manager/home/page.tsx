@@ -1,7 +1,7 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
 import AllProblemTable from "@/components/table/AllProblemTable";
-import { useListProblem } from "@/hook/problem/useListProblem";
+import useGetListProblem from "@/hook/problem/useGetListProblem";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import AdminManagementMock from "../components/AdminManagement";
@@ -10,7 +10,7 @@ import "./style.scss";
 export default function ManagerPage() {
   const [activeTab, setActiveTab] = useState<string>("1");
   const stopLoading = useLoadingStore((state) => state.stopLoading);
-  const { listProblem } = useListProblem();
+  const { listProblem, handleFilterChange } = useGetListProblem();
 
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export default function ManagerPage() {
             addNewProblemLink="/manager/add-problem"
             basePath="/manager"
             totalElements={listProblem?.totalElements || 0}
+            handlePageChange={handleFilterChange}
           />
         </Tabs.TabPane>
       </Tabs>

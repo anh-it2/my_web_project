@@ -1,7 +1,7 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
 import AllProblemTable from "@/components/table/AllProblemTable";
-import { useListProblem } from "@/hook/problem/useListProblem";
+import useGetListProblem from "@/hook/problem/useGetListProblem";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import "./style.scss";
@@ -13,7 +13,7 @@ export default function AdminHomePage() {
     stopLoading();
   }, [stopLoading]);
 
-  const { listProblem } = useListProblem();
+  const { listProblem, handleFilterChange } = useGetListProblem();
 
   const listActiveProblem = listProblem?.content?.filter((item) => item.active === true);
 
@@ -33,6 +33,7 @@ export default function AdminHomePage() {
             data={listProblem?.content || []}
             addNewProblemLink="/admin/add-problem"
             totalElements={listProblem?.totalElements || 0}
+            handlePageChange={handleFilterChange}
           />
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="Public Problems">
@@ -40,6 +41,7 @@ export default function AdminHomePage() {
             data={listActiveProblem || []}
             addNewProblemLink="/admin/add-problem"
             totalElements={listProblem?.totalElements || 0}
+            handlePageChange={handleFilterChange}
           />
         </Tabs.TabPane>
         <Tabs.TabPane key="3" tab="Draft Problems">
@@ -47,6 +49,7 @@ export default function AdminHomePage() {
             data={listUncctiveProblem || []}
             addNewProblemLink="/admin/add-problem"
             totalElements={listProblem?.totalElements || 0}
+            handlePageChange={handleFilterChange}
           />
         </Tabs.TabPane>
       </Tabs>

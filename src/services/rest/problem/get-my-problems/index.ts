@@ -1,9 +1,13 @@
 import axios from "axios";
 import { ProblemResponse } from "../get-active-problem/type";
 
-export async function getListProblem(): Promise<ProblemResponse> {
-  const res = await axios.get(
-    `${window.location.origin}/api/problem/get-my-problem`
+import { FilterOptions } from "../../constant";
+
+export async function getListProblem(filter?: FilterOptions): Promise<ProblemResponse> {
+  const res = await axios.post(
+    `${window.location.origin}/api/get-list`, {
+      link: `http://localhost:8080/problems/me?page=${filter?.pageNumber}&pageSize=${filter?.pageSize}`,
+    }
   );
   if (!res.data.content) return {} as ProblemResponse;
 

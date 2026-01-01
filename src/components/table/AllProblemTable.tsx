@@ -17,11 +17,14 @@ import { useState } from "react";
 import RouteLoading from "../shared/RouteLoading";
 import CommonTable from "./CommonTable";
 
+import { FilterOptions } from "@/services/rest/constant";
+
 type Props = {
   data: Problem[];
   addNewProblemLink: string;
   basePath?: string;
   totalElements: number;
+  handlePageChange?: (filter: FilterOptions) => void;
 };
 
 export default function AllProblemTable({
@@ -29,6 +32,7 @@ export default function AllProblemTable({
   addNewProblemLink,
   basePath = "/admin",
   totalElements,
+  handlePageChange,
 }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -169,6 +173,7 @@ export default function AllProblemTable({
           }}
         />
       }
+      handlePageChange={handlePageChange}
     />
   );
 }

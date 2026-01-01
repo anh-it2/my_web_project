@@ -1,4 +1,4 @@
-import { getUserInfor } from "@/services/rest/auth";
+import { getUserInfor } from "@/services/rest/user";
 import { useQuery } from "@tanstack/react-query";
 
 export function useUserInfo(userName: string) {

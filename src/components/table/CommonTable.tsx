@@ -1,4 +1,5 @@
 "use client";
+import { FilterOptions } from "@/services/rest/constant";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
@@ -18,6 +19,7 @@ interface CommonTableProps<T> {
   defaultPageSize?: number;
   pageSizeOptions?: string[];
   totalElements: number
+  handlePageChange?: ({pageNumber, pageSize}: FilterOptions) => void
 }
 
 export default function CommonTable<T extends object>({
@@ -31,6 +33,7 @@ export default function CommonTable<T extends object>({
   defaultPageSize = 5,
   pageSizeOptions = ["5", "10", "20", "50"],
   totalElements,
+  handlePageChange
 }: CommonTableProps<T>) {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(defaultPageSize);
@@ -78,12 +81,16 @@ export default function CommonTable<T extends object>({
             }}
             pagination={{
               current: page,
+              pageSize: pageSize,
               pageSizeOptions: pageSizeOptions,
               total: totalElements,
               showSizeChanger: true,
               onChange: (p, ps) => {
                 setPage(p);
                 setPageSize(ps);
+                if (handlePageChange) {
+                  handlePageChange({pageNumber: p - 1, pageSize: ps});
+                }
               },
             }}
           />

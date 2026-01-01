@@ -1,5 +1,7 @@
 import useLoadingStore from "@/app/store/loadingStore";
-import { useUserInfo } from "@/hook/auth/useUserInfo";
+import { useUpdateUserInfo } from "@/hook/user-info/useUpdateUserInfo";
+import { useUserInfo } from "@/hook/user-info/useUserInfo";
+import { UserProfileSchema } from "@/hook/user-info/useUserInfoSchema";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Form, Spin, Tag } from "antd";
 import { motion } from "framer-motion";
@@ -9,7 +11,6 @@ import z from "zod";
 import RHFDatePicker from "../form/RHFDatePicker";
 import RHFInput from "../form/RHFInput";
 import PublishButton from "../shared/Button/FormHeader/PublishButton";
-import { UserProfileSchema } from "./constants";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -70,6 +71,7 @@ export default function UserInfoComponent({
 }) {
 
   const { userInfo } = useUserInfo(userName);
+  const { updateUserInfoAsync } = useUpdateUserInfo();
 
   console.log(userInfo)
 
@@ -86,6 +88,20 @@ export default function UserInfoComponent({
     },
   });
 
+  useEffect(() => {
+    methods.reset({
+      email: userInfo?.email || '',
+      fullName: userInfo?.fullName || '',
+      phone: userInfo?.phone || '',
+      bio: userInfo?.bio || '',
+      avatarUrl: userInfo?.avatarUrl || '',
+      github: userInfo?.github || '',
+      facebook: userInfo?.facebook || '',
+      birthday: userInfo?.birthday || '',
+    });
+  }, [userInfo]);
+
+  const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
   useEffect(() => {
     stopLoading();
@@ -93,15 +109,10 @@ export default function UserInfoComponent({
 
   const {  handleSubmit } = methods;
 
-  const onSubmit = (values: z.infer<typeof UserProfileSchema>) => {
-    const payload = {
-      profile: {
-        fullName: values.fullName,
-        phone: values.phone,
-        bio: values.bio,
-      },
-    };
-    console.log("Submit payload:", payload);
+  const onSubmit = async (values: z.infer<typeof UserProfileSchema>) => {
+    startLoading();
+    await updateUserInfoAsync(values);
+    stopLoading();
   };
 
   if (!userInfo) {
@@ -221,15 +232,6 @@ export default function UserInfoComponent({
                 initial="hidden"
                 animate="visible"
               >
-                <motion.div variants={itemVariants}>
-                  <RHFInput
-                    name="address"
-                    label="Địa chỉ"
-                    placeholder="Nhập địa chỉ"
-                    required
-                  />
-                </motion.div>
-
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="bio"
