@@ -5,3 +5,13 @@ export type TestCase = {
   orderIndex: number;
   sample: boolean;
 };
+
+export type ListTestCaseResponse = {
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  first: boolean;
+  content: TestCase[];
+};

@@ -4,7 +4,7 @@ import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useProblemDetail } from "@/hook/problem/useProblemDetail";
-import { useListTestCase } from "@/hook/test-case/useListTestCase";
+import useGetListTestCase from "@/hook/test-case/useGetListTestCase";
 import { Tabs } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -38,8 +38,10 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
 
   const { problemDetail } = useProblemDetail(params.id);
 
-  const { listTestCase } = useListTestCase(params.id);
+  const { listTestCase, handleFilterChange } = useGetListTestCase(params.id);
 
+  console.log("listTestCase", listTestCase);
+  console.log("problemDetail", problemDetail);
 
   if (!problemDetail) return <RouteLoading />;
 
@@ -61,11 +63,11 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
           <Tabs.TabPane key="1" tab="Product Detail">
             <ProblemDetailPage
               data={problemDetail}
-              testCases={listTestCase || []}
+              testCases={listTestCase?.content || []}
             />
           </Tabs.TabPane>
           <Tabs.TabPane key="2" tab="List Test Case">
-            <ListTestCase testcases={listTestCase || []} />
+            <ListTestCase testcases={listTestCase?.content || []} />
           </Tabs.TabPane>
         </Tabs>
       </div>

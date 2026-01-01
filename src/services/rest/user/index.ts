@@ -1,9 +1,8 @@
 import { UserProfileFormValues } from "@/hook/user-info/useUserInfoSchema";
 import axios from "axios";
-import { FilterOptions } from "../constant";
+import { BASE_URL, FilterOptions } from "../constant";
 import { ListUserResponse, UpdateRoleRequest } from "./type";
 
-const  BASE_URL = "http://localhost:8080";
 
 export async function getUserInfor(userName:string) {
   try {
