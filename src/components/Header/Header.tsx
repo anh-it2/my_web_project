@@ -9,7 +9,7 @@ import {
   MessageOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Badge, Dropdown, Space } from "antd";
+import { Badge, Dropdown, message, Space } from "antd";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
@@ -24,9 +24,6 @@ type HeaderProps = {
 };
 
 export default function Header({ site }: HeaderProps) {
-  /* =====================
-   * FAKE DATA (tạm thời)
-   * ===================== */
 
   const [email, setEmail] = useState<string | null>(null);
 
@@ -45,10 +42,6 @@ export default function Header({ site }: HeaderProps) {
   const notificationCount = 2;
   const messageCount = 3;
 
-  /* =====================
-   * COMPUTED UI DATA
-   * ===================== */
-
   const currentUserName = useMemo(() => {
     const name = currentUser.currentUserName || "Current User";
     return name.length > 20 ? name.substring(0, 20) + "..." : name;
@@ -65,10 +58,6 @@ export default function Header({ site }: HeaderProps) {
   };
 
   const [logoError, setLogoError] = useState(false);
-
-  /* =====================
-   * MENU HANDLERS (FAKE)
-   * ===================== */
 
   const handleUserMenuClick = async ({ key }: { key: string }) => {
     switch (key) {
@@ -88,16 +77,13 @@ export default function Header({ site }: HeaderProps) {
         localStorage.removeItem("userName");
         localStorage.removeItem("role");
         await logoutAccount();
-        console.log("Logout");
+        message.success("Logout successfully");
+        router.push("/login");
         break;
       default:
         break;
     }
   };
-
-  /* =====================
-   * MENU CONFIG
-   * ===================== */
 
   const userMenuItems: MenuProps["items"] = [
     {
@@ -144,10 +130,6 @@ export default function Header({ site }: HeaderProps) {
       danger: true,
     },
   ];
-
-  /* =====================
-   * RENDER
-   * ===================== */
 
   return (
     <header className="bg-[#002140] md:px-6 h-16 flex items-center shadow-[0_2px_8px_rgba(0,0,0,0.15)] px-3 md:h-14">

@@ -4,3 +4,7 @@ export type CreateTestCase = {
   isSample: boolean;
   orderIndex: number;
 };
+
+export type CreateTestCasePayload = {
+  testcases: CreateTestCase[];
+};

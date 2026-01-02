@@ -16,6 +16,7 @@ type Props = {
     js: string;
     python: string;
   };
+  isLoading?: boolean
 };
 
 export function CodeEditor({
@@ -24,6 +25,7 @@ export function CodeEditor({
   language,
   setLanguage,
   CODE_TEMPLATES,
+  isLoading = false
 }: Props) {
   return (
     <>
@@ -44,30 +46,6 @@ export function CodeEditor({
         <option value="python">Python</option>
       </select>
 
-      {/* Editor */}
-      {/* <textarea
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        spellCheck={false}
-        className="w-full min-h-[280px] rounded-xl bg-gray-900 text-gray-100 font-mono text-sm p-4 leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500"
-        onKeyDown={(e) => {
-          if (e.key === "Tab") {
-            e.preventDefault();
-            const start = e.currentTarget.selectionStart;
-            const end = e.currentTarget.selectionEnd;
-
-            const newCode = code.slice(0, start) + "    " + code.slice(end);
-
-            setCode(newCode);
-
-            requestAnimationFrame(() => {
-              e.currentTarget.selectionStart = e.currentTarget.selectionEnd =
-                start + 4;
-            });
-          }
-        }}
-      /> */}
-
       <Editor
         height="400px"
         language="cpp"
@@ -77,8 +55,8 @@ export function CodeEditor({
       />
 
       <div className="flex flex-row gap-2 items-end">
-        <CancelButton title="Chạy thử" />
-        <PublishButton title="Nộp bài" isSubmit={true} />
+        <CancelButton title="Chạy thử" disable={isLoading}/>
+        <PublishButton title="Nộp bài" isSubmit={true} isLoading={isLoading}/>
       </div>
     </>
   );

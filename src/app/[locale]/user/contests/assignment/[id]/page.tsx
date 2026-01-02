@@ -5,6 +5,7 @@ import CustomUploadFile from "@/components/form/CustomUploadFile";
 import FormHeader from "@/components/form/FormHeader";
 import ProblemStatement from "@/components/ProblemStatement";
 import { useProblemDetail } from "@/hook/problem/useProblemDetail";
+import { useSubmitProblem } from "@/hook/problem/useSubmitProblem";
 import useGetListTestCase from "@/hook/test-case/useGetListTestCase";
 import { Card, Divider, Tag, Typography, UploadFile } from "antd";
 import { useTranslations } from "next-intl";
@@ -60,6 +61,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
 
   const { problemDetail } = useProblemDetail(id);
   const { listTestCase } = useGetListTestCase(id);
+  const {submitProblemAsync, isLoading} = useSubmitProblem()
 
   const sampleTestCase = useMemo(
     () => listTestCase?.content.find((item) => item.sample === true),
@@ -80,9 +82,14 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
     stopLoading();
   }, [stopLoading]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    const payload = {
+      problemId: id,
+      language: language,
+      code: code,
+    };
+    await submitProblemAsync({payload})
   };
 
   const breadCrumbs = [
@@ -166,6 +173,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
               language={language}
               setLanguage={setLanguage}
               CODE_TEMPLATES={CODE_TEMPLATES}
+              isLoading={isLoading}
             />
             <CustomUploadFile
               fileList={fileList}

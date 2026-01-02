@@ -84,7 +84,7 @@ export default function CreateProblem() {
   const onSubmit = async (values: z.infer<typeof problemFormSchema>) => {
     const payload = {
       ...values,
-      testCases: [
+      testcases: [
         ...values.testCases,
         ...values.samples.map((sample) => ({
           ...sample,
@@ -114,14 +114,14 @@ export default function CreateProblem() {
       outputFormat: null,
     };
 
-    const { testCases } = payload;
+    const { testcases } = payload;
 
     const res = await addProblemAsync({ payload: problemData });
     setMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
 
     const problemId = res.problemId;
     await addTestCaseAsync({
-      payload: testCases,
+      payload: {testcases: testcases},
       problemId,
     });
     setMessage("Đã nạp test case thành công, đang điều hướng");

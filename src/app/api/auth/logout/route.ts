@@ -1,10 +1,7 @@
-import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(_req: NextRequest) {
   try {
-    await axios.post("http://localhost:8080/auth/logout");
-
     const response = NextResponse.json(
       { message: "Logout success" },
       { status: 200 }

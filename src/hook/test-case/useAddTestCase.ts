@@ -1,5 +1,5 @@
 import { addTestCase } from "@/services/rest/test-case/add-test-case";
-import { CreateTestCase } from "@/services/rest/test-case/add-test-case/type";
+import { CreateTestCasePayload } from "@/services/rest/test-case/add-test-case/type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useAddTestCase() {
@@ -11,7 +11,7 @@ export function useAddTestCase() {
       payload,
     }: {
       problemId: number;
-      payload: CreateTestCase[];
+      payload: CreateTestCasePayload;
     }) => {
       const res = await addTestCase(problemId, payload);
       return res;

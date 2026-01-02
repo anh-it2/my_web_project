@@ -1,8 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "../../constant";
-import { CreateTestCase } from "./type";
+import { CreateTestCasePayload } from "./type";
 
-export async function addTestCase(problemId: number, payload: CreateTestCase[]) {
+export async function addTestCase(problemId: number, payload: CreateTestCasePayload) {
 
   const res = await axios.post('/api/post', {
     link: `${BASE_URL}/testcases/problem/${problemId}`,
