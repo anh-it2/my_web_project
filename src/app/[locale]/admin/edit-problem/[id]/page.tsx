@@ -3,7 +3,7 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useProblemDetail } from "@/hook/problem/useProblemDetail";
-import { useListTestCase } from "@/hook/test-case/useListTestCase";
+import useGetListTestCase from "@/hook/test-case/useGetListTestCase";
 import { useEffect } from "react";
 import EditForm from "./components/EditForm";
 
@@ -13,7 +13,7 @@ export default function EditProblemPage({
   params: { id: string };
 }) {
   const { problemDetail } = useProblemDetail(params.id);
-  const { listTestCase } = useListTestCase(params.id);
+  const { listTestCase } = useGetListTestCase(params.id);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
 
   useEffect(() => {
@@ -24,5 +24,5 @@ export default function EditProblemPage({
     return <RouteLoading />;
   }
 
-  return <EditForm problemDetail={problemDetail} testCases={listTestCase} />;
+  return <EditForm problemDetail={problemDetail} testCases={listTestCase.content || []} />;
 }

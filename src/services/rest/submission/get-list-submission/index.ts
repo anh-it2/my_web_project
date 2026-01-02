@@ -1,9 +1,13 @@
 import axios from "axios";
+import { FilterOptions } from "../../constant";
 import { Submission } from "../type";
 
-export async function getListSubmission(): Promise<Submission[]> {
-  const res = await axios.get(
-    "https://694391e669b12460f3151313.mockapi.io/submittedAssign"
+export async function getListSubmission(filter: FilterOptions, problemId: string): Promise<Submission[]> {
+  const res = await axios.post(
+    '/api/get-list', {
+      link: `http://localhost:8080/submissions/${problemId}?page=${filter.pageNumber}&pageSize=${filter.pageSize}`,
+      filter
+    }
   );
   return res.data || null;
 }

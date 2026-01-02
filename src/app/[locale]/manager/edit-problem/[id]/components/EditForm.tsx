@@ -263,11 +263,8 @@ export default function EditForm({ problemDetail, testCases }: EditFormProps) {
                         </Col>
 
                         <Col xs={24} md={4}>
-                          <div className="flex items-center gap-2">
-                            <RHFSwitch name={`testCases.${i}.isSample`} />
-                            <span className="text-sm font-medium">
-                              Is Sample
-                            </span>
+                          <div className="flex items-center justify-center gap-2">
+                            <RHFSwitch name={`testCases.${i}.isSample`} label="Is Sample"/>
                           </div>
                         </Col>
                       </Row>

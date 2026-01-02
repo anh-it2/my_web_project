@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import useLoadingStore from "@/app/store/loadingStore";
-import { useListSubmission } from "@/hook/submission/useListSubmission";
+import useGetListSubmission from "@/hook/submission/useGetListSubmission";
 import { Submission } from "@/services/rest/submission/type";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Table, Tag } from "antd";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../.././style.scss";
 
-export default function SubmissionTable() {
+export default function SubmissionTable({problemId}: {problemId: string}) {
   const [data, setData] = useState<Submission[]>([]);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
@@ -18,7 +18,7 @@ export default function SubmissionTable() {
 
   console.log(pageSize);
 
-  const { listSubmission, refetch } = useListSubmission();
+  const { listSubmission, refetch } = useGetListSubmission(problemId);
 
   useEffect(() => {
     if (!listSubmission) return;

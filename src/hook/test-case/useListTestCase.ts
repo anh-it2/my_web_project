@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useListTestCase(id: string, filter: FilterOptions) {
   const { data, isLoading } = useQuery({
-    queryKey: ["LIST_TEST_CASE", id, filter.pageNumber, filter.pageSize],
+    queryKey: ["LIST_TEST_CASE", id, filter?.pageNumber, filter?.pageSize],
     queryFn: () => {
       return getListTestCaseForProblem(id, filter);
     },

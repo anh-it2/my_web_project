@@ -174,7 +174,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
             />
           </div>
           <Divider />
-          <SubmissionTable />
+          <SubmissionTable problemId={id} />
         </Card>
       </form>
       <ConfirmModal
