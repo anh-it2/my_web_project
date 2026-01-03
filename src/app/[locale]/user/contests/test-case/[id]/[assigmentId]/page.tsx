@@ -268,7 +268,7 @@ export default function TestCasePage({ params }: { params: { id: string, assigme
                   className="mt-3 bg-[#0f172a] rounded-lg p-4 text-sm text-gray-100 overflow-auto"
                 >
                   <pre className="whitespace-pre-wrap">
-                    <code>anything</code>
+                    <code>{submissionDetail?.code}</code>
                   </pre>
                 </motion.div>
               )}

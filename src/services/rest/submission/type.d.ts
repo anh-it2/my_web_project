@@ -19,4 +19,5 @@ export interface Submission {
   submittedAt: string; 
   totalTestcases: number;
   username: string;
+  code: string;
 }
