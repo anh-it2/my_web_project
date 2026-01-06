@@ -63,14 +63,21 @@ export default function LoginForm({
     setLoading(true);
     const { remember, ...payload } = values;
     const res = await loginAccount(payload);
-    localStorage.setItem("userName", res.username);
-    localStorage.setItem("role", res.role);
 
     if (!res) {
       message.error("Login failed");
       setLoading(false);
       return;
     }
+
+    if (res.status === 401) {
+      message.error("Invalid username or password");
+      setLoading(false);
+      return;
+    }
+
+    localStorage.setItem("userName", res.username);
+    localStorage.setItem("role", res.role);
 
     if (res.status && res.status !== 200) {
       message.error(res.backend?.message ?? `Login failed (${res.status})`);
