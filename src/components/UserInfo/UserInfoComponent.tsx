@@ -5,7 +5,7 @@ import { UserProfileSchema } from "@/hook/user-info/useUserInfoSchema";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Form, Spin, Tag } from "antd";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import RHFDatePicker from "../form/RHFDatePicker";
@@ -72,7 +72,6 @@ export default function UserInfoComponent({
 
   const { userInfo } = useUserInfo(userName);
   const { updateUserInfoAsync } = useUpdateUserInfo();
-  const [edit, setEdit] = useState<boolean>(false)
 
 
   const methods = useForm({
