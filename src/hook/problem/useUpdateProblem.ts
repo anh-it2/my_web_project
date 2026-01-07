@@ -1,21 +1,22 @@
-import { addProblem } from "@/services/rest/problem/add-problem";
+import { updateProblem } from "@/services/rest/problem/updateProblem";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useAddProblem() {
+export function useUpdateProblem() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async ({ payload }: { payload: CreateProblem }) => {
-      const res = await addProblem(payload);
+    mutationFn: async ({ payload, problemId }: { payload: UpdateProblem, problemId: string }) => {
+      const res = await updateProblem(payload, problemId);
       return res;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["LIST_PROBLEM"],  exact: false, });
       queryClient.invalidateQueries({ queryKey: ["LIST_ACTIVE_PROBLEM"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["PROBLEM_DETAIL"], exact: false });
     },
   });
   return {
-    addProblem: mutation.mutate,
-    addProblemAsync: mutation.mutateAsync,
+    updateProblem: mutation.mutate,
+    updateProblemAsync: mutation.mutateAsync,
     isLoading: mutation.isPending,
     isError: mutation.isError,
     isSuccess: mutation.isSuccess,

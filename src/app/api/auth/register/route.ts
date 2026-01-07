@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/services/rest/constant";
 import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,7 +7,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const res = await axios.post(
-      "https://dinhchat.id.vn/auth/register",
+      `${BASE_URL}/auth/register`,
       payload,
       {
         // cookies from browser are not sent in this server-side call anyway

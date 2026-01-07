@@ -5,7 +5,7 @@ import { UserProfileSchema } from "@/hook/user-info/useUserInfoSchema";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Form, Spin, Tag } from "antd";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import RHFDatePicker from "../form/RHFDatePicker";
@@ -72,8 +72,8 @@ export default function UserInfoComponent({
 
   const { userInfo } = useUserInfo(userName);
   const { updateUserInfoAsync } = useUpdateUserInfo();
+  const [edit, setEdit] = useState<boolean>(false)
 
-  console.log(userInfo)
 
   const methods = useForm({
     defaultValues: {
@@ -84,7 +84,7 @@ export default function UserInfoComponent({
       avatarUrl: userInfo?.avatarUrl || '',
       github: userInfo?.github || '',
       facebook: userInfo?.facebook || '',
-      birthday: userInfo?.birthday || '',
+      birthday: userInfo?.birthday || null,
     },
   });
 
@@ -97,7 +97,7 @@ export default function UserInfoComponent({
       avatarUrl: userInfo?.avatarUrl || '',
       github: userInfo?.github || '',
       facebook: userInfo?.facebook || '',
-      birthday: userInfo?.birthday || '',
+      birthday: userInfo?.birthday || null,
     });
   }, [userInfo]);
 
@@ -110,6 +110,7 @@ export default function UserInfoComponent({
   const {  handleSubmit } = methods;
 
   const onSubmit = async (values: z.infer<typeof UserProfileSchema>) => {
+    console.log(values)
     startLoading();
     await updateUserInfoAsync(values);
     stopLoading();
@@ -223,7 +224,7 @@ export default function UserInfoComponent({
                   <RHFInput name="facebook" label="Facebook" placeholder="Nhập facebook" />
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <RHFDatePicker name="birthday" label="Ngày sinh" />
+                  <RHFDatePicker name="birthday" label="Ngày sinh (hiện BE đang lỗi)" readOnly={true}/>
                 </motion.div>
               </motion.div>
 

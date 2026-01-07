@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/services/rest/constant";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,7 +7,7 @@ export async function POST(req: NextRequest) {
   const { id } = await req.json();
 
   try {
-    const res = await axios.get(`https://dinhchat.id.vn/problems/${id}`, {
+    const res = await axios.get(`${BASE_URL}/problems/${id}`, {
       headers: {
         Authorization: `Bearer ${jwtToken?.value}`,
       },

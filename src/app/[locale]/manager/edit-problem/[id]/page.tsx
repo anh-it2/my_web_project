@@ -16,6 +16,8 @@ export default function EditProblemPage({
   const { listTestCase } = useGetListTestCase(params.id);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
 
+  console.log("listTestCase", listTestCase);
+
   useEffect(() => {
     stopLoading();
   }, [stopLoading]);
@@ -24,5 +26,5 @@ export default function EditProblemPage({
     return <RouteLoading />;
   }
 
-  return <EditForm problemDetail={problemDetail} testCases={listTestCase?.content || []} />;
+  return <EditForm problemDetail={problemDetail} testCases={listTestCase?.content || []} problemId={params.id}/>;
 }

@@ -9,7 +9,8 @@ export function useDeleteProblem() {
       return res;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["LIST_PROBLEM"] });
+      queryClient.invalidateQueries({ queryKey: ["LIST_PROBLEM"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["LIST_ACTIVE_PROBLEM"], exact: false });
     },
   });
   return {

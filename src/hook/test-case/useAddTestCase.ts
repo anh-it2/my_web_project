@@ -19,6 +19,7 @@ export function useAddTestCase() {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["LIST_TEST_CASE"],
+        exact: false,
       });
     },
   });

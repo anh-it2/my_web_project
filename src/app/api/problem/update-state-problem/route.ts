@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/services/rest/constant";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,7 +9,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     const res = await axios.put(
-      `https://dinhchat.id.vn/problems/active/${problemId}`,
+      `${BASE_URL}/problems/active/${problemId}`,
       null,
       {
         headers: {

@@ -10,7 +10,8 @@ export function useUpdateUserRole() {
       return res;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["USER_LIST"] });
+      queryClient.invalidateQueries({ queryKey: ["USER_LIST"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["USER_DETAIL"], exact: false });
     },
   });
   return {

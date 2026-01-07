@@ -22,11 +22,11 @@ export const editProblemFormSchema = z.object({
 
   description: z.string().min(1, "Description is required"),
 
-  samples: z
-    .array(sampleSchema.extend({ isSample: z.literal(true) }))
-    .min(1, "At least one sample is required"),
-
   testCases: z.array(sampleSchema).min(1, "At least one test case is required"),
 
   constraints: z.string().min(1, "Constraints is required"),
+
+  sampleInput: z.string().min(1, "Sample input is required"),
+
+  sampleOutput: z.string().min(1, "Sample output is required"),
 });

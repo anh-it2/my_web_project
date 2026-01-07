@@ -2,6 +2,8 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
+import ListTestCase from "@/components/problem/ListTestCase";
+import ProblemDetailPage from "@/components/problem/ProblemDetail";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useProblemDetail } from "@/hook/problem/useProblemDetail";
 import useGetListTestCase from "@/hook/test-case/useGetListTestCase";
@@ -9,9 +11,6 @@ import { Tabs } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import "../style.scss";
-import ListTestCase from "./components/ListTestCase";
-import ProblemDetailPage from "./components/ProblemDetail";
 
 export default function ContestDetail({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState<string>("1");

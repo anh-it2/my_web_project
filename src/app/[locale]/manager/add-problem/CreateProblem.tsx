@@ -5,11 +5,12 @@ import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useAddProblem } from "@/hook/problem/useAddProblem";
 import { useAddTestCase } from "@/hook/test-case/useAddTestCase";
+import { getErrorMessages } from "@/utils/fetFormError";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, Steps } from "antd";
+import { Card, message, Steps } from "antd";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import BasicInfoStep from "./components/BasicInfoStep";
@@ -59,7 +60,7 @@ export default function CreateProblem() {
   const t = useTranslations("sidebar");
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
-  const [message, setMessage] = useState<string>("Đang đăng tải sản phẩm");
+  const [loadingMessage, setLoadingMessage] = useState<string>("Đang đăng tải sản phẩm");
   const router = useRouter();
 
   const breadCrumbs = [
@@ -75,22 +76,32 @@ export default function CreateProblem() {
 
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   const { addProblemAsync } = useAddProblem();
   const { addTestCaseAsync } = useAddTestCase();
 
+  useEffect(() => {
+  const messages = getErrorMessages(errors);
+  if (messages.length === 0) return;
+
+  const showMessages = async () => {
+    for (const msg of messages) {
+      message.error(msg);
+      await new Promise((r) => setTimeout(r, 1000)); // thời gian hiển thị
+    }
+  };
+
+  showMessages();
+}, [errors]);
+
+
   const onSubmit = async (values: z.infer<typeof problemFormSchema>) => {
     const payload = {
       ...values,
-      testcases: [
-        ...values.testCases,
-        ...values.samples.map((sample) => ({
-          ...sample,
-          orderIndex: sample.orderIndex + values.testCases.length,
-        })),
-      ],
+      sampleInput: values.samples[0]?.input || '',
+      sampleOutput: values.samples[0]?.expectedOutput || '',
     };
     const {
       problemCode,
@@ -100,6 +111,8 @@ export default function CreateProblem() {
       difficultyLevel,
       timeLimit,
       memoryLimit,
+      sampleInput,
+      sampleOutput,
     } = payload;
 
     const problemData = {
@@ -112,23 +125,24 @@ export default function CreateProblem() {
       memoryLimit,
       inputFormat: null,
       outputFormat: null,
+      sampleInput,
+      sampleOutput,
     };
 
-    const { testcases } = payload;
 
     const res = await addProblemAsync({ payload: problemData });
-    setMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
+    setLoadingMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
 
     const problemId = res.problemId;
     await addTestCaseAsync({
-      payload: {testcases: testcases},
+      payload: {testcases: values.testCases},
       problemId,
     });
-    setMessage("Đã nạp test case thành công, đang điều hướng");
+    setLoadingMessage("Đã nạp test case thành công, đang điều hướng");
     router.push("/manager/home");
   };
 
-  if (isSubmitting) return <RouteLoading message={message} />;
+  if (isSubmitting) return <RouteLoading message={loadingMessage} />;
 
   return (
     <FormProvider {...methods}>

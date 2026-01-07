@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_URL } from "../constant";
 
 export async function registerAccount(payload: RegisterTypes) {
   try {
@@ -41,7 +42,7 @@ export async function logoutAccount() {
 export async function deleteAccount(userName:string) {
   try {
     const res = await axios.post('/api/delete', {
-      link: `https://dinhchat.id.vn/user/${userName}`,
+      link: `${BASE_URL}/user/${userName}`,
     });
     return res.data;
   } catch (error) {

@@ -67,6 +67,7 @@ export default function StatementStep() {
         >
           <CancelButton
             title="Add Sample"
+            disable={fields.length >= 1}
             onClickWithE={(e) => {
               e.preventDefault();
               e.stopPropagation();

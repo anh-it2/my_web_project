@@ -10,7 +10,7 @@ export function useUpdateUserInfo() {
       return res;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["USER_INFO"] });
+      queryClient.invalidateQueries({ queryKey: ["USER_INFO"], exact: false });
     },
   });
   return {

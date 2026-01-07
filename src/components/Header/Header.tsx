@@ -35,7 +35,7 @@ export default function Header({ site }: HeaderProps) {
 
   const currentUser = {
     email: email,
-    currentUserName: "Demo Student",
+    currentUserName: email?.split('@')[0]?.toUpperCase(),
     logo: "/images/logo.png", // hoặc URL logo
   };
 

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { ProblemResponse } from "../get-active-problem/type";
 
-import { FilterOptions } from "../../constant";
+import { BASE_URL, FilterOptions } from "../../constant";
 
 export async function getListProblem(filter?: FilterOptions): Promise<ProblemResponse> {
   const res = await axios.post(
     `${window.location.origin}/api/get-list`, {
-      link: `https://dinhchat.id.vn/problems/me?page=${filter?.pageNumber}&pageSize=${filter?.pageSize}`,
+      link: `${BASE_URL}/problems/me?page=${filter?.pageNumber}&pageSize=${filter?.pageSize}`,
     }
   );
   if (!res.data.content) return {} as ProblemResponse;

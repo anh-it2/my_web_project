@@ -11,6 +11,7 @@ export function useSubmitProblem(){
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ["LIST_SUBMISSION"],
+                exact: false,
             })
         }
     })

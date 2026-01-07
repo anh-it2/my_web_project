@@ -85,7 +85,11 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
     { title: "Score", dataIndex: "score", key: "score" },
   ];
 
-  const sampleData = testCases.filter((item) => item.sample);
+  const sampleData = [{
+    input: data.sampleInput,
+    output: data.sampleOutput,
+    score: 0,
+  }];
 
   const startLoading = useLoadingStore((state) => state.startLoading);
 
@@ -211,7 +215,10 @@ export default function ProblemDetailPage({ testCases, data }: Props) {
         <Card className="p-6 rounded-2xl shadow-sm border">
           <h2 className="text-xl font-semibold mb-4">Test Cases</h2>
           <Table
-            dataSource={testCases}
+            dataSource={testCases.map((item) => ({
+              ...item,
+              score: (100 / testCases.length).toFixed(2) || 0,
+            }))}
             columns={testCaseColumns}
             pagination={false}
           />

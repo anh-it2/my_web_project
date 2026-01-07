@@ -24,5 +24,5 @@ export default function EditProblemPage({
     return <RouteLoading />;
   }
 
-  return <EditForm problemDetail={problemDetail} testCases={listTestCase.content || []} />;
+  return <EditForm problemDetail={problemDetail} testCases={listTestCase.content || []} problemId={params.id} />;
 }

@@ -8,7 +8,7 @@ export async function getListTestCaseForProblem(
 ): Promise<ListTestCaseResponse> {
   const res = await axios.post(
     `${window.location.origin}/api/get-list`,
-    { link: `${BASE_URL}/problems/${id}/testcases?page=${filter.pageNumber}&pageSize=${filter.pageSize}`}
+    { link: `${BASE_URL}/testcases/problem/${id}?page=${filter.pageNumber}&pageSize=${filter.pageSize}`}
   );
   return res.data || null;
 }

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useListActiveProblem(filter: FilterOptions) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["LIST_PROBLEM", filter?.pageNumber, filter?.pageSize],
+    queryKey: ["LIST_ACTIVE_PROBLEM", filter?.pageNumber, filter?.pageSize],
     queryFn: () => getListActiveProblem(filter),
   });
   return { listActiveProblem: data, isLoading, isError, error };

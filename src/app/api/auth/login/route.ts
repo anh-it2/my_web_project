@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/services/rest/constant";
 import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -5,7 +6,7 @@ export async function POST(req: NextRequest) {
   const payload = await req.json();
 
   try {
-    const res = await axios.post("https://dinhchat.id.vn/auth/login", payload);
+    const res = await axios.post(`${BASE_URL}/auth/login`, payload);
 
     const data = res.data;
 

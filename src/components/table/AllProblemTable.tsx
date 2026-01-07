@@ -17,7 +17,7 @@ import { useState } from "react";
 import RouteLoading from "../shared/RouteLoading";
 import CommonTable from "./CommonTable";
 
-import { FilterOptions } from "@/services/rest/constant";
+import { BASE_URL, FilterOptions } from "@/services/rest/constant";
 
 type Props = {
   data: Problem[];
@@ -134,7 +134,7 @@ export default function AllProblemTable({
             label: "Chỉnh sửa",
             onClick: () => {
               startLoading();
-              router.push(`${basePath}/edit-problem/1`);
+              router.push(`${basePath}/edit-problem/${record.problemId}`);
             },
           },
           {
@@ -142,7 +142,7 @@ export default function AllProblemTable({
             label: "Xóa",
             danger: true,
             onClick: () => {
-              deleteProblemAsync({ id: record.problemId, link: 'https://dinhchat.id.vn/problems' })
+              deleteProblemAsync({ id: record.problemId, link: `${BASE_URL}/problems` })
             },
           },
         ];

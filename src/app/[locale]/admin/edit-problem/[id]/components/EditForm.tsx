@@ -1,5 +1,7 @@
 "use client";
 
+import { editProblemFormSchema } from "@/app/[locale]/manager/edit-problem/[id]/constant";
+import useLoadingStore from "@/app/store/loadingStore";
 import ConfirmModal from "@/components/form/ConfirmModal";
 import FormHeader from "@/components/form/FormHeader";
 import RHFInput from "@/components/form/RHFInput";
@@ -9,17 +11,18 @@ import RHFTextArea from "@/components/form/RHFTextArea";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
+import { useUpdateProblem } from "@/hook/problem/useUpdateProblem";
 import { ProblemDetail } from "@/services/rest/problem/getProlemDetail/type";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
+import { getErrorMessages } from "@/utils/fetFormError";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, Col, Flex, Row, Typography } from "antd";
+import { Card, Col, Flex, message, Row, Typography } from "antd";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-import { editProblemFormSchema } from "../constant";
 
 const { Title, Text } = Typography;
 
@@ -70,9 +73,10 @@ export type EditProblemFormValues = z.infer<typeof editProblemFormSchema>;
 type EditFormProps = {
   problemDetail: ProblemDetail;
   testCases: TestCase[];
+  problemId: string;
 };
 
-export default function EditForm({ problemDetail, testCases }: EditFormProps) {
+export default function EditForm({ problemDetail, testCases, problemId }: EditFormProps) {
   const methods = useForm<EditProblemFormValues>({
     resolver: zodResolver(editProblemFormSchema),
     defaultValues: {
@@ -88,14 +92,35 @@ export default function EditForm({ problemDetail, testCases }: EditFormProps) {
     },
   });
 
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, formState: { errors } } = methods;
   const t = useTranslations("problem");
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
+ const { updateProblemAsync } = useUpdateProblem();
+  const startLoading = useLoadingStore((state) => state.startLoading)
+  const stopLoading = useLoadingStore((state) => state.stopLoading)
 
-  const onSubmit = (values: EditProblemFormValues) => {
+  useEffect(() => {
+  const messages = getErrorMessages(errors);
+  if (messages.length === 0) return;
+
+  const showMessages = async () => {
+    for (const msg of messages) {
+      message.error(msg);
+      await new Promise((r) => setTimeout(r, 1000)); // thời gian hiển thị
+    }
+  };
+
+  showMessages();
+}, [errors]);
+
+  const onSubmit = async (values: EditProblemFormValues) => {
     console.log("Submit payload to API:", values);
+    startLoading()
+    await updateProblemAsync({payload: values, problemId: problemId});
+    router.push("/admin/home");
+    stopLoading()
   };
 
   const { fields, append, remove } = useFieldArray({

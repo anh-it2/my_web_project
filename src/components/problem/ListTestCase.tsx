@@ -1,7 +1,7 @@
 import TestCaseTable from "@/components/table/TestCaseTable";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
 import { Card, Typography } from "antd";
-import "../../style.scss";
+import "./style.scss";
 
 const { Title } = Typography;
 

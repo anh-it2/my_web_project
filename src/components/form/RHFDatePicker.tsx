@@ -6,12 +6,14 @@ type RHFDatePickerProps = {
   name: string;
   label?: string;
   required?: boolean;
+  readOnly?: boolean;
 };
 
 export default function RHFDatePicker({
   name,
   label,
   required,
+  readOnly
 }: RHFDatePickerProps) {
   const { control } = useFormContext();
 
@@ -38,6 +40,7 @@ export default function RHFDatePicker({
             }}
             className="w-full"
             style={{ width: '100%', height: 40 }}
+            disabled={readOnly}
           />
         </Form.Item>
       )}
