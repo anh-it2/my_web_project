@@ -11,6 +11,7 @@ export function useAddProblem() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["LIST_PROBLEM"],  exact: false, });
       queryClient.invalidateQueries({ queryKey: ["LIST_ACTIVE_PROBLEM"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["LIST_SUBMITTED_PROBLEM"], exact: false });
     },
   });
   return {

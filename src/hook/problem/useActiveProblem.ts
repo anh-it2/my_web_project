@@ -6,6 +6,10 @@ export function useListActiveProblem(filter: FilterOptions) {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["LIST_ACTIVE_PROBLEM", filter?.pageNumber, filter?.pageSize],
     queryFn: () => getListActiveProblem(filter),
+    staleTime: 2000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
   return { listActiveProblem: data, isLoading, isError, error };
 }

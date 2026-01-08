@@ -61,8 +61,6 @@ export default function RegisterForm({ onBackToLogin }: Props) {
     setLoading(true);
     const { agree, ...payload } = values;
 
-    console.log(agree);
-
     const res = await registerAccount(payload);
 
     if (!res) {
@@ -79,8 +77,10 @@ export default function RegisterForm({ onBackToLogin }: Props) {
 
     // success
     message.success("Register success");
+    localStorage.setItem("userName", payload.username);
+    localStorage.setItem("role", res.role);
     startLoading();
-    router.replace("/login");
+    router.replace("/user/home");
   };
 
   return (

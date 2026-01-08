@@ -6,6 +6,10 @@ export function useProblemDetail(id: string) {
     queryKey: ["PROBLEM_DETAIL", id],
     queryFn: () => getProblemDetail(id),
     enabled: !!id,
+    staleTime: 2000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
   return { problemDetail: data };
 }

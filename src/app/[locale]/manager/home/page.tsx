@@ -12,6 +12,7 @@ export default function ManagerPage() {
   const stopLoading = useLoadingStore((state) => state.stopLoading);
   const { listProblem, handleFilterChange } = useGetListProblem();
 
+  console.log(listProblem)
 
   useEffect(() => {
     stopLoading();

@@ -7,6 +7,10 @@ export function useListTestCaseResult(submissionId: string) {
     queryFn: () => {
       return getListTestCaseResult(submissionId);
     },
+    staleTime: 2000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
   return { listTestCaseResult: data, isLoading: isLoading, refetch };
 }

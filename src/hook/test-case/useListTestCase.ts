@@ -9,6 +9,10 @@ export function useListTestCase(id: string, filter: FilterOptions) {
       return getListTestCaseForProblem(id, filter);
     },
     enabled: !!id,
+    staleTime: 2000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
   return { data, isLoading };
 }

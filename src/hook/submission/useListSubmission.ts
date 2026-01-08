@@ -8,6 +8,10 @@ export function useListSubmission(filter: FilterOptions, problemId: string) {
     queryFn: () => {
       return getListSubmission(filter, problemId);
     },
+    staleTime: 2000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
   return { listSubmission: data, isLoading: isLoading, refetch };
 }
