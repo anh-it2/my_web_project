@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/services/rest/constant";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { message: `Have an error: ${error}` },
-      { status: 500 }
+      { status: (error as AxiosError).response?.status }
     );
   }
 }

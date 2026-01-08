@@ -127,12 +127,22 @@ export default function CreateProblem() {
         sampleInput,
         sampleOutput,
       };
-  
-  
+      
       const res = await addProblemAsync({ payload: problemData });
+
+      if (!res.ok) {
+        if (res.status === 409) {
+          message.error('Problem code đã tồn tại');
+          return;
+        }
+
+        message.error("Có lỗi xảy ra");
+        return;
+      }
+
       setLoadingMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
   
-      const problemId = res.problemId;
+      const problemId = res.data.problemId;
       await addTestCaseAsync({
         payload: {testcases: values.testCases},
         problemId,

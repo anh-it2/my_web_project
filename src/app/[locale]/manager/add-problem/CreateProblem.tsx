@@ -132,16 +132,28 @@ export default function CreateProblem() {
 
 
     const res = await addProblemAsync({ payload: problemData });
-    setLoadingMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
 
-    const problemId = res.problemId;
-    await addTestCaseAsync({
-      payload: {testcases: values.testCases},
-      problemId,
-    });
-    setLoadingMessage("Đã nạp test case thành công, đang điều hướng");
-    router.push("/manager/home");
-  };
+      if (!res.ok) {
+        if (res.status === 409) {
+          message.error('Problem code đã tồn tại');
+          return;
+        }
+
+        message.error("Có lỗi xảy ra");
+        return;
+      }
+
+      setLoadingMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
+  
+      const problemId = res.data.problemId;
+      await addTestCaseAsync({
+        payload: {testcases: values.testCases},
+        problemId,
+      });
+      setLoadingMessage("Đã nạp test case thành công, đang điều hướng");
+      router.push("/manager/home");
+    };
+
 
   if (isSubmitting) return <RouteLoading message={loadingMessage} />;
 
