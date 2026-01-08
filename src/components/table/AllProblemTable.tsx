@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import CommonTable from "./CommonTable";
 
 import { BASE_URL, FilterOptions } from "@/services/rest/constant";
+import { useState } from "react";
+import ConfirmDelete from "../modal/delete-modal/ConfirmDelete";
 
 type Props = {
   data: Problem[];
@@ -39,6 +41,25 @@ export default function AllProblemTable({
   const router = useRouter();
   const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
+
+  const handleDelete = async () => {
+      if (!selectedProblem) return;
+
+      startLoading();
+      await deleteProblemAsync({
+        id: selectedProblem.problemId,
+        link: `${BASE_URL}/problems`,
+      });
+      stopLoading();
+
+      setOpenDeleteModal(false);
+      setSelectedProblem(null);
+};
+
+
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
+
   const columns: ColumnsType<Problem> = [
     {
       title: "Bài tập",
@@ -139,9 +160,8 @@ export default function AllProblemTable({
             label: "Xóa",
             danger: true,
             onClick: () => {
-              startLoading();
-              deleteProblemAsync({ id: record.problemId, link: `${BASE_URL}/problems` })
-              stopLoading();
+             setSelectedProblem(record);
+             setOpenDeleteModal(true);
             },
           },
         ];
@@ -156,6 +176,7 @@ export default function AllProblemTable({
   ];
 
   return (
+    <>
     <CommonTable
       columns={columns}
       dataSource={data}
@@ -172,5 +193,14 @@ export default function AllProblemTable({
       }
       handlePageChange={handlePageChange}
     />
+      <ConfirmDelete
+        open={openDeleteModal}
+         onCancel={() => {
+        setOpenDeleteModal(false);
+        setSelectedProblem(null);
+      }}
+        onConfirm={handleDelete}
+      />
+    </>
   );
 }
