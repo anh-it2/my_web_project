@@ -13,8 +13,6 @@ import {
 import { Dropdown, MenuProps, Switch, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import RouteLoading from "../shared/RouteLoading";
 import CommonTable from "./CommonTable";
 
 import { BASE_URL, FilterOptions } from "@/services/rest/constant";
@@ -34,14 +32,13 @@ export default function AllProblemTable({
   totalElements,
   handlePageChange,
 }: Props) {
-  const [loading, setLoading] = useState<boolean>(false);
-
 
   const { updateStateProblemAsync } = useUpdateStateProblem();
   const { deleteProblemAsync } = useDeleteProblem();
 
   const router = useRouter();
   const startLoading = useLoadingStore((state) => state.startLoading);
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
   const columns: ColumnsType<Problem> = [
     {
       title: "Bài tập",
@@ -91,9 +88,9 @@ export default function AllProblemTable({
         <Switch
           checked={active}
           onChange={async () => {
-            setLoading(true)
+            startLoading()
             await updateStateProblemAsync({ problemId: record.problemId });
-            setLoading(false)
+            stopLoading()
           }}
         />
       ),
@@ -142,7 +139,9 @@ export default function AllProblemTable({
             label: "Xóa",
             danger: true,
             onClick: () => {
+              startLoading();
               deleteProblemAsync({ id: record.problemId, link: `${BASE_URL}/problems` })
+              stopLoading();
             },
           },
         ];
@@ -155,8 +154,6 @@ export default function AllProblemTable({
       },
     },
   ];
-
-  if(loading) return <RouteLoading message="Đang update nội dung, vui lòng đợi..."/>
 
   return (
     <CommonTable

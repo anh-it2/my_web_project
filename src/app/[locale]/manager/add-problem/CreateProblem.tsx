@@ -8,16 +8,19 @@ import { useAddTestCase } from "@/hook/test-case/useAddTestCase";
 import { getErrorMessages } from "@/utils/fetFormError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, message, Steps } from "antd";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import BasicInfoStep from "./components/BasicInfoStep";
-import ReviewStep from "./components/Review";
-import StatementStep from "./components/StatementStep";
-import TestcaseManager from "./components/Testcases";
 import { problemFormSchema } from "./constant";
+
+const StatementStep = dynamic(() => import('./components/StatementStep'));
+const ReviewStep = dynamic(() => import('./components/Review'));
+const TestcaseManager = dynamic(() => import('./components/Testcases'));
 
 export default function CreateProblem() {
   const [step, setStep] = useState<number>(0);
@@ -28,8 +31,6 @@ export default function CreateProblem() {
       title: "",
       problemCode: "",
       difficultyLevel: "EASY",
-      tags: [],
-      visibility: true,
       timeLimit: 1000,
       memoryLimit: 256,
       description: "",
@@ -160,27 +161,63 @@ export default function CreateProblem() {
             items={steps.map((s) => ({ title: s.title }))}
           />
 
-          <Card className="mt-6">{steps[step]?.content}</Card>
+          <AnimatePresence mode="wait">
+    <motion.div
+      key={step}
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        opacity: { duration: 0.2 },
+        layout: { duration: 0.3, ease: "easeInOut" },
+      }}
+    >
+      <Card className="mt-6">
+        {steps[step]?.content}
+      </Card>
+    </motion.div>
+  </AnimatePresence>
 
-          <div className="flex justify-between mt-6">
-            <CancelButton
-              title="Back"
-              disable={step === 0}
-              onClick={() => setStep((prev) => prev - 1)}
-            />
-            {step < steps.length - 1 ? (
-              <PublishButton
-                title="Next"
-                isSubmit={false}
-                onClickWithE={(e) => {
-                  e.preventDefault();
-                  setStep((prev) => prev + 1);
-                }}
-              />
-            ) : (
-              <PublishButton title="Save Draft" isSubmit={true} />
-            )}
-          </div>
+  {/* BUTTON – layout cố định */}
+  <div className="flex justify-between mt-6">
+    <CancelButton
+      title="Back"
+      disable={step === 0}
+      onClick={() => setStep((prev) => prev - 1)}
+    />
+
+    <AnimatePresence mode="wait">
+      {step < steps.length - 1 ? (
+        <motion.div
+          key="next"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.5 }}
+        >
+          <PublishButton
+            title="Next"
+            isSubmit={false}
+            onClickWithE={(e) => {
+              e.preventDefault();
+              setStep((prev) => prev + 1);
+            }}
+          />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="save"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.5 }}
+        >
+          <PublishButton title="Save Draft" isSubmit={true} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
         </div>
       </form>
 

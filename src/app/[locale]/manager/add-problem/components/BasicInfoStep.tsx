@@ -1,13 +1,9 @@
 import RHFInput from "@/components/form/RHFInput";
 import RHFSelect from "@/components/form/RHFSelect";
-import RHFSelectTags from "@/components/form/RHFSelectTags";
-import RHFSwitch from "@/components/form/RHFSwitch";
 import { difficultyOptions } from "@/data/mock";
-import { Col, Flex, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 
-const { Title, Text } = Typography;
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -31,7 +27,6 @@ const itemVariants = {
 };
 
 export default function BasicInfoStep() {
-  const t = useTranslations("problem");
 
   return (
     <motion.div initial="hidden" animate="visible" variants={containerVariants}>
@@ -62,14 +57,6 @@ export default function BasicInfoStep() {
               required={true}
             />
           </motion.div>
-          <motion.div variants={itemVariants}>
-            <RHFSelectTags
-              name="tags"
-              label="Tags"
-              placeholder="Enter a tag then press Enter or comma to add"
-              required={true}
-            />
-          </motion.div>
         </Col>
 
         <Col xs={24} md={12}>
@@ -88,16 +75,6 @@ export default function BasicInfoStep() {
               options={difficultyOptions}
               required={true}
             />
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <Flex align="center" gap={3}>
-              <RHFSwitch name="visibility" />
-              <div>
-                <Title level={5}>{t("publish_title")}</Title>
-                <Text>{t("publish_description")}</Text>
-              </div>
-            </Flex>
           </motion.div>
         </Col>
       </Row>

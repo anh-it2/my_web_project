@@ -14,10 +14,6 @@ export const problemFormSchema = z.object({
 
   difficultyLevel: z.string().min(1, "Difficulty is required"),
 
-  tags: z.array(z.string().min(1)).min(1, "At least one tag is required"),
-
-  visibility: z.boolean(),
-
   timeLimit: z.number().positive("Time limit must be greater than 0"),
 
   memoryLimit: z.number().positive("Memory limit must be greater than 0"),

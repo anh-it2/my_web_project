@@ -29,7 +29,7 @@ export default function RHFSelect({
       render={({ field, fieldState }) => (
         <div className="flex flex-col gap-1">
           {label && (
-            <label className=" font-medium text-base text-[#1A1A1A] select-none mt-1">
+            <label className=" font-medium text-base text-[#1A1A1A] select-none mt-1 mb-2">
               {label}
               {required && <span className="ml-1 text-red-500">*</span>}
             </label>
