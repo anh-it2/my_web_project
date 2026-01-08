@@ -24,6 +24,7 @@ export default function DangerButton({
         className="danger__button"
         danger
         icon={Icon && <Icon className="danger__icon" />}
+        htmlType="button"
       >
         {title}
       </Button>

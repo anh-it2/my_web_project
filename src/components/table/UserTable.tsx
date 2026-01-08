@@ -155,8 +155,8 @@ export default function UserTable({ data, totalElements, handlePageChange }: Pro
           placeholder="Nhập lý do thu hồi quyền"
         />
          <div className="flex gap-2 mt-4 justify-end">
-        <DangerButton title="Cancel" onClick={() => {
-          setGrantModalOpen(false)
+         <DangerButton title="Cancel" onClick={() => {
+          setRevokeModalOpen(false)
           }}/>
         <PublishButton title="Revoke" onClick={async () => {
           startLoading()
