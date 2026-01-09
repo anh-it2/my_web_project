@@ -89,7 +89,7 @@ export default function EditForm({ problemDetail, testCases, problemId }: EditFo
     },
   });
 
-  const { control, handleSubmit, formState: { errors } } = methods;
+  const { handleSubmit, formState: { errors } } = methods;
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
