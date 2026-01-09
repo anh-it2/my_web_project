@@ -1,5 +1,4 @@
 import MainShell from "./MainShell";
-import "./layout.scss";
 import "./responsive.scss";
 
 export default function MainLayout({
