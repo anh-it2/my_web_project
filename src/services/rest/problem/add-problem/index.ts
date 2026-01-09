@@ -1,12 +1,9 @@
 import axios, { AxiosError } from "axios";
-
-type AddProblemResult =
-  | { ok: true; data: any }
-  | { ok: false; status: number; message: string; data: any };
+import { InsertUpdateResponse } from "../../constant";
 
 export async function addProblem(
   payload: CreateProblem
-): Promise<AddProblemResult> {
+): Promise<InsertUpdateResponse<any>> {
   try {
     const res = await axios.post("/api/problem/add-problem", payload);
 

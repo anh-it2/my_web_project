@@ -9,7 +9,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     const res = await axios.put(
-      `${BASE_URL}/problems/active/${problemId}`,
+      `${BASE_URL}/problems/toggle-active/${problemId}`,
       null,
       {
         headers: {

@@ -1,10 +1,14 @@
 "use client";
+import useLoadingStore from "@/app/store/loadingStore";
+import { useDeleteTestCase } from "@/hook/test-case/useDeleteTestCase";
+import { useUpdateTestCase } from "@/hook/test-case/useUpdateTestCase";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
 import { Dropdown, Input, MenuProps, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import ConfirmDelete from "../modal/delete-modal/ConfirmDelete";
 import { MotionRow } from "./MotionRow";
 import { tableContainerVariants } from "./motion";
 
@@ -30,6 +34,27 @@ export default function TestCaseTable({ data }: Props) {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+    const [selectedTestCase, setSelectedTestCase] = useState<TestCase | null>(null);
+
+  const { updateTestCaseAsync } = useUpdateTestCase();
+  const { deleteTestCaseAsync } = useDeleteTestCase();
+  const startLoading = useLoadingStore((state) => state.startLoading);
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+
+  const handleDelete = async () => {
+      if (!selectedTestCase) return;
+  
+      startLoading();
+      await deleteTestCaseAsync({
+        id: selectedTestCase.testcaseId,
+      });
+      stopLoading();
+  
+      setOpenDeleteModal(false);
+      setSelectedTestCase(null);
+    };
+
   const testcaseColumns: ColumnsType<TestCase> = [
     // ... keep your existing column configs, maybe just tweak labels if you want ...
     {
@@ -112,15 +137,23 @@ export default function TestCaseTable({ data }: Props) {
             <div className="flex justify-center gap-3">
               <button
                 disabled={!isValid}
-                className={`text-green-600 text-xl ${
+                className={`text-green-600 text-2xl bg-transparent border-none cursor-pointer ${
                   !isValid ? "opacity-40 cursor-not-allowed" : ""
                 }`}
-                onClick={() => {
-                  console.log("UPDATE TESTCASE", {
-                    testcaseId: record.testcaseId,
-                    input: draft!.input,
-                    expectedOutput: draft!.expectedOutput,
+                onClick={async () => {
+
+                  startLoading()
+                  await updateTestCaseAsync({
+                    payload: {
+                      testcaseId: record.testcaseId,
+                      input: draft!.input,
+                      expectedOutput: draft!.expectedOutput,
+                      orderIndex: record.orderIndex,
+                      sample: record.sample,
+                    },
                   });
+
+                  stopLoading()
 
                   setEditingId(null);
                   setDraft(null);
@@ -131,7 +164,7 @@ export default function TestCaseTable({ data }: Props) {
 
               {/* ✖ CANCEL */}
               <button
-                className="text-red-500 text-xl"
+                className="text-red-500 text-2xl bg-transparent border-none cursor-pointer"
                 onClick={() => {
                   setEditingId(null);
                   setDraft(null);
@@ -154,7 +187,8 @@ export default function TestCaseTable({ data }: Props) {
             label: "Xóa",
             danger: true,
             onClick: () => {
-              console.log("Delete test case", record.testcaseId);
+              setSelectedTestCase(record);
+              setOpenDeleteModal(true);
             },
           },
         ];
@@ -211,6 +245,14 @@ export default function TestCaseTable({ data }: Props) {
           />
         </motion.div>
       </AnimatePresence>
+      <ConfirmDelete
+              open={openDeleteModal}
+              onCancel={() => {
+                setOpenDeleteModal(false);
+                setSelectedTestCase(null);
+              }}
+              onConfirm={handleDelete}
+            />
     </div>
   );
 }

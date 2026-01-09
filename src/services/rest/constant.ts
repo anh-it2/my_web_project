@@ -5,3 +5,7 @@ export interface FilterOptions {
   pageNumber?: number;
   pageSize?: number;
 }
+
+export type InsertUpdateResponse<T> =
+  | { ok: true; data: T }
+  | { ok: false; status: number; message: string; data: T };
