@@ -14,8 +14,6 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
     stopLoading();
   }, [stopLoading]);
 
-  console.log(id);
-
   return (
     <div className="p-4">
       <Tabs

@@ -1,6 +1,7 @@
 "use client";
 
 import useLoadingStore from "@/app/store/loadingStore";
+import FutureFeatureNoticeCard from "@/components/shared/FutureFeatureNoticeCard";
 import { useEffect } from "react";
 
 export default function ClassesPage() {
@@ -8,5 +9,7 @@ export default function ClassesPage() {
   useEffect(() => {
     stopLoading();
   }, [stopLoading]);
-  return <div>classes</div>;
+  return <div className="flex items-center justify-center h-[80vh]">
+        <FutureFeatureNoticeCard />
+      </div>;
 }
