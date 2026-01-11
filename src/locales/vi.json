@@ -166,5 +166,94 @@
     "bio": "Giới thiệu",
     "bioPlaceholder": "Mô tả ngắn về bạn",
     "updateButton": "Cập nhật hồ sơ"
+  },
+  "addProblem": {
+    "basicInfo": {
+      "title": "Tên bài toán",
+      "titlePlaceholder": "Nhập tên bài toán",
+      "timeLimit": "Time Limit",
+      "memoryLimit": "Memory Limit",
+      "problemCode": "Mã nguồn bài toán",
+      "problemCodePlaceholder": "Nhập mã nguồn",
+      "difficultyLevel": "Độ khó"
+    },
+    "statementStep": {
+      "title": "Test mẫu",
+      "description": "Mô tả:",
+      "sampleInput": "Đầu vào mẫu",
+      "sampleInputPlaceholder": "Nhập đầu vào mẫu",
+      "sampleOutput": "Đầu ra mẫu",
+      "sampleOutputPlaceholder": "Nhâp đầu ra mẫu"
+    },
+    "testcases": {
+      "title": "Test Case & Các ràng buộc",
+      "constraints": "Ràng buộc",
+      "testcaseInput": "Đầu vào Test Case",
+      "testcaseInputPlaceholder": "Nhập đầu vào test case",
+      "testcaseOutput": "Đầu ra Test Case",
+      "testcaseOutputPlaceholder": "Nhâp đầu ra test case"
+    },
+    "createProblem": {
+      "loadingMessage": "Đang đăng tải bài toán",
+      "createBreadCrumb": "Tao bài toán mới",
+      "errorProblemExists": "Problem code đã tồn tại",
+      "errorProblemExistsDesc": "Problem code đã tồn tại trong hệ thống",
+      "errorUnexpected": "Có lỗi xảy ra",
+      "errorUnexpectedDesc": "Có lỗi xảy ra khi tạo problem",
+      "problemSuccessMessage": "Đã đăng tải bài toán thành công, đang nạp test case",
+      "testcasesSuccessMessage": "Đã nạp test case thành công, đang điều hướng"
+    }
+  },
+  "editForm": {
+    "title": "Tên bài toán",
+    "titlePlaceholder": "Nhập tên bài toán",
+    "difficulty": "Độ khó",
+    "visibility": "Hiển thị",
+    "problemCode": "Mã nguồn bài toán",
+    "problemCodePlaceholder": "Nhập mã nguồn",
+    "timeLimit": "Time Limit",
+    "memoryLimit": "Memory Limit",
+    "description": "Mô tả",
+    "descriptionPlaceholder": "Mô tả bài toán",
+    "testcasesAndConstraints": "Test Case & Các ràng buộc",
+    "constraints": "Ràng buộc",
+    "sampleTest": "Test mẫu",
+    "sampleInput": "Đầu vào mẫu",
+    "sampleOutput": "Đầu ra mẫu",
+    "testcases": "Test Case",
+    "saveChanges": "Lưu thay đổi",
+    "cancel": "Hủy"
+  },
+  "allProblemTable": {
+    "title": "Bài tập",
+    "problemCode": "Mã bài tập",
+    "difficultyLevel": "Mức độ",
+    "bestScore": "Điểm cao nhất",
+    "maxScore": "Điểm tối đa",
+    "bestStatus": {
+      "title": "Trạng thái",
+      "ac": "Hoàn thành",
+      "wa": "Kết quả chưa đúng",
+      "tle": "Time Limit Exceeded",
+      "ce": "Compile Error"
+    },
+    "actions": {
+      "details": "Xem chi tiết",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa",
+      "publishButton": "Thêm mới"
+    }
+  },
+  "userTable": {
+    "scope": "Tìm kiếm theo",
+    "sortBy": {
+      "global": "Toàn hệ thống",
+      "tag": "Theo Tag",
+      "tagPlaceholder": "Chọn tag",
+      "problem:": "Theo Problem",
+      "problemPlaceholder": "Chọn problem"
+    },
+    "reason": "Lý do",
+    "revokeRoleDescription": "Nhập lý do thu hồi quyền"
   }
 }

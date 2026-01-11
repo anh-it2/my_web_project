@@ -59,11 +59,12 @@ export default function CreateProblem() {
   ];
 
   const t = useTranslations("sidebar");
+  const tt = useTranslations("addProblem.createProblem");
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
   const router = useRouter();
   const [loadingMessage, setLoadingMessage] = useState<string>(
-    "Đang đăng tải sản phẩm"
+    tt("loadingMessage")
   );
 
   const breadCrumbs = [
@@ -72,7 +73,7 @@ export default function CreateProblem() {
       link: "/admin/home",
     },
     {
-      label: "Create new problem",
+      label: tt("createBreadCrumb"),
       link: "#",
     },
   ];
@@ -137,22 +138,22 @@ export default function CreateProblem() {
     if (!res.ok) {
       if (res.status === 409) {
         console.log('test')
-        message.error("Problem code đã tồn tại");
+        message.error(tt("errorProblemExists"));
         return;
       }
 
-      message.error("Có lỗi xảy ra");
+      message.error(tt("errorUnexpected"));
       return;
     }
 
-    setLoadingMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
+    setLoadingMessage(tt("problemSuccessMessage"));
 
     const problemId = res.data.problemId;
     await addTestCaseAsync({
       payload: { testcases: values.testCases },
       problemId,
     });
-    setLoadingMessage("Đã nạp test case thành công, đang điều hướng");
+    setLoadingMessage(tt("testcasesSuccessMessage"));
     router.push("/manager/home");
   };
 

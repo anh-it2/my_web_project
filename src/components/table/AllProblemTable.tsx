@@ -10,7 +10,7 @@ import { MoreOutlined, TrophyOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps, Switch, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import CommonTable from "./CommonTable";
-
+import { useTranslations } from "use-intl";
 import { useRouter } from "@/libs/routing";
 import { BASE_URL, FilterOptions } from "@/services/rest/constant";
 import { useState } from "react";
@@ -37,6 +37,7 @@ export default function AllProblemTable({
   const router = useRouter();
   const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
+  const t = useTranslations("allProblemTable");
 
   const handleDelete = async () => {
     if (!selectedProblem) return;
@@ -57,7 +58,7 @@ export default function AllProblemTable({
 
   const columns: ColumnsType<Problem> = [
     {
-      title: "Bài tập",
+      title: t("title"),
       dataIndex: "title",
       key: "title",
       render: (text, record) => (
@@ -73,13 +74,13 @@ export default function AllProblemTable({
       ),
     },
     {
-      title: "Mã bài tập",
+      title: t("problemCode"),
       dataIndex: "problemCode",
       key: "problemCode",
       className: "text-gray-600",
     },
     {
-      title: "Mức độ",
+      title: t("difficultyLevel"),
       dataIndex: "difficultyLevel",
       key: "difficultyLevel",
       render: (difficultyLevel: string) => {
@@ -112,7 +113,7 @@ export default function AllProblemTable({
       ),
     },
     {
-      title: "Điểm tối đa",
+      title: t("maxScore"),
       dataIndex: "maxScore",
       key: "maxScore",
       align: "right",
@@ -134,7 +135,7 @@ export default function AllProblemTable({
         const items: MenuProps["items"] = [
           {
             key: "view",
-            label: "Xem chi tiết",
+            label: t("actions.details"),
             onClick: () => {
               startLoading();
               router.push(
@@ -144,7 +145,7 @@ export default function AllProblemTable({
           },
           {
             key: "edit",
-            label: "Chỉnh sửa",
+            label: t("actions.edit"),
             onClick: () => {
               startLoading();
               router.push(`/${basePath}/edit-problem/${record.problemId}`);
@@ -152,7 +153,7 @@ export default function AllProblemTable({
           },
           {
             key: "delete",
-            label: "Xóa",
+            label: t("actions.delete"),
             danger: true,
             onClick: () => {
               setSelectedProblem(record);
@@ -179,7 +180,7 @@ export default function AllProblemTable({
         totalElements={totalElements}
         headerActions={
           <PublishButton
-            title="Thêm mới"
+            title={t("actions.publishButton")}
             onClick={() => {
               startLoading();
               router.push(addNewProblemLink);

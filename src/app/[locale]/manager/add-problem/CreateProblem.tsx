@@ -62,9 +62,10 @@ export default function CreateProblem() {
   ];
 
   const t = useTranslations("sidebar");
+  const tt = useTranslations("addProblem.createProblem");
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
-  const [loadingMessage, setLoadingMessage] = useState<string>("Đang đăng tải sản phẩm");
+  const [loadingMessage, setLoadingMessage] = useState<string>(tt("loadingMessage"));
   const router = useRouter();
 
   const breadCrumbs = [
@@ -73,7 +74,7 @@ export default function CreateProblem() {
       link: "/manager/home",
     },
     {
-      label: "Create new problem",
+      label: tt("createBreadCrumb"),
       link: "#",
     },
   ];
@@ -87,18 +88,18 @@ export default function CreateProblem() {
   const { addTestCaseAsync } = useAddTestCase();
 
   useEffect(() => {
-  const messages = getErrorMessages(errors);
-  if (messages.length === 0) return;
+    const messages = getErrorMessages(errors);
+    if (messages.length === 0) return;
 
-  const showMessages = async () => {
-    for (const msg of messages) {
-      message.error(msg);
-      await new Promise((r) => setTimeout(r, 1000)); // thời gian hiển thị
-    }
-  };
+    const showMessages = async () => {
+      for (const msg of messages) {
+        message.error(msg);
+        await new Promise((r) => setTimeout(r, 1000)); // thời gian hiển thị
+      }
+    };
 
-  showMessages();
-}, [errors]);
+    showMessages();
+  }, [errors]);
 
 
   const onSubmit = async (values: z.infer<typeof problemFormSchema>) => {
@@ -136,121 +137,121 @@ export default function CreateProblem() {
 
     const res = await addProblemAsync({ payload: problemData });
 
-      if (!res.ok) {
-        if (res.status === 409) {
-          api.error({
-          title: 'Problem đã tồn tại',
-          description:
-            'Problem code đã tồn tại trong hệ thống',
-        });
-          return;
-        }
-
+    if (!res.ok) {
+      if (res.status === 409) {
         api.error({
-          title: 'Có lỗi xảy ra',
-          description: 'Có lỗi xảy ra khi tạo problem',
+          title: tt("errorProblemExists"),
+          description:
+            tt("errorProblemExistsDesc"),
         });
         return;
       }
 
-      setLoadingMessage("Đã đăng tải sản phẩm thành công, đang nạp test case");
-  
-      const problemId = res.data.problemId;
-      await addTestCaseAsync({
-        payload: {testcases: values.testCases},
-        problemId,
+      api.error({
+        title: tt("errorUnexpected"),
+        description: tt("errorUnexpectedDesc"),
       });
-      setLoadingMessage("Đã nạp test case thành công, đang điều hướng");
-      router.push("/manager/home");
-    };
+      return;
+    }
+
+    setLoadingMessage(tt("problemSuccessMessage"));
+
+    const problemId = res.data.problemId;
+    await addTestCaseAsync({
+      payload: { testcases: values.testCases },
+      problemId,
+    });
+    setLoadingMessage(tt("testcasesSuccessMessage"));
+    router.push("/manager/home");
+  };
 
 
   if (isSubmitting) return <RouteLoading message={loadingMessage} />;
 
   return (
     <>
-    {contextHolder}
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormHeader
-          setOpenDialog={setOpenDialog}
-          title="Assignment"
-          breadcrumbs={breadCrumbs}
-          setConfirmModalLink={setConfirmModalLink}
-          publicButtonTitle="Save Draft"
+      {contextHolder}
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormHeader
+            setOpenDialog={setOpenDialog}
+            title="Assignment"
+            breadcrumbs={breadCrumbs}
+            setConfirmModalLink={setConfirmModalLink}
+            publicButtonTitle="Save Draft"
+          />
+          <div className="p-6 max-w-6xl mx-auto">
+            <Steps
+              current={step}
+              items={steps.map((s) => ({ title: s.title }))}
+            />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={step}
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  opacity: { duration: 0.2 },
+                  layout: { duration: 0.3, ease: "easeInOut" },
+                }}
+              >
+                <Card className="mt-6">
+                  {steps[step]?.content}
+                </Card>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* BUTTON – layout cố định */}
+            <div className="flex justify-between mt-6">
+              <CancelButton
+                title="Back"
+                disable={step === 0}
+                onClick={() => setStep((prev) => prev - 1)}
+              />
+
+              <AnimatePresence mode="wait">
+                {step < steps.length - 1 ? (
+                  <motion.div
+                    key="next"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <PublishButton
+                      title="Next"
+                      isSubmit={false}
+                      onClickWithE={(e) => {
+                        e.preventDefault();
+                        setStep((prev) => prev + 1);
+                      }}
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="save"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <PublishButton title="Save Draft" isSubmit={true} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </form>
+
+        <ConfirmModal
+          open={openDialog}
+          onOk={() => router.replace(confirmModalLink)}
+          onCancel={() => setOpenDialog(false)}
         />
-        <div className="p-6 max-w-6xl mx-auto">
-          <Steps
-            current={step}
-            items={steps.map((s) => ({ title: s.title }))}
-          />
-
-          <AnimatePresence mode="wait">
-    <motion.div
-      key={step}
-      layout
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{
-        opacity: { duration: 0.2 },
-        layout: { duration: 0.3, ease: "easeInOut" },
-      }}
-    >
-      <Card className="mt-6">
-        {steps[step]?.content}
-      </Card>
-    </motion.div>
-  </AnimatePresence>
-
-  {/* BUTTON – layout cố định */}
-  <div className="flex justify-between mt-6">
-    <CancelButton
-      title="Back"
-      disable={step === 0}
-      onClick={() => setStep((prev) => prev - 1)}
-    />
-
-    <AnimatePresence mode="wait">
-      {step < steps.length - 1 ? (
-        <motion.div
-          key="next"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.5 }}
-        >
-          <PublishButton
-            title="Next"
-            isSubmit={false}
-            onClickWithE={(e) => {
-              e.preventDefault();
-              setStep((prev) => prev + 1);
-            }}
-          />
-        </motion.div>
-      ) : (
-        <motion.div
-          key="save"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.5 }}
-        >
-          <PublishButton title="Save Draft" isSubmit={true} />
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
-        </div>
-      </form>
-
-      <ConfirmModal
-        open={openDialog}
-        onOk={() => router.replace(confirmModalLink)}
-        onCancel={() => setOpenDialog(false)}
-      />
-    </FormProvider>
+      </FormProvider>
     </>
   );
 }

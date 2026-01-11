@@ -4,6 +4,7 @@ import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import { Card } from "antd";
 import { motion } from "framer-motion";
 import { useFieldArray } from "react-hook-form";
+import { useTranslations } from "use-intl";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -37,6 +38,7 @@ const cardVariants = {
 
 export default function StatementStep() {
   const { fields, append, remove } = useFieldArray({ name: "samples" });
+  const t = useTranslations("addProblem.statementStep");
 
   return (
     <motion.div
@@ -50,7 +52,7 @@ export default function StatementStep() {
           name="description"
           rows={8}
           placeholder="Markdown + LaTeX supported"
-          label="Description:"
+          label={t("description")}
           required={true}
         />
       </motion.div>
@@ -59,7 +61,7 @@ export default function StatementStep() {
         className="flex justify-between items-center"
         variants={cardVariants}
       >
-        <h3 className="font-semibold">Sample IO</h3>
+        <h3 className="font-semibold">{t("title")}</h3>
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -95,15 +97,15 @@ export default function StatementStep() {
             <RHFTextArea
               name={`samples.${i}.input`}
               rows={3}
-              placeholder="Enter your sample input"
-              label="Sample Input"
+              placeholder={t("sampleInputPlaceholder")}
+              label={t("sampleInput")}
             />
 
             <RHFTextArea
               name={`samples.${i}.expectedOutput`}
               rows={3}
-              placeholder="Enter your sample output"
-              label="Sample Output"
+              placeholder={t("sampleOutputPlaceholder")}
+              label={t("sampleOutput")}
             />
             <motion.div
               whileHover={{ scale: 1.05 }}
