@@ -44,7 +44,7 @@ export default function UserTable({
           className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
             startLoading();
-            router.push(`manager/user-detail/${encodeURIComponent(record.username)}/${record.role}`);
+            router.push(`/manager/user-detail/${encodeURIComponent(record.username)}/${record.role}`);
           }}
         >
           {record.username}

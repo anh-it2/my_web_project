@@ -2,8 +2,9 @@ import useLoadingStore from "@/app/store/loadingStore";
 import { useUpdateUserInfo } from "@/hook/user-info/useUpdateUserInfo";
 import { useUserInfo } from "@/hook/user-info/useUserInfo";
 import { UserProfileSchema } from "@/hook/user-info/useUserInfoSchema";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Form, Spin, Tag } from "antd";
+import { useRouter } from "@/libs/routing";
+import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Form, Spin, Tag } from "antd";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -65,12 +66,15 @@ const loadingVariants = {
 export default function UserInfoComponent({
   userName,
   role,
+  enableEdit = true,
 }: {
   userName: string;
   role: string;
+  enableEdit?: boolean;
 }) {
   const { userInfo } = useUserInfo(userName);
   const { updateUserInfoAsync } = useUpdateUserInfo();
+  const router = useRouter()
 
   const methods = useForm({
     defaultValues: {
@@ -87,13 +91,13 @@ export default function UserInfoComponent({
 
   useEffect(() => {
     methods.reset({
-      email: userInfo?.email || "",
-      fullName: userInfo?.fullName || "",
-      phone: userInfo?.phone || "",
-      bio: userInfo?.bio || "",
-      avatarUrl: userInfo?.avatarUrl || "",
-      github: userInfo?.github || "",
-      facebook: userInfo?.facebook || "",
+      email: userInfo?.email || "--",
+      fullName: userInfo?.fullName || "--",
+      phone: userInfo?.phone || "--",
+      bio: userInfo?.bio || "--",
+      avatarUrl: userInfo?.avatarUrl || "--",
+      github: userInfo?.github || "--",
+      facebook: userInfo?.facebook || "--",
       birthday: userInfo?.birthday || null,
     });
   }, [userInfo]);
@@ -138,6 +142,14 @@ export default function UserInfoComponent({
     >
       <motion.div variants={itemVariants} className="w-full">
         <Card className="w-full max-w-3xl rounded-2xl shadow-lg mx-auto">
+          { <Button
+      icon={<ArrowLeftOutlined />}
+      type="text"
+      className="flex items-center gap-1 text-gray-600 hover:text-blue-600 mb-5"
+      onClick={() => router.back()}
+    >
+      Quay lại
+    </Button>}
           {/* Header */}
           <motion.div
             className="flex items-center gap-6 mb-8"
@@ -195,6 +207,7 @@ export default function UserInfoComponent({
                     label="Họ và tên"
                     required
                     placeholder="Nhập họ tên"
+                    readOnly={!enableEdit}
                   />
                 </motion.div>
 
@@ -204,6 +217,7 @@ export default function UserInfoComponent({
                     label="Email"
                     placeholder="Email"
                     required
+                    readOnly={!enableEdit}
                   />
                 </motion.div>
 
@@ -213,6 +227,7 @@ export default function UserInfoComponent({
                     label="Số điện thoại"
                     placeholder="Nhập số điện thoại"
                     required
+                    readOnly={!enableEdit}
                   />
                 </motion.div>
 
@@ -221,6 +236,7 @@ export default function UserInfoComponent({
                     name="github"
                     label="Github"
                     placeholder="Nhập github"
+                    readOnly={!enableEdit}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
@@ -228,6 +244,7 @@ export default function UserInfoComponent({
                     name="facebook"
                     label="Facebook"
                     placeholder="Nhập facebook"
+                    readOnly={!enableEdit}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
@@ -250,6 +267,7 @@ export default function UserInfoComponent({
                     label="Giới thiệu"
                     placeholder="Mô tả ngắn về bạn"
                     required
+                    readOnly={!enableEdit}
                   />
                 </motion.div>
 
@@ -261,7 +279,7 @@ export default function UserInfoComponent({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <PublishButton title="Cập nhật hồ sơ" isSubmit={true} />
+                    {enableEdit && <PublishButton title="Cập nhật hồ sơ" isSubmit={true} />}
                   </motion.div>
                 </motion.div>
               </motion.div>

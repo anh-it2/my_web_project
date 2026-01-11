@@ -9,5 +9,5 @@ export default function UserDetailPage({params}: {params: {id: string, role: str
     stopLoading();
   }, [stopLoading]);
 
-    return <UserInfoComponent userName={decodeURIComponent(params.id)} role={params.role} />;
+    return <UserInfoComponent userName={decodeURIComponent(params.id)} role={params.role} enableEdit={false} />;
 }
