@@ -1,6 +1,7 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import { useUpdateUserInfo } from "@/hook/user-info/useUpdateUserInfo";
 import { useUserInfo } from "@/hook/user-info/useUserInfo";
+import { useTranslations } from "next-intl";
 import { UserProfileSchema } from "@/hook/user-info/useUserInfoSchema";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Form, Spin, Tag } from "antd";
@@ -71,6 +72,7 @@ export default function UserInfoComponent({
 }) {
   const { userInfo } = useUserInfo(userName);
   const { updateUserInfoAsync } = useUpdateUserInfo();
+  const t = useTranslations("userInfo");
 
   const methods = useForm({
     defaultValues: {
@@ -192,17 +194,17 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="fullName"
-                    label="Họ và tên"
+                    label={t("fullName")}
                     required
-                    placeholder="Nhập họ tên"
+                    placeholder={t("fullNamePlaceholder")}
                   />
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="email"
-                    label="Email"
-                    placeholder="Email"
+                    label={t("email")}
+                    placeholder={t("emailPlaceholder")}
                     required
                   />
                 </motion.div>
@@ -210,8 +212,8 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="phone"
-                    label="Số điện thoại"
-                    placeholder="Nhập số điện thoại"
+                    label={t("phone")}
+                    placeholder={t("phonePlaceholder")}
                     required
                   />
                 </motion.div>
@@ -219,21 +221,21 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="github"
-                    label="Github"
-                    placeholder="Nhập github"
+                    label={t("github")}
+                    placeholder={t("githubPlaceholder")}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="facebook"
-                    label="Facebook"
-                    placeholder="Nhập facebook"
+                    label={t("facebook")}
+                    placeholder={t("facebookPlaceholder")}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <RHFDatePicker
                     name="birthday"
-                    label="Ngày sinh (hiện BE đang lỗi)"
+                    label={t("birthday")}
                     readOnly={true}
                   />
                 </motion.div>
@@ -247,8 +249,8 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="bio"
-                    label="Giới thiệu"
-                    placeholder="Mô tả ngắn về bạn"
+                    label={t("bio")}
+                    placeholder={t("bioPlaceholder")}
                     required
                   />
                 </motion.div>
@@ -261,7 +263,7 @@ export default function UserInfoComponent({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <PublishButton title="Cập nhật hồ sơ" isSubmit={true} />
+                    <PublishButton title={t("updateButton")} isSubmit={true} />
                   </motion.div>
                 </motion.div>
               </motion.div>

@@ -150,5 +150,21 @@
   "problem": {
     "publish_title": "Đăng tải bài toán này",
     "publish_description": "Khi bật, bài toán này sẽ xuất hiện trên lớp học."
+  },
+  "userInfo": {
+    "fullName": "Họ và tên",
+    "fullNamePlaceholder": "Nhập họ tên",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "phone": "Số điện thoại",
+    "phonePlaceholder": "Nhập số điện thoại",
+    "github": "Github",
+    "githubPlaceholder": "Nhập GitHub",
+    "facebook": "Facebook",
+    "facebookPlaceholder": "Nhập Facebook",
+    "birthday": "Ngày sinh",
+    "bio": "Giới thiệu",
+    "bioPlaceholder": "Mô tả ngắn về bạn",
+    "updateButton": "Cập nhật hồ sơ"
   }
 }
