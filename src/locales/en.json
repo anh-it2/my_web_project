@@ -150,5 +150,21 @@
   "problem": {
     "publish_title": "Publish this problem",
     "publish_description": "When enabled, this product will appear in the class."
+  },
+  "userInfo": {
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Type your full name",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "phone": "Phone number",
+    "phonePlaceholder": "Type your phone number",
+    "github": "Github",
+    "githubPlaceholder": "Provide GitHub",
+    "facebook": "Facebook",
+    "facebookPlaceholder": "Provide Facebook",
+    "birthday": "Birthday",
+    "bio": "About me",
+    "bioPlaceholder": "Tell us something about you",
+    "updateButton": "Update Profile"
   }
 }
