@@ -2,6 +2,7 @@
 
 import useLoadingStore from "@/app/store/loadingStore";
 import { useRegisterAccount } from "@/hook/user-info/useRegisterAccount";
+import { useRouter } from "@/libs/routing";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -12,7 +13,6 @@ import { Button, Checkbox, Form, Input, message, Typography } from "antd";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Title } = Typography;

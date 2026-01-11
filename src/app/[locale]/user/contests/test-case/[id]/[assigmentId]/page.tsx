@@ -5,6 +5,7 @@ import FormHeader from "@/components/form/FormHeader";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useListTestCaseResult } from "@/hook/submission/useGetTestCaseResult";
 import { useSubmissionDetail } from "@/hook/submission/useSubmissionDetail";
+import { useRouter } from "@/libs/routing";
 import { TestCaseResult } from "@/services/rest/submission/get-list-test-case-result/type";
 import { mapLanguage } from "@/utils/map";
 import {
@@ -17,7 +18,6 @@ import { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import InfoRow from "./components/InfoRow";
 import ResultModal from "./components/ResultModal";
@@ -82,7 +82,6 @@ export default function TestCasePage({
   const { submissionDetail } = useSubmissionDetail(id);
   const {listTestCaseResult} = useListTestCaseResult(id)
 
-  console.log(listTestCaseResult)
 
   if (!submissionDetail) return <RouteLoading />;
 

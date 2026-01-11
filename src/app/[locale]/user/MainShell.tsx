@@ -3,6 +3,7 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/shared/Sidebar/Sidebar";
+import { useRouter } from "@/libs/routing";
 import {
   AppstoreOutlined,
   HomeOutlined,
@@ -11,7 +12,6 @@ import {
 import type { MenuProps } from "antd";
 import { Layout } from "antd";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function MainShell({ children }: { children: React.ReactNode }) {

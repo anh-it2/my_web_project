@@ -14,8 +14,8 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import useLoadingStore from "@/app/store/loadingStore";
+import { useRouter } from "@/libs/routing";
 import { logoutAccount } from "@/services/rest/auth";
-import { useRouter } from "next/navigation";
 import LanguageSwitcher from "../shared/LanguageSwitcher/LanguageSwitcher";
 import "./Header.scss";
 
@@ -78,7 +78,7 @@ export default function Header({ site }: HeaderProps) {
         localStorage.removeItem("role");
         await logoutAccount();
         message.success("Logout successfully");
-        router.push("/login");
+        router.push("login");
         break;
       default:
         break;

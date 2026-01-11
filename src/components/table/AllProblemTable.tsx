@@ -9,9 +9,9 @@ import { Problem } from "@/services/rest/problem/get-active-problem/type";
 import { MoreOutlined, TrophyOutlined } from "@ant-design/icons";
 import { Dropdown, MenuProps, Switch, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useRouter } from "next/navigation";
 import CommonTable from "./CommonTable";
 
+import { useRouter } from "@/libs/routing";
 import { BASE_URL, FilterOptions } from "@/services/rest/constant";
 import { useState } from "react";
 import ConfirmDelete from "../modal/delete-modal/ConfirmDelete";
@@ -65,7 +65,7 @@ export default function AllProblemTable({
           className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
             startLoading();
-            router.push(`${basePath}/view-problem-detail/${record.problemId}`);
+            router.push(`/${basePath}/view-problem-detail/${record.problemId}`);
           }}
         >
           {text}
@@ -138,7 +138,7 @@ export default function AllProblemTable({
             onClick: () => {
               startLoading();
               router.push(
-                `${basePath}/view-problem-detail/${record.problemId}`
+                `/${basePath}/view-problem-detail/${record.problemId}`
               );
             },
           },
@@ -147,7 +147,7 @@ export default function AllProblemTable({
             label: "Chỉnh sửa",
             onClick: () => {
               startLoading();
-              router.push(`${basePath}/edit-problem/${record.problemId}`);
+              router.push(`/${basePath}/edit-problem/${record.problemId}`);
             },
           },
           {

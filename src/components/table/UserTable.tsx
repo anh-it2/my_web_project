@@ -3,6 +3,7 @@ import useLoadingStore from "@/app/store/loadingStore";
 import DangerButton from "@/components/shared/Button/FormHeader/DangerButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { useUpdateUserRole } from "@/hook/user-info/useUpdateRole";
+import { useRouter } from "@/libs/routing";
 import { FilterOptions } from "@/services/rest/constant";
 import { User } from "@/services/rest/user/type";
 import { Input, Modal, Select } from "antd";
@@ -27,6 +28,7 @@ export default function UserTable({
   const [tag, setTag] = useState<string | null>(null);
   const [problem, setProblem] = useState<string | null>(null);
   const [reason, setReason] = useState<string>("");
+  const router = useRouter();
 
   const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
@@ -37,7 +39,17 @@ export default function UserTable({
   console.log(problem);
 
   const columns = [
-    { title: "Username", dataIndex: "username", key: "username" },
+    { title: "Username", dataIndex: "username", key: "username",render: (_: unknown, record: User) => (
+        <span
+          className="text-blue-600 hover:underline cursor-pointer"
+          onClick={() => {
+            startLoading();
+            router.push(`manager/user-detail/${encodeURIComponent(record.username)}/${record.role}`);
+          }}
+        >
+          {record.username}
+        </span>
+      ), },
     { title: "Role", dataIndex: "role", key: "role" },
     {
       title: "Actions",

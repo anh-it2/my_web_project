@@ -7,9 +7,9 @@ import ProblemDetailPage from "@/components/problem/ProblemDetail";
 import RouteLoading from "@/components/shared/RouteLoading";
 import { useProblemDetail } from "@/hook/problem/useProblemDetail";
 import useGetListTestCase from "@/hook/test-case/useGetListTestCase";
+import { useRouter } from "@/libs/routing";
 import { Tabs } from "antd";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ContestDetail({ params }: { params: { id: string } }) {

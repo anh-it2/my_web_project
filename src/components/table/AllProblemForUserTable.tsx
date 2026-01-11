@@ -2,6 +2,7 @@
 import { difficultyConfig } from "@/app/[locale]/constants";
 import useLoadingStore from "@/app/store/loadingStore";
 // ExerciseTable.tsx
+import { useRouter } from "@/libs/routing";
 import { Problem } from "@/services/rest/problem/get-active-problem/type";
 import {
   CheckCircleFilled,
@@ -13,7 +14,6 @@ import {
 } from "@ant-design/icons";
 import { Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useRouter } from "next/navigation";
 import CommonTable from "./CommonTable";
 
 type Props = {
@@ -41,7 +41,7 @@ export default function AllProblemForUserTable({
           className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
             startLoading();
-            router.push(`${basePath}/${record.problemId}`);
+            router.push(`/${basePath}/${record.problemId}`);
           }}
         >
           {text}

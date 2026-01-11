@@ -1,6 +1,7 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
+import { useRouter } from "@/libs/routing";
 import { ProblemDetail } from "@/services/rest/problem/getProlemDetail/type";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
 import {
@@ -12,7 +13,6 @@ import {
 } from "@ant-design/icons";
 import { Card, Table } from "antd";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 
 type Props = {
@@ -73,7 +73,7 @@ export const cardVariants: Variants = {
 };
 
 
-export default function   ProblemDetailPage({ testCases, data }: Props) {
+export default function ProblemDetailPage({ testCases, data }: Props) {
   const sampleColumns = [
     { title: "Input", dataIndex: "input", key: "input",
       render: (text: string) => (

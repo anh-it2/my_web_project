@@ -10,13 +10,13 @@ import ListTestCase from "@/components/problem/ListTestCase";
 import CancelButton from "@/components/shared/Button/FormHeader/CancelButton";
 import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { useUpdateProblem } from "@/hook/problem/useUpdateProblem";
+import { useRouter } from "@/libs/routing";
 import { ProblemDetail } from "@/services/rest/problem/getProlemDetail/type";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
 import { getErrorMessages } from "@/utils/fetFormError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, Col, message, Row } from "antd";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -115,7 +115,7 @@ export default function EditForm({ problemDetail, testCases, problemId }: EditFo
     console.log("Submit payload to API:", values);
     startLoading()
     await updateProblemAsync({payload: values, problemId: problemId});
-    router.push("/admin/home");
+    router.push("/manager/home");
     stopLoading()
   };
 

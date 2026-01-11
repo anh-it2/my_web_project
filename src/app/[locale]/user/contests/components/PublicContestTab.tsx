@@ -1,9 +1,9 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import CommonTable from "@/components/table/CommonTable";
 import useGetListAdmin from "@/hook/admin/useGetListAdmin";
+import { useRouter } from "@/libs/routing";
 import { Admin } from "@/services/rest/admin/type";
 import { Card } from "antd";
-import { useRouter } from "next/navigation";
 import "../style.scss";
 
 export default function PublicContestTab() {

@@ -1,6 +1,7 @@
 "use client";
 
 import useLoadingStore from "@/app/store/loadingStore";
+import { useRouter } from "@/libs/routing";
 import { loginAccount } from "@/services/rest/auth";
 import {
   EyeInvisibleOutlined,
@@ -12,7 +13,6 @@ import { Button, Checkbox, Form, Input, message, Typography } from "antd";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Title } = Typography;

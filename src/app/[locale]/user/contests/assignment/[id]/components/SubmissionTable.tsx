@@ -2,11 +2,11 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import CommonTable from "@/components/table/CommonTable";
 import useGetListSubmission from "@/hook/submission/useGetListSubmission";
+import { useRouter } from "@/libs/routing";
 import { Submission } from "@/services/rest/submission/get-list-submission/type";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../.././style.scss";
 

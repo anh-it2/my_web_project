@@ -1,10 +1,10 @@
 "use client";
+import { useRouter } from "@/libs/routing";
 import { FilterOptions } from "@/services/rest/constant";
 import { ArrowLeftOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { MotionRow } from "./MotionRow";
 import { tableContainerVariants } from "./motion";
