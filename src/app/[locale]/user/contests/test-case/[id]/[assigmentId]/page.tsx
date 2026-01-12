@@ -73,6 +73,7 @@ export default function TestCasePage({
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
+  const [selectedTestCase, setSelectedTestCase] = useState<TestCaseResult | null>(null);
   const t = useTranslations("sidebar");
   const router = useRouter();
   const stopLoading = useLoadingStore((state) => state.stopLoading);
@@ -81,6 +82,8 @@ export default function TestCasePage({
   }, [stopLoading]);
   const { submissionDetail } = useSubmissionDetail(id);
   const {listTestCaseResult} = useListTestCaseResult(id)
+
+  console.log(listTestCaseResult)
 
 
   if (!submissionDetail) return <RouteLoading />;
@@ -147,19 +150,37 @@ export default function TestCasePage({
     },
     {
       title: "Thông báo",
-      dataIndex: "passed",
+      dataIndex: "status",
       align: "center",
-      render: (passed) => {
-        if (passed) {
+      render: (status) => {
+        if (status === "Success") {
           return (
             <Tag color="green" className="font-medium text-base">
-              Accepted
+              Success
             </Tag>
           );
-        } else  {
+        } else if (status === "Wrong Answer") {
           return (
             <Tag color="red" className="font-medium text-base">
               Wrong Answer
+            </Tag>
+          );
+        } else if (status === 'Time Limit Exceeded') {
+          return (
+            <Tag color="orange" className="font-medium text-base">
+              Time Limit Exceeded
+            </Tag>
+          );
+        } else if(status === 'Compilation Error'){
+          return (
+            <Tag color="red" className="font-medium text-base">
+              Compilation Error
+            </Tag>
+          );
+        } else {
+          return (
+            <Tag color="gray" className="font-medium text-base">
+              {status}
             </Tag>
           );
         }
@@ -182,9 +203,11 @@ export default function TestCasePage({
       render: (record: TestCaseResult) => (
         <>
           <motion.span whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
-            <InfoCircleFilled className="text-blue-500 text-xl cursor-pointer" onClick={() => setOpenModal(true)}/>
+            <InfoCircleFilled className="text-blue-500 text-xl cursor-pointer"  onClick={() => {
+          setSelectedTestCase(record);
+          setOpenModal(true);
+        }}/>
           </motion.span>
-          <ResultModal open={openModal} onClose={() => setOpenModal(false)} input={record.input} expectedOutput={record.expectedOutput} output={record.actualOutput}/>
         </>
       ),
     },
@@ -334,6 +357,7 @@ export default function TestCasePage({
         onOk={() => router.replace(confirmModalLink)}
         onCancel={() => setOpenDialog(false)}
       />
+       <ResultModal open={openModal} onClose={() => setOpenModal(false)} input={selectedTestCase?.input || ''} expectedOutput={selectedTestCase?.expectedOutput || ''} output={selectedTestCase?.actualOutput || ''}/>
     </>
   );
 }

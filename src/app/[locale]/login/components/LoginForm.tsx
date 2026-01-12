@@ -85,10 +85,10 @@ export default function LoginForm({
 
     if (res.role === "USER") {
       startLoading();
-      router.replace("/user/home");
+      router.push("/user/home");
     } else if (res.role === "ADMIN") {
       startLoading();
-      router.replace("/admin/home");
+      router.push("/admin/home");
     } else {
       startLoading();
       router.push("/manager/home");
