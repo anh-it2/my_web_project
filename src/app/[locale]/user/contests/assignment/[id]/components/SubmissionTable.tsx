@@ -71,7 +71,7 @@ export default function SubmissionTable({problemId}: {problemId: string}) {
       title: "Thời gian chạy",
       dataIndex: "executionTime",
       key: "executionTime",
-      render: (executionTime) => (executionTime !== null ? executionTime : "--"),
+      render: (executionTime) => (executionTime !== null ? executionTime.toFixed(2) : "--"),
     },
     {
       title: "Memory sử dụng",
