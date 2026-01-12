@@ -1,10 +1,12 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
 import { Tabs } from "antd";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import "../../style.scss";
 import AssignmentTab from "./components/AssignmentTab";
-import SubmittedTab from "./components/SubmittedTab";
+
+const SubmittedTab = dynamic(() => import("./components/SubmittedTab"));
 
 export default function ContestDetail({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -25,7 +27,7 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
           <AssignmentTab adminId={id} />
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="Bài nộp">
-          <SubmittedTab />
+          <SubmittedTab adminId={id} />
         </Tabs.TabPane>
       </Tabs>
     </div>

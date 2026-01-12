@@ -1,18 +1,19 @@
 export interface SubmittedProblem {
-  problemId: number;
-  problemCode: string;
-  title: string;
-  description: string;
-  inputFormat: string;
-  outputFormat: string;
-  constraints: string;
-  difficultyLevel: string;
-  timeLimit: number;
-  memoryLimit: number;
-  createdBy: string;
-  createdDate: string;
-  updatedDate: string;
-  active: boolean;
-  score: number;
-  maxScore: number;
+  submissionId: number;
+  problemTitle: string;
+  language: string;
+  status: string;
+  passedTestcases: number;
+  totalTestcases: number;
+  judgedAt?: string; // ISO 8601 datetime
+}
+
+export interface SubmittedProblemResponse {
+  content: SubmittedProblem[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  first: boolean;
 }
