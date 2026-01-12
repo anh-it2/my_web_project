@@ -8,6 +8,7 @@ import { FilterOptions } from "@/services/rest/constant";
 import { User } from "@/services/rest/user/type";
 import { Input, Modal, Select } from "antd";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import CommonTable from "./CommonTable";
 
 type Props = {
@@ -29,6 +30,7 @@ export default function UserTable({
   const [problem, setProblem] = useState<string | null>(null);
   const [reason, setReason] = useState<string>("");
   const router = useRouter();
+  const t = useTranslations("userTable");
 
   const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
@@ -39,7 +41,8 @@ export default function UserTable({
   console.log(problem);
 
   const columns = [
-    { title: "Username", dataIndex: "username", key: "username",render: (_: unknown, record: User) => (
+    {
+      title: "Username", dataIndex: "username", key: "username", render: (_: unknown, record: User) => (
         <span
           className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
@@ -49,7 +52,8 @@ export default function UserTable({
         >
           {record.username}
         </span>
-      ), },
+      ),
+    },
     { title: "Role", dataIndex: "role", key: "role" },
     {
       title: "Actions",
@@ -101,22 +105,22 @@ export default function UserTable({
       >
         <div className="flex flex-col gap-4">
           <div>
-            <p className="font-medium mb-1">Scope</p>
+            <p className="font-medium mb-1">{t("scope")}</p>
             <Select
               className="w-full"
               value={scope}
               onChange={(v) => setScope(v)}
               options={[
-                { label: "Toàn hệ thống", value: "global" },
-                { label: "Theo Tag", value: "tag" },
-                { label: "Theo Problem", value: "problem" },
+                { label: t("sortBy.global"), value: "global" },
+                { label: t("sortBy.tag"), value: "tag" },
+                { label: t("sortBy.problem"), value: "problem" },
               ]}
             />
           </div>
 
           {scope === "tag" && (
             <Select
-              placeholder="Chọn tag"
+              placeholder={t("sortBy.tagPlaceholder")}
               className="w-full"
               onChange={(v) => setTag(v)}
               options={[
@@ -128,7 +132,7 @@ export default function UserTable({
 
           {scope === "problem" && (
             <Select
-              placeholder="Chọn problem"
+              placeholder={t("sortBy.problemPlaceholder")}
               className="w-full"
               onChange={(v) => setProblem(v)}
               options={[
@@ -171,12 +175,12 @@ export default function UserTable({
         centered
         footer={null}
       >
-        <p className="font-medium mb-1">Reason</p>
+        <p className="font-medium mb-1">{t("reason")}</p>
         <Input.TextArea
           rows={3}
           value={reason}
           onChange={(e) => setReason(e.target.value)}
-          placeholder="Nhập lý do thu hồi quyền"
+          placeholder={t("revokeRoleDescription")}
         />
         <div className="flex gap-2 mt-4 justify-end">
           <DangerButton

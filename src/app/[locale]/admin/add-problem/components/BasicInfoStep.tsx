@@ -1,4 +1,5 @@
 import { difficultyOptions } from "@/app/[locale]/constants";
+import { useTranslations } from "use-intl";
 import RHFInput from "@/components/form/RHFInput";
 import RHFSelect from "@/components/form/RHFSelect";
 import { Col, Row } from "antd";
@@ -26,6 +27,8 @@ const itemVariants = {
 };
 
 export default function BasicInfoStep() {
+  const t = useTranslations("addProblem.basicInfo");
+
   return (
     <motion.div initial="hidden" animate="visible" variants={containerVariants}>
       <Row gutter={[16, 16]}>
@@ -33,8 +36,8 @@ export default function BasicInfoStep() {
           <motion.div variants={itemVariants}>
             <RHFInput
               name="title"
-              label="Problem title"
-              placeholder="Enter your problem title"
+              label={t("title")}
+              placeholder={t("titlePlaceholder")}
               required={true}
             />
           </motion.div>
@@ -43,7 +46,7 @@ export default function BasicInfoStep() {
               type="number"
               name="timeLimit"
               addonAfter="ms"
-              label="Time Limit"
+              label={t("timeLimit")}
               required={true}
             />
 
@@ -51,7 +54,7 @@ export default function BasicInfoStep() {
               type="number"
               name="memoryLimit"
               addonAfter="MB"
-              label="Memory Limit"
+              label={t("memoryLimit")}
               required={true}
             />
           </motion.div>
@@ -61,15 +64,15 @@ export default function BasicInfoStep() {
           <motion.div variants={itemVariants}>
             <RHFInput
               name="problemCode"
-              label="Problem code"
-              placeholder="Enter your problem code"
+              label={t("problemCode")}
+              placeholder={t("problemCodePlaceholder")}
               required={true}
             />
           </motion.div>
           <motion.div variants={itemVariants}>
             <RHFSelect
               name="difficultyLevel"
-              label="Difficulty"
+              label={t("difficultyLevel")}
               options={difficultyOptions}
               required={true}
             />

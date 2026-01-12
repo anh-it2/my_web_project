@@ -6,6 +6,7 @@ import { Card, Col, Row } from "antd";
 import { motion } from "framer-motion";
 import React from "react";
 import { useFieldArray } from "react-hook-form";
+import { useTranslations } from "use-intl";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,6 +40,7 @@ const cardVariants = {
 
 export default function TestcaseManager() {
   const { fields, append, remove } = useFieldArray({ name: "testCases" });
+  const t = useTranslations("addProblem.testcases");
   return (
     <motion.div
       className="space-y-4"
@@ -50,7 +52,7 @@ export default function TestcaseManager() {
         className="flex justify-between items-center"
         variants={cardVariants}
       >
-        <h3 className="font-semibold">Problem Test Cases & constraints</h3>
+        <h3 className="font-semibold">{t("title")}</h3>
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -72,7 +74,7 @@ export default function TestcaseManager() {
         </motion.div>
       </motion.div>
       <motion.div variants={cardVariants}>
-        <RHFInput name="constraints" label="Contraints" required />
+        <RHFInput name="constraints" label={t("constraints")} required />
       </motion.div>
 
       {fields.map((f, i) => (
@@ -89,16 +91,16 @@ export default function TestcaseManager() {
               <Col xs={24} md={12}>
                 <RHFTextArea
                   name={`testCases.${i}.input`}
-                  placeholder="Enter your test case input"
-                  label="Test Case Input"
+                  placeholder={t("testcaseInputPlaceholder")}
+                  label={t("testcaseInput")}
                 />
               </Col>
 
               <Col xs={24} md={12}>
                 <RHFTextArea
                   name={`testCases.${i}.expectedOutput`}
-                  placeholder="Enter your test case output"
-                  label="Test Case  Output"
+                  placeholder={t("testcaseOutputPlaceholder")}
+                  label={t("testcaseOutput")}
                 />
               </Col>
             </Row>

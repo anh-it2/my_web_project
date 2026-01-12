@@ -150,5 +150,110 @@
   "problem": {
     "publish_title": "Publish this problem",
     "publish_description": "When enabled, this product will appear in the class."
+  },
+  "userInfo": {
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Type your full name",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "phone": "Phone number",
+    "phonePlaceholder": "Type your phone number",
+    "github": "Github",
+    "githubPlaceholder": "Provide GitHub",
+    "facebook": "Facebook",
+    "facebookPlaceholder": "Provide Facebook",
+    "birthday": "Birthday",
+    "bio": "About me",
+    "bioPlaceholder": "Tell us something about you",
+    "updateButton": "Update Profile"
+  },
+  "addProblem": {
+    "basicInfo": {
+      "title": "Problem title",
+      "titlePlaceholder": "Enter your problem title",
+      "timeLimit": "Time Limit",
+      "memoryLimit": "Memory Limit",
+      "problemCode": "Problem code",
+      "problemCodePlaceholder": "Enter your problem code",
+      "difficultyLevel": "Difficulty"
+    },
+    "statementStep": {
+      "title": "Sample IO",
+      "description": "Description:",
+      "sampleInput": "Sample Input",
+      "sampleInputPlaceholder": "Enter your sample input",
+      "sampleOutput": "Sample Output",
+      "sampleOutputPlaceholder": "Enter your sample output"
+    },
+    "testcases": {
+      "title": "Problem Test Cases & constraints",
+      "constraints": "Constraints",
+      "testcaseInput": "Test Case Input",
+      "testcaseInputPlaceholder": "Enter your test case input",
+      "testcaseOutput": "Test Case Output",
+      "testcaseOutputPlaceholder": "Enter your test case output"
+    },
+    "createProblem": {
+      "loadingMessage": "Uploading problem",
+      "createBreadCrumb": "Create new problem",
+      "errorProblemExists": "Problem code already exists",
+      "errorProblemExistsDesc": "Problem code already exists in the system",
+      "errorUnexpected": "Unexpected error occurred",
+      "errorUnexpectedDesc": "An unexpected error occurred while creating the problem",
+      "problemSuccessMessage": "Problem uploaded successfully, uploading test cases",
+      "testcasesSuccessMessage": "All test cases uploaded successfully, redirecting"
+    }
+  },
+  "editForm": {
+    "title": "Problem Title",
+    "titlePlaceholder": "Enter problem title",
+    "difficulty": "Difficulty",
+    "visibility": "Visibility",
+    "problemCode": "Problem code",
+    "problemCodePlaceholder": "Enter problem code",
+    "timeLimit": "Time Limit",
+    "memoryLimit": "Memory Limit",
+    "description": "Description",
+    "descriptionPlaceholder": "Problem description",
+    "testcasesAndConstraints": "Problem Test Cases & Constraints",
+    "constraints": "Constraints",
+    "sampleTest": "Sample Tests",
+    "sampleInput": "Sample Input",
+    "sampleOutput": "Sample Output",
+    "testcases": "Test Case",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "allProblemTable": {
+    "title": "Problems",
+    "problemCode": "Problem code",
+    "difficultyLevel": "Difficulty Level",
+    "bestScore": "Best score",
+    "maxScore": "Max score",
+    "bestStatus": {
+      "title": "Status",
+      "ac": "Accepted",
+      "wa": "Wrong Answer",
+      "tle": "Time Limit Exceeded",
+      "ce": "Compile Error"
+    },
+    "actions": {
+      "details": "Details",
+      "edit": "Edit",
+      "delete": "Delete",
+      "publishButton": "Add"
+    }
+  },
+  "userTable": {
+    "scope": "Scope",
+    "sortBy": {
+      "global": "Default",
+      "tag": "By Tag",
+      "tagPlaceholder": "Select tag",
+      "problem:": "By Problem",
+      "problemPlaceholder": "Select problem"
+    },
+    "reason": "Reason",
+    "revokeRoleDescription": "Reason for revoking"
   }
 }

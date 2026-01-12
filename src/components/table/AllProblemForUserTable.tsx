@@ -15,6 +15,7 @@ import {
 import { Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import CommonTable from "./CommonTable";
+import { useTranslations } from "use-intl";
 
 type Props = {
   data: Problem[];
@@ -29,11 +30,12 @@ export default function AllProblemForUserTable({
   totalElements,
   hasButton = false,
 }: Props) {
+  const t = useTranslations("allProblemTable");
   const router = useRouter();
   const startLoading = useLoadingStore((state) => state.startLoading);
   const columns: ColumnsType<Problem> = [
     {
-      title: "Bài tập",
+      title: t("title"),
       dataIndex: "title",
       key: "title",
       render: (text, record) => (
@@ -49,13 +51,13 @@ export default function AllProblemForUserTable({
       ),
     },
     {
-      title: "Mã bài tập",
+      title: t("problemCode"),
       dataIndex: "problemCode",
       key: "problemCode",
       className: "text-gray-600",
     },
     {
-      title: "Mức độ",
+      title: t("difficultyLevel"),
       dataIndex: "difficultyLevel",
       key: "difficultyLevel",
       render: (difficultyLevel: string) => {
@@ -72,7 +74,7 @@ export default function AllProblemForUserTable({
       },
     },
     {
-      title: "Điểm cao nhất",
+      title: t("bestScore"),
       dataIndex: "bestScore",
       key: "bestScore",
       align: "center",
@@ -87,7 +89,7 @@ export default function AllProblemForUserTable({
       ),
     },
     {
-      title: "Điểm tối đa",
+      title: t("maxScore"),
       dataIndex: "maxScore",
       key: "maxScore",
       align: "right",
@@ -102,7 +104,7 @@ export default function AllProblemForUserTable({
       ),
     },
     {
-      title: "Pass",
+      title: t("bestStatus.title"),
       dataIndex: "bestStatus",
       key: "bestStatus",
       render: (status: string) => {
@@ -110,22 +112,22 @@ export default function AllProblemForUserTable({
           AC: {
             color: "green",
             icon: <CheckCircleFilled />,
-            label: "Accepted",
+            label: t("bestStatus.ac"),
           },
           WA: {
             color: "red",
             icon: <CloseCircleFilled />,
-            label: "Wrong Answer",
+            label: t("bestStatus.wa"),
           },
           TLE: {
             color: "orange",
             icon: <ClockCircleFilled />,
-            label: "Time Limit",
+            label: t("bestStatus.tle"),
           },
           CE: {
             color: "volcano",
             icon: <WarningFilled />,
-            label: "Compile Error",
+            label: t("bestStatus.ce"),
           },
         } as const;
 

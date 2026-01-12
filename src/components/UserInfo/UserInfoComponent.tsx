@@ -1,6 +1,7 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import { useUpdateUserInfo } from "@/hook/user-info/useUpdateUserInfo";
 import { useUserInfo } from "@/hook/user-info/useUserInfo";
+import { useTranslations } from "next-intl";
 import { UserProfileSchema } from "@/hook/user-info/useUserInfoSchema";
 import { useRouter } from "@/libs/routing";
 import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
@@ -75,6 +76,7 @@ export default function UserInfoComponent({
   const { userInfo } = useUserInfo(userName);
   const { updateUserInfoAsync } = useUpdateUserInfo();
   const router = useRouter()
+  const t = useTranslations("userInfo");
 
   const methods = useForm({
     defaultValues: {
@@ -142,14 +144,14 @@ export default function UserInfoComponent({
     >
       <motion.div variants={itemVariants} className="w-full">
         <Card className="w-full max-w-3xl rounded-2xl shadow-lg mx-auto">
-          { <Button
-      icon={<ArrowLeftOutlined />}
-      type="text"
-      className="flex items-center gap-1 text-gray-600 hover:text-blue-600 mb-5"
-      onClick={() => router.back()}
-    >
-      Quay lại
-    </Button>}
+          {<Button
+            icon={<ArrowLeftOutlined />}
+            type="text"
+            className="flex items-center gap-1 text-gray-600 hover:text-blue-600 mb-5"
+            onClick={() => router.back()}
+          >
+            Quay lại
+          </Button>}
           {/* Header */}
           <motion.div
             className="flex items-center gap-6 mb-8"
@@ -204,9 +206,9 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="fullName"
-                    label="Họ và tên"
+                    label={t("fullName")}
                     required
-                    placeholder="Nhập họ tên"
+                    placeholder={t("fullNamePlaceholder")}
                     readOnly={!enableEdit}
                   />
                 </motion.div>
@@ -214,8 +216,8 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="email"
-                    label="Email"
-                    placeholder="Email"
+                    label={t("email")}
+                    placeholder={t("emailPlaceholder")}
                     required
                     readOnly={!enableEdit}
                   />
@@ -224,8 +226,8 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="phone"
-                    label="Số điện thoại"
-                    placeholder="Nhập số điện thoại"
+                    label={t("phone")}
+                    placeholder={t("phonePlaceholder")}
                     required
                     readOnly={!enableEdit}
                   />
@@ -234,23 +236,23 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="github"
-                    label="Github"
-                    placeholder="Nhập github"
+                    label={t("github")}
+                    placeholder={t("githubPlaceholder")}
                     readOnly={!enableEdit}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="facebook"
-                    label="Facebook"
-                    placeholder="Nhập facebook"
+                    label={t("facebook")}
+                    placeholder={t("facebookPlaceholder")}
                     readOnly={!enableEdit}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <RHFDatePicker
                     name="birthday"
-                    label="Ngày sinh (hiện BE đang lỗi)"
+                    label={t("birthday")}
                     readOnly={true}
                   />
                 </motion.div>
@@ -264,8 +266,8 @@ export default function UserInfoComponent({
                 <motion.div variants={itemVariants}>
                   <RHFInput
                     name="bio"
-                    label="Giới thiệu"
-                    placeholder="Mô tả ngắn về bạn"
+                    label={t("bio")}
+                    placeholder={t("bioPlaceholder")}
                     required
                     readOnly={!enableEdit}
                   />
@@ -279,7 +281,7 @@ export default function UserInfoComponent({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {enableEdit && <PublishButton title="Cập nhật hồ sơ" isSubmit={true} />}
+                    {enableEdit && <PublishButton title={t("updateButton")} isSubmit={true} />}
                   </motion.div>
                 </motion.div>
               </motion.div>
