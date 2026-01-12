@@ -1,9 +1,10 @@
 import axios from "axios";
-import { SubmittedProblem } from "./type";
+import { BASE_URL, FilterOptions } from "../../constant";
+import { SubmittedProblemResponse } from "./type";
 
-export async function getListSubmittedProblem(): Promise<SubmittedProblem[]> {
-  const res = await axios.get(
-    "https://686e2031c9090c49538860be.mockapi.io/problem"
-  );
+export async function getListSubmittedProblem(adminId: string, filter: FilterOptions): Promise<SubmittedProblemResponse> {
+   const res = await axios.post("/api/get-list", {
+    link: `${BASE_URL}/submissions/user/${adminId}?page=${filter?.pageNumber}&pageSize=${filter?.pageSize}`,
+  });
   return res.data || null;
 }

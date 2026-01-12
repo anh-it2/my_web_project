@@ -3,6 +3,7 @@ import { difficultyConfig } from "@/app/[locale]/constants";
 import useLoadingStore from "@/app/store/loadingStore";
 // ExerciseTable.tsx
 import { useRouter } from "@/libs/routing";
+import { FilterOptions } from "@/services/rest/constant";
 import { Problem } from "@/services/rest/problem/get-active-problem/type";
 import {
   CheckCircleFilled,
@@ -14,14 +15,15 @@ import {
 } from "@ant-design/icons";
 import { Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import CommonTable from "./CommonTable";
 import { useTranslations } from "use-intl";
+import CommonTable from "./CommonTable";
 
 type Props = {
   data: Problem[];
   basePath?: string;
   totalElements: number;
   hasButton?: boolean;
+  handlePageChange?: ({ pageNumber, pageSize }: FilterOptions) => void; 
 };
 
 export default function AllProblemForUserTable({
@@ -29,6 +31,7 @@ export default function AllProblemForUserTable({
   basePath = "/admin",
   totalElements,
   hasButton = false,
+  handlePageChange
 }: Props) {
   const t = useTranslations("allProblemTable");
   const router = useRouter();
@@ -155,6 +158,7 @@ export default function AllProblemForUserTable({
       rowKey="problemId"
       totalElements={totalElements}
       hasButton={hasButton}
+      handlePageChange={handlePageChange}
     />
   );
 }

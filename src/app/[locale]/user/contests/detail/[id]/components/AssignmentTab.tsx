@@ -10,7 +10,7 @@ const {Text} = Typography
 
 export default function AssignmentTab({ adminId }: { adminId: string }) {
 
-  const { listActiveProblem, isLoading } = useGetListActiveProblem(adminId);
+  const { listActiveProblem, isLoading, handleFilterChange } = useGetListActiveProblem(adminId);
   const { classScore } = useClassScore(adminId);
 
   if (isLoading || !listActiveProblem) return <RouteLoading message="Đang tải bài tập..."/>;
@@ -22,7 +22,7 @@ export default function AssignmentTab({ adminId }: { adminId: string }) {
                   {formatNumberSpace(listActiveProblem?.totalElements*100)}
                 </Text>
               </div>}>
-        <AllProblemForUserTable hasButton={true} totalElements={listActiveProblem?.totalElements || 0} data={listActiveProblem?.content || []} basePath="/user/contests/assignment/"/>
+        <AllProblemForUserTable hasButton={true} totalElements={listActiveProblem?.totalElements || 0} data={listActiveProblem?.content || []} basePath="/user/contests/assignment/" handlePageChange={handleFilterChange}/>
     </Card>
   );
 }
