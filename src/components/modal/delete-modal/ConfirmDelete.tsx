@@ -1,5 +1,6 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
+import { useTranslations } from "use-intl";
 
 type ConfirmDeleteProps = {
   open: boolean;
