@@ -63,7 +63,7 @@ export default function UserHomePage() {
           variants={itemVariants}
         >
           <Title level={2} style={{ color: "rgb(174, 29, 44)" }}>
-            HUSTack
+            CODE ARENA
           </Title>
           <Text className="text-base">
             Empower your programming journey and solve real-world problems
