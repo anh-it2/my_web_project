@@ -107,7 +107,10 @@
   },
   "message": {
     "loading": "Loading page, please wait...",
-    "loadingAdmin": "Loading admin page..."
+    "loadingAdmin": "Loading admin page...",
+    "loadingData": "Loading data...",
+    "loadingProblem": "Loading problem details...",
+    "loadingContent": "Loading content, please wait..."
   },
   "sidebar": {
     "home": "Home",
@@ -132,7 +135,16 @@
     "contactSupport": "Contact Support",
     "support_center": "Support Center",
     "become_supplier": "Become a Supplier",
-    "check_order": "Check Order"
+    "check_order": "Check Order",
+    "menu": {
+      "business_info": "User Information",
+      "support": "Support",
+      "logout": "Logout",
+      "message1": "Message 1",
+      "message2": "Message 2",
+      "noti1": "Notification 1",
+      "noti2": "Notification 2"
+    }
   },
   "customUploadFile": {
     "label": "Financial Report Data",
@@ -145,7 +157,11 @@
   "modal": {
     "message": "Your information will not be saved, do you agree to exit?",
     "stayButton": "Stay",
-    "exitButton": "Exit"
+    "exitButton": "Exit",
+    "deleteTitle": "Confirm Delete",
+    "deleteDescription": "Data will be lost forever. You cannot undo this.",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "problem": {
     "publish_title": "Publish this problem",
@@ -165,7 +181,8 @@
     "birthday": "Birthday",
     "bio": "About me",
     "bioPlaceholder": "Tell us something about you",
-    "updateButton": "Update Profile"
+    "updateButton": "Update Profile",
+    "return": "Return"
   },
   "addProblem": {
     "basicInfo": {
@@ -230,6 +247,13 @@
     "difficultyLevel": "Difficulty Level",
     "bestScore": "Best score",
     "maxScore": "Max score",
+    "submission": "Submission",
+    "submissionId": "Submission ID",
+    "language": "Language",
+    "passedTestcases": "Passed Testcases",
+    "totalTestcases": "Total Testcases",
+    "scoreAchieved": "Score achieved:",
+    "scoreMax": "Max score:",
     "bestStatus": {
       "title": "Status",
       "ac": "Accepted",
@@ -255,5 +279,37 @@
     },
     "reason": "Reason",
     "revokeRoleDescription": "Reason for revoking"
+  },
+  "submitPage": {
+    "code": "Code",
+    "testRun": "Test Run",
+    "submit": "Submit",
+    "submission": "Submission",
+    "refresh": "Refresh",
+    "find": "Find",
+    "status": "Status",
+    "passedTestcases": "Passed Test",
+    "totalTestcases": "Total Test",
+    "language": "Language",
+    "runTime": "Run Time",
+    "memoryUse": "Memory Used",
+    "finalSubmission": "Final Submission",
+    "passedTestcase": "Testcase Graded",
+    "failedTestcase": "Testcase Failed",
+    "action": "Action",
+    "class": "Class",
+    "currentAssignment": "Current Assignment",
+    "passed": "Passed",
+    "grade": "Grade",
+    "totalRunTime": "Total Run Time",
+    "createTime": "Created At",
+    "return": "Return"
+  },
+  "contestTab": {
+    "class": "Class",
+    "classOf": "Class of",
+    "status": "Status",
+    "ongoing": "Ongoing",
+    "manager": "Manager"
   }
 }

@@ -12,7 +12,7 @@ import type { MenuProps } from "antd";
 import { Badge, Dropdown, message, Space } from "antd";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-
+import { useTranslations } from "next-intl";
 import useLoadingStore from "@/app/store/loadingStore";
 import { useRouter } from "@/libs/routing";
 import { logoutAccount } from "@/services/rest/auth";
@@ -26,6 +26,7 @@ type HeaderProps = {
 export default function Header({ site }: HeaderProps) {
 
   const [email, setEmail] = useState<string | null>(null);
+  const t = useTranslations("header");
 
   useEffect(() => {
     const value = localStorage.getItem("userName");
@@ -115,18 +116,18 @@ export default function Header({ site }: HeaderProps) {
     {
       key: "business-info",
       icon: <InfoCircleOutlined />,
-      label: "Thông tin cá nhân",
+      label: t("menu.business_info"),
     },
     {
       key: "support",
       icon: <CustomerServiceOutlined />,
-      label: "Hỗ trợ",
+      label: t("menu.support"),
     },
     { type: "divider" },
     {
       key: "logout",
       icon: <LogoutOutlined />,
-      label: "Đăng xuất",
+      label: t("menu.logout"),
       danger: true,
     },
   ];
@@ -156,8 +157,8 @@ export default function Header({ site }: HeaderProps) {
               placement="bottomRight"
               menu={{
                 items: [
-                  { key: "1", label: "Tin nhắn 1" },
-                  { key: "2", label: "Tin nhắn 2" },
+                  { key: "1", label: t("message1") },
+                  { key: "2", label: t("message2") },
                 ],
               }}
             >
@@ -173,8 +174,8 @@ export default function Header({ site }: HeaderProps) {
               placement="bottomRight"
               menu={{
                 items: [
-                  { key: "1", label: "Thông báo 1" },
-                  { key: "2", label: "Thông báo 2" },
+                  { key: "1", label: t("noti1") },
+                  { key: "2", label: t("noti2") },
                 ],
               }}
             >

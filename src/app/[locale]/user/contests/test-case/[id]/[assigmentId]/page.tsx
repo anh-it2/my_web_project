@@ -75,13 +75,14 @@ export default function TestCasePage({
   const [confirmModalLink, setConfirmModalLink] = useState<string>("#");
   const [selectedTestCase, setSelectedTestCase] = useState<TestCaseResult | null>(null);
   const t = useTranslations("sidebar");
+  const tt = useTranslations("submitPage");
   const router = useRouter();
   const stopLoading = useLoadingStore((state) => state.stopLoading);
   useEffect(() => {
     stopLoading();
   }, [stopLoading]);
   const { submissionDetail } = useSubmissionDetail(id);
-  const {listTestCaseResult} = useListTestCaseResult(id)
+  const { listTestCaseResult } = useListTestCaseResult(id)
 
   console.log(listTestCaseResult)
 
@@ -118,8 +119,8 @@ export default function TestCasePage({
           <Tooltip
             title={
               passed
-                ? "Test case của bạn được tính điểm"
-                : "Test case của bạn không được tính điểm"
+                ? tt("passedTestcase")
+                : tt("failedTestcase")
             }
             color={
               passed
@@ -149,7 +150,7 @@ export default function TestCasePage({
       },
     },
     {
-      title: "Thông báo",
+      title: tt("status"),
       dataIndex: "status",
       align: "center",
       render: (status) => {
@@ -171,7 +172,7 @@ export default function TestCasePage({
               Time Limit Exceeded
             </Tag>
           );
-        } else if(status === 'Compilation Error'){
+        } else if (status === 'Compilation Error') {
           return (
             <Tag color="red" className="font-medium text-base">
               Compilation Error
@@ -187,26 +188,26 @@ export default function TestCasePage({
       },
     },
     {
-      title: "Thời gian chạy (ms)",
+      title: "Run Time (ms)",
       dataIndex: "timeTaken",
       align: "center",
     },
     {
-      title: "Bộ nhớ (MB)",
+      title: "Memory (MB)",
       dataIndex: "memoryUsed",
       align: "center",
       render: (v: number) => v.toLocaleString(),
     },
     {
-      title: "Thao tác",
+      title: tt("action"),
       align: "center",
       render: (record: TestCaseResult) => (
         <>
           <motion.span whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
-            <InfoCircleFilled className="text-blue-500 text-xl cursor-pointer"  onClick={() => {
-          setSelectedTestCase(record);
-          setOpenModal(true);
-        }}/>
+            <InfoCircleFilled className="text-blue-500 text-xl cursor-pointer" onClick={() => {
+              setSelectedTestCase(record);
+              setOpenModal(true);
+            }} />
           </motion.span>
         </>
       ),
@@ -223,11 +224,11 @@ export default function TestCasePage({
       link: "/user/contests",
     },
     {
-      label: "Class",
+      label: tt("class"),
       link: "/user/contests/detail/1",
     },
     {
-      label: "Current Assignment",
+      label: tt("currentAssignment"),
       link: `/user/contests/assignment/${assigmentId}`,
     },
     {
@@ -268,7 +269,7 @@ export default function TestCasePage({
               whileHover={{ x: 5 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span className="text-xl font-medium">Mã nguồn</span>
+              <span className="text-xl font-medium">{tt("code")}</span>
               <motion.span
                 className="text-blue-400"
                 animate={{ rotate: showCode ? 180 : 0 }}
@@ -311,19 +312,19 @@ export default function TestCasePage({
               variants={containerVariants}
             >
               <motion.div variants={cardVariants}>
-                <InfoRow label="Trạng thái">
+                <InfoRow label={tt("status")}>
                   {renderStatusText(submissionDetail?.status || "")}
                 </InfoRow>
               </motion.div>
 
               <motion.div variants={cardVariants}>
-                <InfoRow label="Đạt">
+                <InfoRow label={tt("passed")}>
                   {submissionDetail.passedTestcases}/
                   {submissionDetail.totalTestcases} test cases
                 </InfoRow>
               </motion.div>
               <motion.div variants={cardVariants}>
-                <InfoRow label="Điểm">
+                <InfoRow label={tt("grade")}>
                   {(
                     (submissionDetail.passedTestcases /
                       submissionDetail.totalTestcases) *
@@ -332,17 +333,17 @@ export default function TestCasePage({
                 </InfoRow>
               </motion.div>
               <motion.div variants={cardVariants}>
-                <InfoRow label="Ngôn ngữ">
+                <InfoRow label={tt("language")}>
                   {mapLanguage(submissionDetail.language)}
                 </InfoRow>
               </motion.div>
               <motion.div variants={cardVariants}>
-                <InfoRow label="Tổng thời gian chạy">
+                <InfoRow label={tt("totalRunTime")}>
                   {submissionDetail?.executionTime} ms
                 </InfoRow>
               </motion.div>
               <motion.div variants={cardVariants}>
-                <InfoRow label="Thời gian tạo">
+                <InfoRow label={tt("createTime")}>
                   {dayjs(submissionDetail?.judgedAt).format(
                     "DD/MM/YYYY HH:mm:ss"
                   )}
@@ -357,7 +358,7 @@ export default function TestCasePage({
         onOk={() => router.replace(confirmModalLink)}
         onCancel={() => setOpenDialog(false)}
       />
-       <ResultModal open={openModal} onClose={() => setOpenModal(false)} input={selectedTestCase?.input || ''} expectedOutput={selectedTestCase?.expectedOutput || ''} output={selectedTestCase?.actualOutput || ''}/>
+      <ResultModal open={openModal} onClose={() => setOpenModal(false)} input={selectedTestCase?.input || ''} expectedOutput={selectedTestCase?.expectedOutput || ''} output={selectedTestCase?.actualOutput || ''} />
     </>
   );
 }

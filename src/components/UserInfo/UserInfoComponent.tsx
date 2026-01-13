@@ -150,7 +150,7 @@ export default function UserInfoComponent({
             className="flex items-center gap-1 text-gray-600 hover:text-blue-600 mb-5"
             onClick={() => router.back()}
           >
-            Quay lại
+            {t("return")}
           </Button>}
           {/* Header */}
           <motion.div

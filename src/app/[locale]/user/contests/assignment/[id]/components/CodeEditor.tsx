@@ -3,6 +3,7 @@ import PublishButton from "@/components/shared/Button/FormHeader/PublishButton";
 import { Editor } from "@monaco-editor/react";
 import { Typography } from "antd";
 import React, { SetStateAction } from "react";
+import { useTranslations } from "next-intl";
 
 const { Title } = Typography;
 
@@ -27,9 +28,10 @@ export function CodeEditor({
   CODE_TEMPLATES,
   isLoading = false,
 }: Props) {
+  const t = useTranslations("submitPage");
   return (
     <>
-      <Title level={5}>Mã nguồn</Title>
+      <Title level={5}>{t("code")}</Title>
 
       {/* Language selector */}
       <select
@@ -55,8 +57,8 @@ export function CodeEditor({
       />
 
       <div className="flex flex-row gap-2 items-end">
-        <CancelButton title="Chạy thử" disable={isLoading} />
-        <PublishButton title="Nộp bài" isSubmit={true} isLoading={isLoading} />
+        <CancelButton title={t("testRun")} disable={isLoading} />
+        <PublishButton title={t("submit")} isSubmit={true} isLoading={isLoading} />
       </div>
     </>
   );

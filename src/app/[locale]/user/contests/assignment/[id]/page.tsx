@@ -63,6 +63,7 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
   const { submitProblemAsync, isLoading } = useSubmitProblem();
 
   const t = useTranslations("sidebar");
+  const tt = useTranslations("login.message");
   const router = useRouter();
 
   const [language, setLanguage] = useState<string>("cpp");
@@ -104,8 +105,8 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
       link: "#",
     },
   ];
-  
-  if(!problemDetail) return <RouteLoading message="Đang tải dữ liệu..." />;
+
+  if (!problemDetail) return <RouteLoading message={tt("loadingData")} />;
 
   return (
     <>
@@ -156,14 +157,14 @@ export default function AssignmentPage({ params }: { params: { id: string } }) {
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Input</div>
               <pre>
-            {problemDetail.sampleInput}
-          </pre>  
+                {problemDetail.sampleInput}
+              </pre>
             </div>
             <div className="bg-gray-900 text-gray-100 rounded-xl p-4 text-sm">
               <div className="font-semibold mb-2">Output</div>
               <pre>
-            {problemDetail.sampleOutput}
-          </pre>  
+                {problemDetail.sampleOutput}
+              </pre>
             </div>
           </div>
 

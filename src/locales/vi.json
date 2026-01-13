@@ -107,7 +107,10 @@
   },
   "message": {
     "loading": "Đang tải trang, vui lòng chờ...",
-    "loadingAdmin": "Đang tải trang quản trị..."
+    "loadingAdmin": "Đang tải trang quản trị...",
+    "loadingData": "Đang tải dữ liệu...",
+    "loadingProblem": "Đang tải bài toán...",
+    "loadingContent": "Đang tải nội dung, vui lòng chờ..."
   },
   "sidebar": {
     "home": "Trang chủ",
@@ -132,7 +135,16 @@
     "contactSupport": "Liên hệ hỗ trợ",
     "support_center": "Trung tâm hỗ trợ",
     "become_supplier": "Trở thành Nhà cung cấp",
-    "check_order": "Kiểm tra đơn hàng"
+    "check_order": "Kiểm tra đơn hàng",
+    "menu": {
+      "business_info": "Thông tin cá nhân",
+      "support": "Hỗ trợ",
+      "logout": "Đăng xuất",
+      "message1": "Tin nhắn 1",
+      "message2": "Tin nhắn 2",
+      "noti1": "Thông báo 1",
+      "noti2": "Thông báo 2"
+    }
   },
   "customUploadFile": {
     "label": "Dữ liệu báo cáo tài chính",
@@ -145,7 +157,11 @@
   "modal": {
     "message": "Thông tin sẽ không được lưu, bạn có đồng ý thoát?",
     "stayButton": "Ở lại",
-    "exitButton": "Thoát"
+    "exitButton": "Thoát",
+    "deleteTitle": "Xác nhận xóa",
+    "deleteDescription": "Hành động này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn.",
+    "delete": "Xóa",
+    "cancel": "Hủy"
   },
   "problem": {
     "publish_title": "Đăng tải bài toán này",
@@ -165,7 +181,8 @@
     "birthday": "Ngày sinh",
     "bio": "Giới thiệu",
     "bioPlaceholder": "Mô tả ngắn về bạn",
-    "updateButton": "Cập nhật hồ sơ"
+    "updateButton": "Cập nhật hồ sơ",
+    "return": "Quay lại"
   },
   "addProblem": {
     "basicInfo": {
@@ -230,6 +247,13 @@
     "difficultyLevel": "Mức độ",
     "bestScore": "Điểm cao nhất",
     "maxScore": "Điểm tối đa",
+    "submission": "Bài nộp",
+    "submissionId": "Mã bài nộp",
+    "language": "Ngôn ngữ",
+    "passedTestcases": "Testcase đạt được",
+    "totalTestcases": "Tổng Testcase",
+    "scoreAchieved": "Điểm đạt được:",
+    "scoreMax": "Điểm tối đa:",
     "bestStatus": {
       "title": "Trạng thái",
       "ac": "Hoàn thành",
@@ -255,5 +279,37 @@
     },
     "reason": "Lý do",
     "revokeRoleDescription": "Nhập lý do thu hồi quyền"
+  },
+  "submitPage": {
+    "code": "Mã nguồn",
+    "testRun": "Chạy thử",
+    "submit": "Nộp bài",
+    "submission": "Bài nộp",
+    "refresh": "Làm mới",
+    "find": "Tìm kiếm",
+    "status": "Trạng thái",
+    "passedTestcases": "Số Test case đạt",
+    "totalTestcases": "Tổng Test case",
+    "language": "Ngôn ngữ",
+    "runTime": "Thời gian chạy",
+    "memoryUse": "Bộ nhớ sử dụng",
+    "finalSubmission": "Bài nộp cuối",
+    "passedTestcase": "Test case của bạn được tính điểm",
+    "failedTestcase": "Test case của bạn không được tính điểm",
+    "action": "Hành động",
+    "class": "Lớp học",
+    "currentAssignment": "Bài tập hiện tại",
+    "passed": "Đạt",
+    "grade": "Điểm",
+    "totalRunTime": "Tổng thời gian chạy",
+    "createTime": "Thời gian tạo",
+    "return": "Quay lại"
+  },
+  "contestTab": {
+    "class": "Lớp học",
+    "classOf": "Lớp học của",
+    "status": "Trạng thái",
+    "ongoing": "Đang diễn ra",
+    "manager": "Người quản lý"
   }
 }

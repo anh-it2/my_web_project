@@ -2,13 +2,15 @@
 
 import { Spin } from "antd";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface RouteLoadingProps {
   message?: string;
 }
 
+const t = useTranslations("login.message");
 const RouteLoading: React.FC<RouteLoadingProps> = ({
-  message = "Đang tải nội dung, vui lòng chờ...",
+  message = t("loadingContent"),
 }) => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#F5F8FD]">

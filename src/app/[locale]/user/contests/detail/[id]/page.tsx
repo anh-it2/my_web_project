@@ -3,6 +3,7 @@ import useLoadingStore from "@/app/store/loadingStore";
 import { Tabs } from "antd";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import "../../style.scss";
 import AssignmentTab from "./components/AssignmentTab";
 
@@ -15,6 +16,7 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
   useEffect(() => {
     stopLoading();
   }, [stopLoading]);
+  const t = useTranslations("allProblemTable");
 
   return (
     <div className="p-4">
@@ -23,10 +25,10 @@ export default function ContestDetail({ params }: { params: { id: string } }) {
         onChange={(key) => setActiveTab(key)}
         className="custom__search__tabs"
       >
-        <Tabs.TabPane key="1" tab="Bài tập">
+        <Tabs.TabPane key="1" tab={t("title")}>
           <AssignmentTab adminId={id} />
         </Tabs.TabPane>
-        <Tabs.TabPane key="2" tab="Bài nộp">
+        <Tabs.TabPane key="2" tab={t("submission")}>
           <SubmittedTab adminId={id} />
         </Tabs.TabPane>
       </Tabs>

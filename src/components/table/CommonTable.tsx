@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/libs/routing";
 import { FilterOptions } from "@/services/rest/constant";
 import { ArrowLeftOutlined, SearchOutlined } from "@ant-design/icons";
@@ -21,15 +22,17 @@ interface CommonTableProps<T> {
   pageSizeOptions?: string[];
   totalElements: number;
   handlePageChange?: ({ pageNumber, pageSize }: FilterOptions) => void;
-  hasButton?: boolean 
+  hasButton?: boolean
 }
+
+const t = useTranslations("submitPage");
 
 export default function CommonTable<T extends object>({
   columns,
   dataSource,
   rowKey = "id", // Default fallback
   loading = false,
-  searchPlaceholder = "Tìm kiếm",
+  searchPlaceholder = t("find"),
   onSearchChange,
   headerActions,
   defaultPageSize = 5,
@@ -54,28 +57,28 @@ export default function CommonTable<T extends object>({
   return (
     <div className="bg-white p-4 rounded-lg flex flex-col gap-3">
       <div className={`flex items-center ${hasButton ? "justify-between" : "justify-end"}`}>
-    {/* LEFT: Back button */}
-   {hasButton && <Button
-      icon={<ArrowLeftOutlined />}
-      type="text"
-      className="flex items-center gap-1 text-gray-600 hover:text-blue-600"
-      onClick={() => router.back()}
-    >
-      Quay lại
-    </Button>}
+        {/* LEFT: Back button */}
+        {hasButton && <Button
+          icon={<ArrowLeftOutlined />}
+          type="text"
+          className="flex items-center gap-1 text-gray-600 hover:text-blue-600"
+          onClick={() => router.back()}
+        >
+          {t("return")}
+        </Button>}
 
-    {/* RIGHT: Search + actions */}
-    <div className="flex gap-2">
-      <Input
-        value={searchValue}
-        onChange={handleSearchChange}
-        prefix={<SearchOutlined className="text-gray-400" />}
-        className="text-base w-[220px]"
-        placeholder={searchPlaceholder}
-      />
-      {headerActions}
-    </div>
-  </div>
+        {/* RIGHT: Search + actions */}
+        <div className="flex gap-2">
+          <Input
+            value={searchValue}
+            onChange={handleSearchChange}
+            prefix={<SearchOutlined className="text-gray-400" />}
+            className="text-base w-[220px]"
+            placeholder={searchPlaceholder}
+          />
+          {headerActions}
+        </div>
+      </div>
 
       <AnimatePresence mode="wait">
         <motion.div

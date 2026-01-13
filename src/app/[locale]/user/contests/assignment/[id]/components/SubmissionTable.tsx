@@ -2,6 +2,7 @@
 import useLoadingStore from "@/app/store/loadingStore";
 import CommonTable from "@/components/table/CommonTable";
 import useGetListSubmission from "@/hook/submission/useGetListSubmission";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/libs/routing";
 import { Submission } from "@/services/rest/submission/get-list-submission/type";
 import { ReloadOutlined } from "@ant-design/icons";
@@ -10,10 +11,10 @@ import type { ColumnsType } from "antd/es/table";
 import { useEffect, useState } from "react";
 import "../../.././style.scss";
 
-export default function SubmissionTable({problemId}: {problemId: string}) {
+export default function SubmissionTable({ problemId }: { problemId: string }) {
   const [data, setData] = useState<Submission[]>([]);
   const router = useRouter();
-  
+  const t = useTranslations("submitPage");
 
   const { listSubmission, refetch, handleFilterChange } = useGetListSubmission(problemId);
   const startLoading = useLoadingStore((state) => state.startLoading)
@@ -37,7 +38,7 @@ export default function SubmissionTable({problemId}: {problemId: string}) {
       ),
     },
     {
-      title: "Trạng thái",
+      title: t("status"),
       dataIndex: "status",
       key: "status",
       render: (status) => {
@@ -50,37 +51,37 @@ export default function SubmissionTable({problemId}: {problemId: string}) {
       },
     },
     {
-      title: "Số Test case đạt",
+      title: t("passedTestcases"),
       dataIndex: "passedTestcases",
       key: "passedTestcases",
       render: (passedTestcases) => (passedTestcases !== null ? passedTestcases : "--"),
     },
-     {
-      title: "Tổng Test case",
+    {
+      title: t("totalTestcases"),
       dataIndex: "totalTestcases",
       key: "totalTestcases",
       render: (totalTestcases) => (totalTestcases !== null ? totalTestcases : "--"),
     },
     {
-      title: "Ngôn ngữ",
+      title: t("language"),
       dataIndex: "language",
       key: "language",
       render: (language) => (language ? language : "C++"),
     },
     {
-      title: "Thời gian chạy",
+      title: t("runTime"),
       dataIndex: "executionTime",
       key: "executionTime",
       render: (executionTime) => (executionTime !== null ? executionTime.toFixed(2) : "--"),
     },
     {
-      title: "Memory sử dụng",
+      title: t("memoryUsed"),
       dataIndex: "memoryUsed",
       key: "memoryUsed",
       render: (memoryUsed) => (memoryUsed !== null ? memoryUsed : "--"),
     },
     {
-      title: "Bài nộp cuối",
+      title: t("finalSubmission"),
       key: "last",
       align: "center",
       render: (_, record) => (
@@ -110,7 +111,7 @@ export default function SubmissionTable({problemId}: {problemId: string}) {
           marginBottom: 16,
         }}
       >
-        <h3 style={{ margin: 0 }}>Bài nộp</h3>
+        <h3 style={{ margin: 0 }}>{t("submission")}</h3>
         <Button
           type="primary"
           icon={<ReloadOutlined />}
@@ -121,11 +122,11 @@ export default function SubmissionTable({problemId}: {problemId: string}) {
           }}
           className="!shadow-none"
         >
-          Làm mới
+          {t("refresh")}
         </Button>
       </div>
 
-      <CommonTable dataSource={data} columns={columns} totalElements={listSubmission?.totalElements || 0} handlePageChange={handleFilterChange}/>
+      <CommonTable dataSource={data} columns={columns} totalElements={listSubmission?.totalElements || 0} handlePageChange={handleFilterChange} />
     </div>
   );
 }

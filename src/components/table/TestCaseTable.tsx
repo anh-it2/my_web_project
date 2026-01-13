@@ -1,5 +1,6 @@
 "use client";
 import useLoadingStore from "@/app/store/loadingStore";
+import { useTranslations } from "next-intl";
 import { useDeleteTestCase } from "@/hook/test-case/useDeleteTestCase";
 import { useUpdateTestCase } from "@/hook/test-case/useUpdateTestCase";
 import { TestCase } from "@/services/rest/test-case/get-test-case/type";
@@ -32,11 +33,13 @@ export default function TestCaseTable({ data, visible = true }: Props) {
     });
   };
 
+  const t = useTranslations("submitPage");
+  const tt = useTranslations("allProblemTable");
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
   const [searchValue, setSearchValue] = useState<string>("");
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-    const [selectedTestCase, setSelectedTestCase] = useState<TestCase | null>(null);
+  const [selectedTestCase, setSelectedTestCase] = useState<TestCase | null>(null);
 
   const { updateTestCaseAsync } = useUpdateTestCase();
   const { deleteTestCaseAsync } = useDeleteTestCase();
@@ -44,17 +47,17 @@ export default function TestCaseTable({ data, visible = true }: Props) {
   const stopLoading = useLoadingStore((state) => state.stopLoading);
 
   const handleDelete = async () => {
-      if (!selectedTestCase) return;
-  
-      startLoading();
-      await deleteTestCaseAsync({
-        id: selectedTestCase.testcaseId,
-      });
-      stopLoading();
-  
-      setOpenDeleteModal(false);
-      setSelectedTestCase(null);
-    };
+    if (!selectedTestCase) return;
+
+    startLoading();
+    await deleteTestCaseAsync({
+      id: selectedTestCase.testcaseId,
+    });
+    stopLoading();
+
+    setOpenDeleteModal(false);
+    setSelectedTestCase(null);
+  };
 
   const testcaseColumns: ColumnsType<TestCase> = [
     // ... keep your existing column configs, maybe just tweak labels if you want ...
@@ -76,9 +79,8 @@ export default function TestCaseTable({ data, visible = true }: Props) {
             autoSize
             readOnly={!isEditing}
             value={isEditing ? draft?.input : record.input}
-            className={`text-sm ${
-              isEditing ? "bg-white" : "bg-gray-100 cursor-pointer"
-            }`}
+            className={`text-sm ${isEditing ? "bg-white" : "bg-gray-100 cursor-pointer"
+              }`}
             onClick={() => !isEditing && startEdit(record)}
             onChange={(e) =>
               setDraft((prev) =>
@@ -100,9 +102,8 @@ export default function TestCaseTable({ data, visible = true }: Props) {
             autoSize
             readOnly={!isEditing}
             value={isEditing ? draft?.expectedOutput : record.expectedOutput}
-            className={`text-sm ${
-              isEditing ? "bg-white" : "bg-gray-100 cursor-pointer"
-            }`}
+            className={`text-sm ${isEditing ? "bg-white" : "bg-gray-100 cursor-pointer"
+              }`}
             onClick={() => !isEditing && startEdit(record)}
             onChange={(e) =>
               setDraft((prev) =>
@@ -138,9 +139,8 @@ export default function TestCaseTable({ data, visible = true }: Props) {
             <div className="flex justify-center gap-3">
               <button
                 disabled={!isValid}
-                className={`text-green-600 text-2xl bg-transparent border-none cursor-pointer ${
-                  !isValid ? "opacity-40 cursor-not-allowed" : ""
-                }`}
+                className={`text-green-600 text-2xl bg-transparent border-none cursor-pointer ${!isValid ? "opacity-40 cursor-not-allowed" : ""
+                  }`}
                 onClick={async () => {
 
                   startLoading()
@@ -180,12 +180,12 @@ export default function TestCaseTable({ data, visible = true }: Props) {
         const items: MenuProps["items"] = [
           {
             key: "edit",
-            label: "Chỉnh sửa",
+            label: tt("actions.edit"),
             onClick: () => startEdit(record),
           },
           {
             key: "delete",
-            label: "Xóa",
+            label: tt("actions.delete"),
             danger: true,
             onClick: () => {
               setSelectedTestCase(record);
@@ -211,7 +211,7 @@ export default function TestCaseTable({ data, visible = true }: Props) {
           onChange={(e) => setSearchValue(e.target.value)}
           prefix={<SearchOutlined className="text-gray-400" />}
           className="text-base w-[220px]"
-          placeholder="Tìm kiếm"
+          placeholder={t("find")}
         />
       </div>}
 
@@ -247,13 +247,13 @@ export default function TestCaseTable({ data, visible = true }: Props) {
         </motion.div>
       </AnimatePresence>
       <ConfirmDelete
-              open={openDeleteModal}
-              onCancel={() => {
-                setOpenDeleteModal(false);
-                setSelectedTestCase(null);
-              }}
-              onConfirm={handleDelete}
-            />
+        open={openDeleteModal}
+        onCancel={() => {
+          setOpenDeleteModal(false);
+          setSelectedTestCase(null);
+        }}
+        onConfirm={handleDelete}
+      />
     </div>
   );
 }

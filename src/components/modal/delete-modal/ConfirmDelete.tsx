@@ -1,5 +1,6 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
+import { useTranslations } from "use-intl";
 
 type ConfirmDeleteProps = {
   open: boolean;
@@ -10,10 +11,11 @@ type ConfirmDeleteProps = {
   onCancel: () => void;
 };
 
+const t = useTranslations("modal");
 export default function ConfirmDelete({
   open,
-  title = "Xác nhận xóa",
-  description = "Hành động này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn.",
+  title = t("deleteTitle"),
+  description = t("deleteDescription"),
   loading = false,
   onConfirm,
   onCancel,
@@ -50,7 +52,7 @@ export default function ConfirmDelete({
             disabled={loading}
             className="!rounded-lg"
           >
-            Hủy
+            {t("cancel")}
           </Button>
 
           <Button
@@ -61,7 +63,7 @@ export default function ConfirmDelete({
             onClick={onConfirm}
             className="!rounded-lg"
           >
-            Xóa
+            {t("delete")}
           </Button>
         </div>
       </div>
